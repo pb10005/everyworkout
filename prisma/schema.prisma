@@ -44,8 +44,8 @@ model Exercise {
 
 model ExerciseMuscle {
     id              String  @id @default(cuid())
-    exercise_id     String
-    muscle_id       String
+    exerciseId      String
+    muscleId       String
     exercise        Exercise    @relation(fields: [exerciseId], references: [id])
     muscle          Muscle      @relation(fields: [muscleId], references: [id])
     is_main         Boolean

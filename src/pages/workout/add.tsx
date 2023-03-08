@@ -2,13 +2,11 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-import { RecordCard } from "../components/RecordCard";
+import { Badge } from "../../components/Badge";
+import { api } from "../../utils/api";
 
-const records = [
-  { exercise: "ベンチプレス", weight: 62.5 },
-  { exercise: "スクワット", weight: 70 },
-];
 const Dashboard: NextPage = () => {
+  const { data } = api.muscle.getAll.useQuery();
   return (
     <>
       <Head>
@@ -18,9 +16,11 @@ const Dashboard: NextPage = () => {
       </Head>
       <Link href="/">Home</Link>
       <Link href="/workout/add">Add Workout</Link>
-      {records.map(({ exercise, weight }) => {
-        return <RecordCard exercise={exercise} weight={weight} />;
-      })}
+      <div>
+        {data?.map((d) => (
+          <Badge key={d.id} label={d.name}></Badge>
+        ))}
+      </div>
     </>
   );
 };

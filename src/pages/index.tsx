@@ -21,6 +21,9 @@ const Home: NextPage = () => {
             Every <span className="text-[hsl(280,100%,70%)]">W</span>orkout
           </h1>
           <div className="flex flex-col items-center gap-2">
+            <Link href="/dashboard" className="text-white">
+              Dashboard
+            </Link>
             <AuthShowcase />
           </div>
         </div>

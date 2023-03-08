@@ -24,7 +24,7 @@ model Muscle {
     id              String  @id @default(cuid())
     name            String
     description     String?
-    exerciseMuscles  ExerciseMuscle[]
+    exercises       ExerciseMuscle[]
 }
 
 model Workout {
@@ -41,7 +41,7 @@ model Exercise {
     id              String  @id @default(cuid())
     name            String
     description     String?
-    exerciseMuscles  ExerciseMuscle[]
+    muscles         ExerciseMuscle[]
 }
 
 model ExerciseMuscle {

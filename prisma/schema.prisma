@@ -20,10 +20,18 @@ model Example {
     updatedAt DateTime @updatedAt
 }
 
+model BodyPart {
+    id              Int     @id @default(autoincrement())
+    name            String
+    muscles         Muscle[]
+}
+
 model Muscle {
-    id              String  @id @default(cuid())
+    id              Int       @id @default(autoincrement())
     name            String
     description     String?
+    bodyPartId      Int
+    bodyPart        BodyPart  @relation(fields: [bodyPartId], references: [id])
     exercises       ExerciseMuscle[]
 }
 
@@ -34,20 +42,23 @@ model Workout {
     reps            Int
     sets            Int
     note            String?
+    exerciseId      Int
+    exercise        Exercise    @relation(fields:[exerciseId], references: [id])
     createdAt       DateTime @default(now())
 }
 
 model Exercise {
-    id              String  @id @default(cuid())
+    id              Int  @id @default(autoincrement())
     name            String
     description     String?
     muscles         ExerciseMuscle[]
+    workouts        Workout[]
 }
 
 model ExerciseMuscle {
-    id              String  @id @default(cuid())
-    exerciseId      String
-    muscleId        String
+    id              Int  @id @default(autoincrement())
+    exerciseId      Int
+    muscleId        Int
     exercise        Exercise    @relation(fields: [exerciseId], references: [id])
     muscle          Muscle      @relation(fields: [muscleId], references: [id])
     is_main         Boolean

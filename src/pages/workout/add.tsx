@@ -1,22 +1,21 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
 import { Navigation } from "../../components/Navigation";
 import { Badge } from "../../components/Badge";
+import { ExerciseSelector } from "../../components/ExerciseSelector";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
-  const [muscleId, setMuscleId] = useState(-1);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [selectedExerciseId, selectExerciseId] = useState(-1);
   const [weight, setWeight] = useState(50);
   const [reps, setReps] = useState(10);
   const [sets, setSets] = useState(3);
   const [note, setNote] = useState("");
-  const muscles = api.muscle.getAll.useQuery().data;
-  const exercises = api.exercise.getByMuscleId.useQuery({ muscleId }).data;
+
   const mutation = api.workout.add.useMutation();
   const send = () => {
     mutation.mutate({
@@ -58,28 +57,13 @@ const Dashboard: NextPage = () => {
           />
         </div>
         <div className="mb-2">
-          <label class="mb-2 block text-sm font-bold text-gray-700">種目</label>
-          <div className="mb-2 py-2">
-            {muscles?.map((d) => (
-              <Badge
-                onClick={() => handleMuscleClick(d.id)}
-                key={d.id}
-                label={(d.id === muscleId ? "✔" : "") + d.name}
-              ></Badge>
-            ))}
-          </div>
-          <div className="mb-2 py-2">
-            {exercises?.map((d) => (
-              <Badge
-                onClick={() => handleExerciseClick(d.exerciseId)}
-                key={d.exerciseId}
-                label={
-                  (d.exerciseId === selectedExerciseId ? "✔" : "") +
-                  d.exercise.name
-                }
-              />
-            ))}
-          </div>
+          <label className="mb-2 block text-sm font-bold text-gray-700">
+            種目
+          </label>
+          <ExerciseSelector
+            selectedExerciseId={selectedExerciseId}
+            handleExerciseClick={handleExerciseClick}
+          />
         </div>
         <div class="mb-2">
           <label

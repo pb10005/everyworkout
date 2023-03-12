@@ -16,7 +16,7 @@ type Props = {
   workout: Workout;
 };
 
-export const RecordCard: React.FC<Workout> = (props: Props) => {
+export const RecordCard: React.FC<Props> = (props: Props) => {
   const { workout } = props;
   const { exercise, weight, reps, sets, note } = workout;
 

@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -26,9 +26,6 @@ const Dashboard: NextPage = () => {
       note: note,
       exerciseId: selectedExerciseId,
     });
-  };
-  const handleMuscleClick = (muscleId) => {
-    setMuscleId(muscleId);
   };
   const handleExerciseClick = (exerciseId) => {
     selectExerciseId(exerciseId);

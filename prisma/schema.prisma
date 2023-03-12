@@ -39,7 +39,7 @@ model Muscle {
 model Workout {
   id         String   @id @default(cuid())
   date       DateTime @default(now())
-  weight     Int?
+  weight     Float?
   reps       Int
   sets       Int
   note       String?

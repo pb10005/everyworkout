@@ -12,6 +12,7 @@ export const exerciseRouter = createTRPCRouter({
       return ctx.prisma.exerciseMuscle.findMany({
         where: {
           muscleId: input.muscleId,
+          is_main: true,
         },
         include: {
           exercise: true,

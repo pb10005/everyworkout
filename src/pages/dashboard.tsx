@@ -1,15 +1,19 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { api } from "../utils/api";
 
 import { Navigation } from "../components/Navigation";
 import { RecordCard } from "../components/RecordCard";
 
+/*
 const records = [
   { id: 1, exercise: "ベンチプレス", weight: 62.5 },
   { id: 2, exercise: "スクワット", weight: 72.5 },
 ];
+*/
 const Dashboard: NextPage = () => {
+  const { data } = api.workout.getAll.useQuery();
   return (
     <>
       <Head>
@@ -18,9 +22,9 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <p>ベスト</p>
-      {records.map(({ id, exercise, weight }) => {
-        return <RecordCard key={id} exercise={exercise} weight={weight} />;
+      <p>トレーニング記録</p>
+      {data?.map((d) => {
+        return <RecordCard key={d.id} workout={d} />;
       })}
     </>
   );

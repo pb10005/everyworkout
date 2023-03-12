@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -7,7 +8,23 @@ import { Badge } from "../../components/Badge";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
-  const { data } = api.muscle.getAll.useQuery();
+  const [muscleId, setMuscleId] = useState(-1);
+  const muscles = api.muscle.getAll.useQuery().data;
+  const exercises = api.exercise.getByMuscleId.useQuery({ muscleId }).data;
+  const mutation = api.workout.add.useMutation();
+  const send = () => {
+    mutation.mutate({
+      date: new Date().toISOString(),
+      weight: 50,
+      reps: 5,
+      sets: 1,
+      note: "フォームは良くなってきている",
+      exerciseId: 1,
+    });
+  };
+  const handleTagClick = (muscleId) => {
+    setMuscleId(muscleId);
+  };
   return (
     <>
       <Head>
@@ -16,11 +33,21 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div>
-        {data?.map((d) => (
-          <Badge key={d.id} label={d.name}></Badge>
+      <div className="mb-2 py-2">
+        {muscles?.map((d) => (
+          <Badge
+            onClick={() => handleTagClick(d.id)}
+            key={d.id}
+            label={(d.id === muscleId ? "✔" : "") + d.name}
+          ></Badge>
         ))}
       </div>
+      <div className="mb-2 py-2">
+        {exercises?.map((d) => (
+          <Badge key={d.exerciseId} label={d.exercise.name} />
+        ))}
+      </div>
+      <button onClick={send}>SEND</button>
     </>
   );
 };

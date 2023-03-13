@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, memo } from "react";
+import { useState, memo, useCallback } from "react";
 import { Badge } from "../components/Badge";
 import { api } from "../utils/api";
 
@@ -53,9 +53,9 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
   const muscles = data;
   const MemoMuscleList = memo(MuscleList);
 
-  const handleMuscleClick = (muscleId) => {
+  const handleMuscleClick = useCallback((muscleId) => {
     setMuscleId(muscleId);
-  };
+  });
   return (
     <>
       <MemoMuscleList

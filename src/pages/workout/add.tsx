@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -27,9 +27,9 @@ const Dashboard: NextPage = () => {
       exerciseId: selectedExerciseId,
     });
   };
-  const handleExerciseClick = (exerciseId) => {
+  const handleExerciseClick = useCallback((exerciseId) => {
     selectExerciseId(exerciseId);
-  };
+  });
   return (
     <>
       <Head>
@@ -73,6 +73,7 @@ const Dashboard: NextPage = () => {
             class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="weight"
             type="number"
+            step="2.5"
             placeholder="重量"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}

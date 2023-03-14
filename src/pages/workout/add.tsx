@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import { Navigation } from "../../components/Navigation";
 import { Badge } from "../../components/Badge";
@@ -9,6 +10,7 @@ import { ExerciseSelector } from "../../components/ExerciseSelector";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
+  const { data: sessionData } = useSession();
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [selectedExerciseId, selectExerciseId] = useState(-1);
   const [weight, setWeight] = useState(50);
@@ -19,6 +21,7 @@ const Dashboard: NextPage = () => {
   const mutation = api.workout.add.useMutation();
   const send = () => {
     mutation.mutate({
+      userId: sessionData?.user?.id,
       date: new Date(date).toISOString(),
       weight: parseFloat(weight),
       reps: parseInt(reps),

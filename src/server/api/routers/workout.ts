@@ -6,6 +6,7 @@ export const workoutRouter = createTRPCRouter({
   add: publicProcedure
     .input(
       z.object({
+        userId: z.string(),
         date: z.string().datetime(),
         weight: z.number(),
         reps: z.number(),
@@ -17,6 +18,7 @@ export const workoutRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const workout = await ctx.prisma.workout.create({
         data: {
+          userId: input.userId,
           date: input.date,
           weight: input.weight,
           reps: input.reps,

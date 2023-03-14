@@ -6,6 +6,7 @@ export const workoutRouter = createTRPCRouter({
   add: publicProcedure
     .input(
       z.object({
+        userId: z.string(),
         date: z.string().datetime(),
         weight: z.number(),
         reps: z.number(),
@@ -17,6 +18,7 @@ export const workoutRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const workout = await ctx.prisma.workout.create({
         data: {
+          userId: input.userId,
           date: input.date,
           weight: input.weight,
           reps: input.reps,
@@ -31,4 +33,13 @@ export const workoutRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.workout.findMany({ include: { exercise: true } });
   }),
+
+  getUserWorkout: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.workout.findMany({
+        where: { userId: input.userId },
+        include: { exercise: true },
+      });
+    }),
 });

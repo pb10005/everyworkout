@@ -1,19 +1,17 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
 import { Navigation } from "../components/Navigation";
 import { RecordCard } from "../components/RecordCard";
 
-/*
-const records = [
-  { id: 1, exercise: "ベンチプレス", weight: 62.5 },
-  { id: 2, exercise: "スクワット", weight: 72.5 },
-];
-*/
 const Dashboard: NextPage = () => {
-  const { data } = api.workout.getAll.useQuery();
+  const { data: sessionData } = useSession();
+  const { data } = api.workout.getUserWorkout.useQuery({
+    userId: sessionData?.user?.id,
+  });
   return (
     <>
       <Head>

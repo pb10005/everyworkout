@@ -1,6 +1,4 @@
-import { z } from "zod";
-
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const muscleRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {

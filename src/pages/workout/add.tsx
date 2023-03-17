@@ -1,27 +1,27 @@
 import { useState, useCallback } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 import { Navigation } from "../../components/Navigation";
-import { Badge } from "../../components/Badge";
 import { ExerciseSelector } from "../../components/ExerciseSelector";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
   const { data: sessionData } = useSession();
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState<string>(
+    new Date().toISOString().split("T")[0] || ""
+  );
   const [selectedExerciseId, selectExerciseId] = useState(-1);
-  const [weight, setWeight] = useState(50);
-  const [reps, setReps] = useState(10);
-  const [sets, setSets] = useState(3);
-  const [note, setNote] = useState("");
+  const [weight, setWeight] = useState<string>("50");
+  const [reps, setReps] = useState<string>("10");
+  const [sets, setSets] = useState<string>("3");
+  const [note, setNote] = useState<string>("");
 
   const mutation = api.workout.add.useMutation();
   const send = () => {
     mutation.mutate({
-      userId: sessionData?.user?.id,
+      userId: sessionData?.user?.id || "",
       date: new Date(date).toISOString(),
       weight: parseFloat(weight),
       reps: parseInt(reps),
@@ -30,9 +30,9 @@ const Dashboard: NextPage = () => {
       exerciseId: selectedExerciseId,
     });
   };
-  const handleExerciseClick = useCallback((exerciseId) => {
+  const handleExerciseClick = useCallback((exerciseId: number) => {
     selectExerciseId(exerciseId);
-  });
+  }, []);
   return (
     <>
       <Head>
@@ -46,7 +46,7 @@ const Dashboard: NextPage = () => {
         <div className="mb-2">
           <label
             className="mb-2 block text-sm font-bold text-gray-700"
-            for="date"
+            htmlFor="date"
           >
             日付
           </label>
@@ -68,15 +68,15 @@ const Dashboard: NextPage = () => {
             handleExerciseClick={handleExerciseClick}
           />
         </div>
-        <div class="mb-2">
+        <div className="mb-2">
           <label
-            class="mb-2 block text-sm font-bold text-gray-700"
-            for="weight"
+            className="mb-2 block text-sm font-bold text-gray-700"
+            htmlFor="weight"
           >
             重量
           </label>
           <input
-            class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="weight"
             type="number"
             step="2.5"
@@ -85,12 +85,15 @@ const Dashboard: NextPage = () => {
             onChange={(e) => setWeight(e.target.value)}
           />
         </div>
-        <div class="mb-2">
-          <label class="mb-2 block text-sm font-bold text-gray-700" for="reps">
+        <div className="mb-2">
+          <label
+            className="mb-2 block text-sm font-bold text-gray-700"
+            htmlFor="reps"
+          >
             rep数
           </label>
           <input
-            class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="reps"
             type="number"
             placeholder="rep数"
@@ -98,12 +101,15 @@ const Dashboard: NextPage = () => {
             onChange={(e) => setReps(e.target.value)}
           />
         </div>
-        <div class="mb-2">
-          <label class="mb-2 block text-sm font-bold text-gray-700" for="sets">
+        <div className="mb-2">
+          <label
+            className="mb-2 block text-sm font-bold text-gray-700"
+            htmlFor="sets"
+          >
             セット数
           </label>
           <input
-            class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="sets"
             type="number"
             placeholder="セット数"
@@ -111,15 +117,15 @@ const Dashboard: NextPage = () => {
             onChange={(e) => setSets(e.target.value)}
           />
         </div>
-        <div class="mb-2">
+        <div className="mb-2">
           <label
-            class="mb-2 block text-sm font-bold text-gray-700"
-            for="username"
+            className="mb-2 block text-sm font-bold text-gray-700"
+            htmlFor="username"
           >
             メモ
           </label>
           <input
-            class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="note"
             type="text"
             placeholder="メモ"

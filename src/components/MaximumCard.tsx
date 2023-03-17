@@ -19,7 +19,7 @@ type Props = {
 export const MaximumCard: React.FC<Props> = (props: Props) => {
   const { maximum } = props;
   const { id, exercise, metrics_code, value } = maximum;
-  const metrics_map = {
+  const metrics_map: { [key: string]: string } = {
     "01": "kg",
     "02": "reps",
   };

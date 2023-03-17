@@ -11,7 +11,7 @@ type Workout = {
   weight: number | null;
   reps: number;
   sets: number;
-  note: string;
+  note: string | null;
 };
 
 type Props = {

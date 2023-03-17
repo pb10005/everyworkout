@@ -8,7 +8,24 @@ type Props = {
   handleExerciseClick: (exerciseId: number) => void;
 };
 
-const MuscleList = (props) => {
+type Muscle = {
+  id: number;
+  name: string;
+};
+
+type MuscleListProps = {
+  muscleId: number;
+  muscles: Muscle[] | undefined;
+  handleMuscleClick: (muscleId: number) => void;
+};
+
+type ExerciseListProps = {
+  muscleId: number;
+  selectedExerciseId: number;
+  handleExerciseClick: (exerciseId: number) => void;
+};
+
+const MuscleList = (props: MuscleListProps) => {
   const { muscleId, muscles, handleMuscleClick } = props;
   return (
     <>
@@ -17,7 +34,7 @@ const MuscleList = (props) => {
           <Badge
             onClick={() => handleMuscleClick(d.id)}
             key={d.id}
-            label={(d.id === muscleId ? "✔" : "") + d.name}
+            label={`${d.id === muscleId ? "✔" : ""}${d.name}`}
           ></Badge>
         ))}
       </div>
@@ -25,7 +42,7 @@ const MuscleList = (props) => {
   );
 };
 
-const ExerciseList = (props) => {
+const ExerciseList = (props: ExerciseListProps) => {
   const { muscleId, selectedExerciseId, handleExerciseClick } = props;
   const exercises = api.exercise.getByMuscleId.useQuery({ muscleId }).data;
   return (
@@ -53,9 +70,9 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
   const muscles = data;
   const MemoMuscleList = memo(MuscleList);
 
-  const handleMuscleClick = useCallback((muscleId) => {
+  const handleMuscleClick = useCallback((muscleId: number) => {
     setMuscleId(muscleId);
-  });
+  }, []);
   return (
     <>
       <MemoMuscleList

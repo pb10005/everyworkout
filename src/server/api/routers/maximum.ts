@@ -2,42 +2,38 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const workoutRouter = createTRPCRouter({
+export const maximumRouter = createTRPCRouter({
   add: publicProcedure
     .input(
       z.object({
         userId: z.string(),
-        date: z.string().datetime(),
-        weight: z.number(),
-        reps: z.number(),
-        sets: z.number(),
-        note: z.string(),
+        metrics_code: z.string(),
+        value: z.number(),
         exerciseId: z.number(),
+        date: z.string().datetime(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const workout = await ctx.prisma.workout.create({
+      const maximum = await ctx.prisma.maximum.create({
         data: {
           userId: input.userId,
           date: input.date,
-          weight: input.weight,
-          reps: input.reps,
-          sets: input.sets,
-          note: input.note,
+          metrics_code: input.metrics_code,
+          value: input.value,
           exerciseId: input.exerciseId,
         },
       });
-      return workout;
+      return maximum;
     }),
 
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.workout.findMany({ include: { exercise: true } });
+    return ctx.prisma.maximum.findMany({ include: { exercise: true } });
   }),
 
-  getUserWorkouts: publicProcedure
+  getUserMaximums: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.workout.findMany({
+      return ctx.prisma.maximum.findMany({
         where: { userId: input.userId },
         include: { exercise: true },
       });

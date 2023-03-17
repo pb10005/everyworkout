@@ -43,12 +43,15 @@ const Dashboard: NextPage = () => {
       <main>
         <Navigation />
 
-        <div class="mb-2">
-          <label class="mb-2 block text-sm font-bold text-gray-700" for="date">
+        <div className="mb-2">
+          <label
+            className="mb-2 block text-sm font-bold text-gray-700"
+            for="date"
+          >
             日付
           </label>
           <input
-            class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
             id="date"
             type="date"
             placeholder="日付"

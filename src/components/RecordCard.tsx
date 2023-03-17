@@ -6,7 +6,7 @@ type Exercise = {
 };
 
 type Workout = {
-  exercise: Exercise;
+  id: string;
   weight: number;
   reps: number;
   sets: number;
@@ -14,7 +14,7 @@ type Workout = {
 };
 
 type Props = {
-  workout: Workout;
+  workout: Workout & { exercise: Exercise };
 };
 
 export const RecordCard: React.FC<Props> = (props: Props) => {

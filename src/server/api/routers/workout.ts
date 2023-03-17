@@ -34,7 +34,7 @@ export const workoutRouter = createTRPCRouter({
     return ctx.prisma.workout.findMany({ include: { exercise: true } });
   }),
 
-  getUserWorkout: publicProcedure
+  getUserWorkouts: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.prisma.workout.findMany({

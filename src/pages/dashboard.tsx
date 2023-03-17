@@ -5,10 +5,14 @@ import { api } from "../utils/api";
 
 import { Navigation } from "../components/Navigation";
 import { RecordCard } from "../components/RecordCard";
+import { MaximumCard } from "../components/MaximumCard";
 
 const Dashboard: NextPage = () => {
   const { data: sessionData } = useSession();
-  const { data } = api.workout.getUserWorkout.useQuery({
+  const { data } = api.workout.getUserWorkouts.useQuery({
+    userId: sessionData?.user?.id || "",
+  });
+  const { data: maximum } = api.maximum.getUserMaximums.useQuery({
     userId: sessionData?.user?.id || "",
   });
   return (
@@ -22,6 +26,9 @@ const Dashboard: NextPage = () => {
       <p>トレーニング記録</p>
       {data?.map((d) => {
         return <RecordCard key={d.id} workout={d} />;
+      })}
+      {maximum?.map((m) => {
+        return <MaximumCard key={m.id} maximum={m} />;
       })}
     </>
   );

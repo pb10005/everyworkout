@@ -16,7 +16,7 @@ type Props = {
   maximum: Maximum & { exercise: Exercise };
 };
 
-export const RecordCard: React.FC<Props> = (props: Props) => {
+export const MaximumCard: React.FC<Props> = (props: Props) => {
   const { maximum } = props;
   const { id, exercise, metrics_code, value } = maximum;
   const metrics_map = {

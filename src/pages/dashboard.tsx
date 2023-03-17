@@ -10,7 +10,7 @@ import { RecordCard } from "../components/RecordCard";
 const Dashboard: NextPage = () => {
   const { data: sessionData } = useSession();
   const { data } = api.workout.getUserWorkout.useQuery({
-    userId: sessionData?.user?.id,
+    userId: sessionData?.user?.id || "",
   });
   return (
     <>

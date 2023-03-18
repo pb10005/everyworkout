@@ -35,10 +35,30 @@ export const workoutRouter = createTRPCRouter({
   }),
 
   getUserWorkouts: publicProcedure
-    .input(z.object({ userId: z.string() }))
+    .input(z.object({ userId: z.string(), limit: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.prisma.workout.findMany({
         where: { userId: input.userId },
+        orderBy: { date: "desc" },
+        take: input.limit,
+        include: { exercise: true },
+      });
+    }),
+  getUserWorkoutsByDate: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        date: z.string().datetime(),
+        skip: z.number(),
+        perPage: z.number(),
+      })
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.workout.findMany({
+        where: { userId: input.userId, date: input.date },
+        orderBy: { date: "desc" },
+        skip: input.skip,
+        take: input.perPage,
         include: { exercise: true },
       });
     }),

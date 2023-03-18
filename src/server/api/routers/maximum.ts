@@ -45,7 +45,6 @@ export const maximumRouter = createTRPCRouter({
       return maximums.map((d) => {
         const e = exercises.find((x) => x.id === d.exerciseId);
         return {
-          id: d.id,
           exerciseId: d.exerciseId,
           exercise: e,
           metrics_code: d.metrics_code,

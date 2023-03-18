@@ -33,8 +33,11 @@ const Dashboard: NextPage = () => {
               {maximum?.length && maximum?.length > 0
                 ? maximum?.map((m) => {
                     return (
-                      <div className="md:grid-span-1 md:mb-1 px-1">
-                        <Link key={m.id} href={`/maximum/${m.exerciseId}`}>
+                      <div className="md:grid-span-1 px-1 md:mb-1">
+                        <Link
+                          key={`${m.exerciseid}${m.metrics_code}`}
+                          href={`/maximum/${m.exerciseId}`}
+                        >
                           <MaximumCard
                             exerciseName={m.exercise?.name}
                             metrics_code={m.metrics_code}

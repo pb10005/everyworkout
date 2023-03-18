@@ -28,20 +28,7 @@ const Dashboard: NextPage = () => {
       <div className="grid md:grid-cols-12">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
-            <p className="text-sm text-gray-500">トレーニング履歴</p>
-            {data?.length && data?.length > 0
-              ? data?.map((d) => {
-                  return <RecordCard key={d.id} workout={d} />;
-                })
-              : "No data"}
-            {data?.length && data?.length > 0 ? (
-              <Link href="/workout/history">View More</Link>
-            ) : (
-              ""
-            )}
-          </section>
-          <section className="mb-2 p-2">
-            <p className="text-sm text-gray-500">ベスト更新記録</p>
+            <p className="text-sm text-gray-500">自己ベスト</p>
             {maximum?.length && maximum?.length > 0
               ? maximum?.map((m) => {
                   return (
@@ -54,6 +41,19 @@ const Dashboard: NextPage = () => {
                   );
                 })
               : "No data"}
+          </section>
+          <section className="mb-2 p-2">
+            <p className="text-sm text-gray-500">トレーニング履歴</p>
+            {data?.length && data?.length > 0
+              ? data?.map((d) => {
+                  return <RecordCard key={d.id} workout={d} />;
+                })
+              : "No data"}
+            {data?.length && data?.length > 0 ? (
+              <Link href="/workout/history">View More</Link>
+            ) : (
+              ""
+            )}
           </section>
         </div>
       </div>

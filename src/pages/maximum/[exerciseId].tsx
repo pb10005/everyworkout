@@ -19,7 +19,7 @@ const History: NextPage = () => {
   const [perPage, setPerPage] = useState<number>(10);
   const { data } = api.maximum.getUserMaximumsByExerciseId.useQuery({
     userId: sessionData?.user?.id || "",
-    exerciseId: parseInt(exerciseId) || -1,
+    exerciseId: parseInt(exerciseId),
   });
   return (
     <>

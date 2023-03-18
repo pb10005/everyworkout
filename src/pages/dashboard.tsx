@@ -47,7 +47,7 @@ const Dashboard: NextPage = () => {
                   return (
                     <MaximumCard
                       key={m.exerciseId}
-                      exerciseName={m.exercise.name}
+                      exerciseName={m.exercise?.name}
                       metrics_code={m.metrics_code}
                       value={m.value}
                     />

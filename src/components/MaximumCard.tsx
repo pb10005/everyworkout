@@ -2,7 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 
 type Props = {
-  exerciseName: string;
+  exerciseName: string | undefined;
   metrics_code: string;
   value: number | null;
 };

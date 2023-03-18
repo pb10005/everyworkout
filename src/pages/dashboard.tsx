@@ -44,7 +44,14 @@ const Dashboard: NextPage = () => {
             <p className="text-sm text-gray-500">ベスト更新記録</p>
             {maximum?.length && maximum?.length > 0
               ? maximum?.map((m) => {
-                  return <MaximumCard key={m.id} maximum={m} />;
+                  return (
+                    <MaximumCard
+                      key={m.exerciseId}
+                      exercise={m.exercise}
+                      metrics_code={m.metrics_code}
+                      value={m.value}
+                    />
+                  );
                 })
               : "No data"}
           </section>

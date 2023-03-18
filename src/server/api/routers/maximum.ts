@@ -32,10 +32,24 @@ export const maximumRouter = createTRPCRouter({
 
   getUserMaximums: publicProcedure
     .input(z.object({ userId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.maximum.findMany({
+    .query(async ({ ctx, input }) => {
+      const exercises = await ctx.prisma.exercise.findMany({});
+      const maximums = await ctx.prisma.maximum.groupBy({
+        by: ["exerciseId", "metrics_code"],
+        _max: { value: true },
         where: { userId: input.userId },
-        include: { exercise: true },
+        orderBy: {
+          exerciseId: "asc",
+        },
+      });
+      return maximums.map((d) => {
+        const e = exercises.find((x) => x.id === d.exerciseId);
+        return {
+          exerciseId: d.exerciseId,
+          exercise: e,
+          metrics_code: d.metrics_code,
+          value: d._max.value,
+        };
       });
     }),
 });

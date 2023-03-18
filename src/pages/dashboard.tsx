@@ -32,12 +32,14 @@ const Dashboard: NextPage = () => {
             {maximum?.length && maximum?.length > 0
               ? maximum?.map((m) => {
                   return (
-                    <MaximumCard
-                      key={m.exerciseId}
-                      exerciseName={m.exercise?.name}
-                      metrics_code={m.metrics_code}
-                      value={m.value}
-                    />
+                    <Link href={`/maximum/${m.exerciseId}`}>
+                      <MaximumCard
+                        key={m.exerciseId}
+                        exerciseName={m.exercise?.name}
+                        metrics_code={m.metrics_code}
+                        value={m.value}
+                      />
+                    </Link>
                   );
                 })
               : "No data"}

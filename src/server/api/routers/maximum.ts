@@ -52,4 +52,19 @@ export const maximumRouter = createTRPCRouter({
         };
       });
     }),
+
+  getUserMaximumsByExerciseId: publicProcedure
+    .input(z.object({ userId: z.string(), exerciseId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const maximums = await ctx.prisma.maximum.findMany({
+        where: { userId: input.userId, exerciseId: input.exerciseId },
+        orderBy: {
+          date: "desc",
+        },
+        include: {
+          exercise: true,
+        },
+      });
+      return maximums;
+    }),
 });

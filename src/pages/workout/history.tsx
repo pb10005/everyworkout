@@ -10,9 +10,11 @@ import { RecordCard } from "../../components/RecordCard";
 
 const History: NextPage = () => {
   const { data: sessionData } = useSession();
-  const [skip, setSkip] = useState(0);
-  const [perPage, setPerPage] = useState(5);
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [skip, setSkip] = useState<number>(0);
+  const [perPage, setPerPage] = useState<number>(5);
+  const [date, setDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
   const { data } = api.workout.getUserWorkoutsByDate.useQuery({
     userId: sessionData?.user?.id || "",
     date: new Date(date).toISOString(),

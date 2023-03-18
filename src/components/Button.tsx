@@ -1,7 +1,7 @@
 import * as React from "react";
 
 type Props = {
-  children: ReactNode;
+  children: React.ReactNode;
   onClick: () => void;
 };
 

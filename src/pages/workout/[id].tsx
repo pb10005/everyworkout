@@ -7,8 +7,9 @@ import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
   const router = useRouter();
-  const { id } = router.query;
-  const { data } = api.workout.getWorkoutById.useQuery({ id });
+  const { id: ids } = router.query;
+  const id = Array.isArray(ids) ? ids[0] : ids;
+  const { data } = api.workout.getWorkoutById.useQuery({ id: id || "" });
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
   return (
     <>

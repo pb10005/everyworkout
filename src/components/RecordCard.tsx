@@ -7,7 +7,7 @@ type Exercise = {
 
 type Workout = {
   id: string;
-  date: string;
+  date: Date;
   exercise: Exercise;
   weight: number | null;
   reps: number;

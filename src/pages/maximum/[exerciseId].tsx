@@ -13,7 +13,7 @@ const History: NextPage = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
   const { exerciseId: ids } = router.query;
-  const exerciseId = Array.isArray(ids) ? ids[0] : ids;
+  const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
 
   const [skip, setSkip] = useState<number>(0);
   const [perPage, setPerPage] = useState<number>(10);

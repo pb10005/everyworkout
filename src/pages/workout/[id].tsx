@@ -1,16 +1,30 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { useSession } from "next-auth/react";
 
 import { Navigation } from "../../components/Navigation";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
+  const { data: sessionData } = useSession();
   const router = useRouter();
   const { id: ids } = router.query;
   const id = Array.isArray(ids) ? ids[0] : ids;
   const { data } = api.workout.getWorkoutById.useQuery({ id: id || "" });
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
+
+  const mutation = api.maximum.add.useMutation();
+  const registerMaximum = useCallback(() => {
+    mutation.mutate({
+      userId: sessionData?.user?.id || "",
+      exerciseId: data?.exerciseId || -1,
+      date: data?.date.toISOString() || "",
+      metrics_code: "01",
+      value: data?.weight || 0,
+    });
+  }, []);
   return (
     <>
       <Head>
@@ -28,6 +42,7 @@ const Dashboard: NextPage = () => {
           <div>{data?.reps} reps</div>
           <div>{data?.sets} sets</div>
           <div>メモ: {data?.note}</div>
+          <button onClick={registerMaximum}>Max記録登録</button>
         </div>
       </div>
     </>

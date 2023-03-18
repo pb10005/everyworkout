@@ -10,7 +10,10 @@ export const Badge: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <span className="mr-2 mb-2 rounded bg-gray-200 p-2" onClick={onClick}>
+      <span
+        className="mr-2 mb-2 inline-block rounded bg-gray-200 p-2"
+        onClick={onClick}
+      >
         {label}
       </span>
     </>

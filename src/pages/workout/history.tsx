@@ -13,7 +13,7 @@ const History: NextPage = () => {
   const [skip, setSkip] = useState<number>(0);
   const [perPage, setPerPage] = useState<number>(5);
   const [date, setDate] = useState<string>(
-    new Date().toISOString().split("T")[0]
+    new Date().toISOString().split("T")[0] || ""
   );
   const { data } = api.workout.getUserWorkoutsByDate.useQuery({
     userId: sessionData?.user?.id || "",

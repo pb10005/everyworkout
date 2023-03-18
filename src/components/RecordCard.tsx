@@ -20,7 +20,7 @@ type Props = {
 
 export const RecordCard: React.FC<Props> = (props: Props) => {
   const { workout } = props;
-  const { id, exercise, weight, reps, sets, note } = workout;
+  const { id, exercise, weight, reps, sets } = workout;
 
   return (
     <>
@@ -29,11 +29,10 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
           <Link href={`/workout/${id}`}>{exercise.name}</Link>
         </p>
         <div className="p-2">
-          <p>{weight} kg</p>
-          <p>{reps} reps</p>
-          <p>{sets} sets</p>
+          <span>{weight} kg</span>
+          <span>{reps} reps</span>
+          <span>{sets} sets</span>
         </div>
-        <p>メモ: {note}</p>
       </div>
     </>
   );

@@ -3,10 +3,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import { Navigation } from "../../components/Navigation";
+import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id: ids } = router.query;
+  const id = Array.isArray(ids) ? ids[0] : ids;
+  const { data } = api.workout.getWorkoutById.useQuery({ id: id || "" });
+  const dateDisplay = data?.date.toISOString().split("T")[0] || "";
   return (
     <>
       <Head>
@@ -15,7 +19,17 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div>{id}</div>
+
+      <div className="grid md:grid-cols-12">
+        <div className="md:col-span-6 md:col-start-4">
+          <div>{data?.exercise.name}</div>
+          <div>{dateDisplay}</div>
+          <div>{data?.weight} kg</div>
+          <div>{data?.reps} reps</div>
+          <div>{data?.sets} sets</div>
+          <div>メモ: {data?.note}</div>
+        </div>
+      </div>
     </>
   );
 };

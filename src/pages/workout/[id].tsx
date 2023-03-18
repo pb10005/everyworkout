@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useCallback } from "react";
+import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
+import { Button } from "../../components/Button";
 import { Navigation } from "../../components/Navigation";
 import { api } from "../../utils/api";
 
@@ -14,16 +15,27 @@ const Dashboard: NextPage = () => {
   const id = Array.isArray(ids) ? ids[0] : ids;
   const { data } = api.workout.getWorkoutById.useQuery({ id: id || "" });
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
+  const [metricsCode, setMetricsCode] = useState<string>("01");
 
   const mutation = api.maximum.add.useMutation();
-  const registerMaximum = () => {
-    mutation.mutate({
-      userId: sessionData?.user?.id || "",
-      exerciseId: data?.exerciseId || -1,
-      date: data?.date.toISOString() || "",
-      metrics_code: "01",
-      value: data?.weight || 0,
-    });
+  const registerMaximum = async () => {
+    await mutation
+      .mutateAsync({
+        userId: sessionData?.user?.id || "",
+        exerciseId: data?.exerciseId || -1,
+        date: data?.date.toISOString() || "",
+        metrics_code: metricsCode,
+        value:
+          metricsCode === "01"
+            ? data?.weight || 0
+            : metricsCode === "02"
+            ? data?.reps || 0
+            : 0,
+      })
+      .then(() => Router.push("/dashboard"))
+      .catch(() => {
+        return;
+      });
   };
   return (
     <>
@@ -36,13 +48,44 @@ const Dashboard: NextPage = () => {
 
       <div className="grid md:grid-cols-12">
         <div className="md:col-span-6 md:col-start-4">
-          <div>{data?.exercise.name}</div>
-          <div>{dateDisplay}</div>
-          <div>{data?.weight} kg</div>
-          <div>{data?.reps} reps</div>
-          <div>{data?.sets} sets</div>
-          <div>メモ: {data?.note}</div>
-          <button onClick={registerMaximum}>Max記録登録</button>
+          <p className="text-xl">{data?.exercise.name}</p>
+          <p className="text-sm text-gray-500">{dateDisplay}</p>
+          <section className="p-2">
+            <div>
+              <span className="text-lg font-bold">{data?.weight}</span> kg
+            </div>
+            <div>
+              <span className="text-lg font-bold">{data?.reps}</span> reps
+            </div>
+            <div>
+              <span className="text-lg font-bold">{data?.sets}</span> sets
+            </div>
+          </section>
+          <section className="my-2">
+            {data?.note && (
+              <>
+                <p>メモ</p>
+                <p className="rounded bg-gray-200 p-4">{data?.note}</p>
+              </>
+            )}
+          </section>
+          <section className="rounded-xl border-2 border-gray-200 p-4">
+            <div className="mb-2">
+              <label className="mr-2" htmlFor="metrics">
+                指標
+              </label>
+              <select
+                name="metrics"
+                className="p-2"
+                value={metricsCode}
+                onChange={(e) => setMetricsCode(e.target.value)}
+              >
+                <option value="01">重量</option>
+                <option value="02">reps</option>
+              </select>
+            </div>
+            <Button onClick={() => void registerMaximum()}>Max記録登録</Button>
+          </section>
         </div>
       </div>
     </>

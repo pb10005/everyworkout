@@ -29,7 +29,7 @@ const MuscleList = (props: MuscleListProps) => {
   const { muscleId, muscles, handleMuscleClick } = props;
   return (
     <>
-      <div className="mb-2 py-2">
+      <div className="mb-2">
         {muscles?.map((d) => (
           <Badge
             onClick={() => handleMuscleClick(d.id)}
@@ -47,7 +47,7 @@ const ExerciseList = (props: ExerciseListProps) => {
   const exercises = api.exercise.getByMuscleId.useQuery({ muscleId }).data;
   return (
     <>
-      <div className="mb-2 py-2">
+      <div>
         {exercises?.map((d) => (
           <Badge
             onClick={() => handleExerciseClick(d.exerciseId)}

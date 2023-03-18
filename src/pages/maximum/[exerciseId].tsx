@@ -34,9 +34,8 @@ const History: NextPage = () => {
               {data?.length && data?.length > 0
                 ? data?.map((d) => {
                     return (
-                      <div className="md:grid-span-1 px-1 md:mb-1">
+                      <div key={d.id} className="md:grid-span-1 px-1 md:mb-1">
                         <MaximumCard
-                          key={d.id}
                           date={d.date}
                           exerciseName={d.exercise.name}
                           metrics_code={d.metrics_code}

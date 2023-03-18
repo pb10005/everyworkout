@@ -29,19 +29,23 @@ const Dashboard: NextPage = () => {
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">自己ベスト</p>
-            {maximum?.length && maximum?.length > 0
-              ? maximum?.map((m) => {
-                  return (
-                    <Link key={m.exerciseId} href={`/maximum/${m.exerciseId}`}>
-                      <MaximumCard
-                        exerciseName={m.exercise?.name}
-                        metrics_code={m.metrics_code}
-                        value={m.value}
-                      />
-                    </Link>
-                  );
-                })
-              : "No data"}
+            <section className="grid md:grid-cols-3">
+              {maximum?.length && maximum?.length > 0
+                ? maximum?.map((m) => {
+                    return (
+                      <div className="md:grid-span-1 md:mb-1 px-1">
+                        <Link key={m.id} href={`/maximum/${m.exerciseId}`}>
+                          <MaximumCard
+                            exerciseName={m.exercise?.name}
+                            metrics_code={m.metrics_code}
+                            value={m.value}
+                          />
+                        </Link>
+                      </div>
+                    );
+                  })
+                : "No data"}
+            </section>
           </section>
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">トレーニング履歴</p>

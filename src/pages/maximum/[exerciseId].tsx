@@ -30,19 +30,23 @@ const History: NextPage = () => {
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">ベスト更新履歴</p>
 
-            {data?.length && data?.length > 0
-              ? data?.map((d) => {
-                  return (
-                    <MaximumCard
-                      key={d.id}
-                      date={d.date}
-                      exerciseName={d.exercise.name}
-                      metrics_code={d.metrics_code}
-                      value={d.value}
-                    />
-                  );
-                })
-              : "No data"}
+            <section className="grid md:grid-cols-3">
+              {data?.length && data?.length > 0
+                ? data?.map((d) => {
+                    return (
+                      <div className="md:grid-span-1 px-1 md:mb-1">
+                        <MaximumCard
+                          key={d.id}
+                          date={d.date}
+                          exerciseName={d.exercise.name}
+                          metrics_code={d.metrics_code}
+                          value={d.value}
+                        />
+                      </div>
+                    );
+                  })
+                : "No data"}
+            </section>
           </section>
         </div>
       </div>

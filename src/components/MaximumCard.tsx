@@ -17,15 +17,17 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <div className="mb-2 rounded-lg p-2 shadow-lg">
-        <p className="font-bold">
-          <span>{exerciseName}</span>
-        </p>
-        <div className="p-2">
-          <p>
-            {value} {unit}
+      <div className=" mb-2 flex justify-between rounded-lg bg-amber-400 p-2 shadow-lg">
+        <section>
+          <p className="text-lg font-bold">
+            <span>{exerciseName}</span>
           </p>
-        </div>
+        </section>
+        <section>
+          <p>
+            <span className="text-3xl font-extrabold">{value}</span> {unit}
+          </p>
+        </section>
       </div>
     </>
   );

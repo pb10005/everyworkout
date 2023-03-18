@@ -2,12 +2,14 @@ import { useState, useCallback } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
+import Router from "next/router";
 
+import { Button } from "../../components/Button";
 import { Navigation } from "../../components/Navigation";
 import { ExerciseSelector } from "../../components/ExerciseSelector";
 import { api } from "../../utils/api";
 
-const Dashboard: NextPage = () => {
+const AddWorkout: NextPage = () => {
   const { data: sessionData } = useSession();
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
@@ -19,16 +21,23 @@ const Dashboard: NextPage = () => {
   const [note, setNote] = useState<string>("");
 
   const mutation = api.workout.add.useMutation();
-  const send = () => {
-    mutation.mutate({
-      userId: sessionData?.user?.id || "",
-      date: new Date(date).toISOString(),
-      weight: parseFloat(weight),
-      reps: parseInt(reps),
-      sets: parseInt(sets),
-      note: note,
-      exerciseId: selectedExerciseId,
-    });
+  const send = async () => {
+    await mutation
+      .mutateAsync({
+        userId: sessionData?.user?.id || "",
+        date: new Date(date).toISOString(),
+        weight: parseFloat(weight),
+        reps: parseInt(reps),
+        sets: parseInt(sets),
+        note: note,
+        exerciseId: selectedExerciseId,
+      })
+      .then(({ id }) => {
+        return Router.push(`/workout/${id}`);
+      })
+      .catch(() => {
+        return;
+      });
   };
   const handleExerciseClick = useCallback((exerciseId: number) => {
     selectExerciseId(exerciseId);
@@ -61,7 +70,7 @@ const Dashboard: NextPage = () => {
               />
             </div>
             <div className="mb-2">
-              <label className="mb-2 block text-sm font-bold text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 種目
               </label>
               <ExerciseSelector
@@ -134,7 +143,7 @@ const Dashboard: NextPage = () => {
                 onChange={(e) => setNote(e.target.value)}
               />
             </div>
-            <button onClick={send}>SEND</button>
+            <Button onClick={() => void send()}>登録</Button>
           </div>
         </div>
       </main>
@@ -142,4 +151,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default AddWorkout;

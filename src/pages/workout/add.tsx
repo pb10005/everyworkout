@@ -42,98 +42,101 @@ const Dashboard: NextPage = () => {
       </Head>
       <main>
         <Navigation />
-
-        <div className="mb-2">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700"
-            htmlFor="date"
-          >
-            日付
-          </label>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-            id="date"
-            type="date"
-            placeholder="日付"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
+        <div className="grid md:grid-cols-12">
+          <div className="md:col-span-6 md:col-start-4">
+            <div className="mb-2">
+              <label
+                className="mb-2 block text-sm font-bold text-gray-700"
+                htmlFor="date"
+              >
+                日付
+              </label>
+              <input
+                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                id="date"
+                type="date"
+                placeholder="日付"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+            <div className="mb-2">
+              <label className="mb-2 block text-sm font-bold text-gray-700">
+                種目
+              </label>
+              <ExerciseSelector
+                selectedExerciseId={selectedExerciseId}
+                handleExerciseClick={handleExerciseClick}
+              />
+            </div>
+            <div className="mb-2">
+              <label
+                className="mb-2 block text-sm font-bold text-gray-700"
+                htmlFor="weight"
+              >
+                重量
+              </label>
+              <input
+                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                id="weight"
+                type="number"
+                step="2.5"
+                placeholder="重量"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+              />
+            </div>
+            <div className="mb-2">
+              <label
+                className="mb-2 block text-sm font-bold text-gray-700"
+                htmlFor="reps"
+              >
+                rep数
+              </label>
+              <input
+                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                id="reps"
+                type="number"
+                placeholder="rep数"
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+              />
+            </div>
+            <div className="mb-2">
+              <label
+                className="mb-2 block text-sm font-bold text-gray-700"
+                htmlFor="sets"
+              >
+                セット数
+              </label>
+              <input
+                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                id="sets"
+                type="number"
+                placeholder="セット数"
+                value={sets}
+                onChange={(e) => setSets(e.target.value)}
+              />
+            </div>
+            <div className="mb-2">
+              <label
+                className="mb-2 block text-sm font-bold text-gray-700"
+                htmlFor="username"
+              >
+                メモ
+              </label>
+              <input
+                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                id="note"
+                type="text"
+                placeholder="メモ"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+              />
+            </div>
+            <button onClick={send}>SEND</button>
+          </div>
         </div>
-        <div className="mb-2">
-          <label className="mb-2 block text-sm font-bold text-gray-700">
-            種目
-          </label>
-          <ExerciseSelector
-            selectedExerciseId={selectedExerciseId}
-            handleExerciseClick={handleExerciseClick}
-          />
-        </div>
-        <div className="mb-2">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700"
-            htmlFor="weight"
-          >
-            重量
-          </label>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-            id="weight"
-            type="number"
-            step="2.5"
-            placeholder="重量"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
-        </div>
-        <div className="mb-2">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700"
-            htmlFor="reps"
-          >
-            rep数
-          </label>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-            id="reps"
-            type="number"
-            placeholder="rep数"
-            value={reps}
-            onChange={(e) => setReps(e.target.value)}
-          />
-        </div>
-        <div className="mb-2">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700"
-            htmlFor="sets"
-          >
-            セット数
-          </label>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-            id="sets"
-            type="number"
-            placeholder="セット数"
-            value={sets}
-            onChange={(e) => setSets(e.target.value)}
-          />
-        </div>
-        <div className="mb-2">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700"
-            htmlFor="username"
-          >
-            メモ
-          </label>
-          <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-            id="note"
-            type="text"
-            placeholder="メモ"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-          />
-        </div>
-        <button onClick={send}>SEND</button>
       </main>
     </>
   );

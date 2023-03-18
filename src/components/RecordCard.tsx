@@ -29,9 +29,9 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
           <Link href={`/workout/${id}`}>{exercise.name}</Link>
         </p>
         <div className="p-2">
-          <span>{weight} kg</span>
-          <span>{reps} reps</span>
-          <span>{sets} sets</span>
+          <span className="text-xl">{weight}</span> kg /
+          <span className="text-xl">{reps}</span> reps /
+          <span className="text-xl">{sets}</span> sets
         </div>
       </div>
     </>

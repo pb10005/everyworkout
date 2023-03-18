@@ -16,7 +16,7 @@ const Dashboard: NextPage = () => {
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
 
   const mutation = api.maximum.add.useMutation();
-  const registerMaximum = useCallback(() => {
+  const registerMaximum = () => {
     mutation.mutate({
       userId: sessionData?.user?.id || "",
       exerciseId: data?.exerciseId || -1,
@@ -24,7 +24,7 @@ const Dashboard: NextPage = () => {
       metrics_code: "01",
       value: data?.weight || 0,
     });
-  }, []);
+  };
   return (
     <>
       <Head>

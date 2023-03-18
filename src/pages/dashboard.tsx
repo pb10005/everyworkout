@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
@@ -11,6 +12,7 @@ const Dashboard: NextPage = () => {
   const { data: sessionData } = useSession();
   const { data } = api.workout.getUserWorkouts.useQuery({
     userId: sessionData?.user?.id || "",
+    limit: 3,
   });
   const { data: maximum } = api.maximum.getUserMaximums.useQuery({
     userId: sessionData?.user?.id || "",
@@ -25,18 +27,27 @@ const Dashboard: NextPage = () => {
       <Navigation />
       <div className="grid md:grid-cols-12">
         <div className="md:col-span-6 md:col-start-4">
-          <p>トレーニング履歴</p>
-          {data?.length && data?.length > 0
-            ? data?.map((d) => {
-                return <RecordCard key={d.id} workout={d} />;
-              })
-            : "No data"}
-          <p>ベスト更新記録</p>
-          {maximum?.length && maximum?.length > 0
-            ? maximum?.map((m) => {
-                return <MaximumCard key={m.id} maximum={m} />;
-              })
-            : "No data"}
+          <section className="mb-2 p-2">
+            <p className="text-sm text-gray-500">トレーニング履歴</p>
+            {data?.length && data?.length > 0
+              ? data?.map((d) => {
+                  return <RecordCard key={d.id} workout={d} />;
+                })
+              : "No data"}
+            {data?.length && data?.length > 0 ? (
+              <Link href="/workout/history">View More</Link>
+            ) : (
+              ""
+            )}
+          </section>
+          <section className="mb-2 p-2">
+            <p className="text-sm text-gray-500">ベスト更新記録</p>
+            {maximum?.length && maximum?.length > 0
+              ? maximum?.map((m) => {
+                  return <MaximumCard key={m.id} maximum={m} />;
+                })
+              : "No data"}
+          </section>
         </div>
       </div>
     </>

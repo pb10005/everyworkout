@@ -1,8 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
@@ -15,8 +13,6 @@ const History: NextPage = () => {
   const { exerciseId: ids } = router.query;
   const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
 
-  const [skip, setSkip] = useState<number>(0);
-  const [perPage, setPerPage] = useState<number>(10);
   const { data } = api.maximum.getUserMaximumsByExerciseId.useQuery({
     userId: sessionData?.user?.id || "",
     exerciseId: parseInt(exerciseId),

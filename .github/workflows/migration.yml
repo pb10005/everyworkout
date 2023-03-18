@@ -17,8 +17,7 @@ jobs:
       - name: Setup Nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: 16.x
-          cache: "yarn"
+          node-version: 18.x
 
       - name: Install
         run: yarn install
@@ -37,7 +36,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18.x
-          cache: "yarn"
 
       - name: Install
         run: yarn install

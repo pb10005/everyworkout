@@ -4,8 +4,7 @@ import Head from "next/head";
 import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
-import { Button } from "../../components/Button";
-import { Navigation } from "../../components/Navigation";
+import { Button, Navigation, Loading } from "../../components";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
@@ -13,7 +12,13 @@ const Dashboard: NextPage = () => {
   const router = useRouter();
   const { id: ids } = router.query;
   const id = Array.isArray(ids) ? ids[0] : ids;
-  const { data } = api.workout.getWorkoutById.useQuery({ id: id || "" });
+  const {
+    data,
+    isLoading: loadingGet,
+    isSuccess: successGet,
+  } = api.workout.getWorkoutById.useQuery({
+    id: id || "",
+  });
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
   const [metricsCode, setMetricsCode] = useState<string>("01");
 
@@ -32,7 +37,6 @@ const Dashboard: NextPage = () => {
             ? data?.reps || 0
             : 0,
       })
-      .then(() => Router.push("/dashboard"))
       .catch(() => {
         return;
       });
@@ -45,47 +49,70 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-
       <div className="grid md:grid-cols-12">
         <div className="md:col-span-6 md:col-start-4">
-          <p className="text-xl">{data?.exercise.name}</p>
-          <p className="text-sm text-gray-500">{dateDisplay}</p>
-          <section className="p-2">
-            <div>
-              <span className="text-lg font-bold">{data?.weight}</span> kg
-            </div>
-            <div>
-              <span className="text-lg font-bold">{data?.reps}</span> reps
-            </div>
-            <div>
-              <span className="text-lg font-bold">{data?.sets}</span> sets
-            </div>
-          </section>
-          <section className="my-2">
-            {data?.note && (
-              <>
-                <p>メモ</p>
-                <p className="rounded bg-gray-200 p-4">{data?.note}</p>
-              </>
-            )}
-          </section>
-          <section className="rounded-xl border-2 border-gray-200 p-4">
-            <div className="mb-2">
-              <label className="mr-2" htmlFor="metrics">
-                指標
-              </label>
-              <select
-                name="metrics"
-                className="p-2"
-                value={metricsCode}
-                onChange={(e) => setMetricsCode(e.target.value)}
-              >
-                <option value="01">重量</option>
-                <option value="02">reps</option>
-              </select>
-            </div>
-            <Button onClick={() => void registerMaximum()}>Max記録登録</Button>
-          </section>
+          {loadingGet && <Loading />}
+          {mutation.isLoading && <Loading />}
+          {mutation.isSuccess && (
+            <>
+              <p className="rounded-lg bg-green-100 p-4 text-green-900">
+                登録完了
+              </p>
+            </>
+          )}
+          {mutation.isError && (
+            <>
+              <p className="rounded-lg bg-red-100 p-4 text-red-900">
+                {mutation.error.data?.path}
+              </p>
+            </>
+          )}
+          {successGet && (
+            <>
+              <p className="text-xl">{data?.exercise.name}</p>
+              <p className="text-sm text-gray-500">{dateDisplay}</p>
+              <section className="p-2">
+                <div>
+                  <span className="text-lg font-bold">{data?.weight}</span> kg
+                </div>
+                <div>
+                  <span className="text-lg font-bold">{data?.reps}</span> reps
+                </div>
+                <div>
+                  <span className="text-lg font-bold">{data?.sets}</span> sets
+                </div>
+              </section>
+              <section className="my-2">
+                {data?.note && (
+                  <>
+                    <p>メモ</p>
+                    <p className="rounded bg-gray-200 p-4">{data?.note}</p>
+                  </>
+                )}
+              </section>
+              <section className="rounded-xl border-2 border-gray-200 p-4">
+                <div className="mb-2">
+                  <label className="mr-2" htmlFor="metrics">
+                    指標
+                  </label>
+                  <select
+                    name="metrics"
+                    className="p-2"
+                    value={metricsCode}
+                    onChange={(e) => setMetricsCode(e.target.value)}
+                  >
+                    <option value="01">重量</option>
+                    <option value="02">reps</option>
+                  </select>
+                </div>
+                {!mutation.isLoading && (
+                  <Button onClick={() => void registerMaximum()}>
+                    Max記録登録
+                  </Button>
+                )}
+              </section>
+            </>
+          )}
         </div>
       </div>
     </>

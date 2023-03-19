@@ -62,7 +62,7 @@ const SearchByExerciseId: NextPage = () => {
             {count > 0 && (
               <div className="flex justify-center">
                 <Button onClick={viewPrev}>Prev</Button>
-                <span class="inline-block py-2 mx-4">{page + 1}/{maxPage}</span>
+                <span className="inline-block py-2 mx-4">{page + 1}/{maxPage}</span>
                 <Button onClick={viewNext}>Next</Button>
               </div>)}
             {isSuccess && (

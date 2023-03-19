@@ -28,7 +28,7 @@ const SearchByExerciseId: NextPage = () => {
    
   const { data:count } = api.workout.getUserWorkoutsCountByExerciseId.useQuery({
       userId: sessionData?.user?.id || "",
-      exerciseId: parseInt(exerciseId),
+      exerciseId: parseInt(exerciseId) || 0,
   });
   
   const maxPage = Math.ceil(count / perPage);

@@ -39,7 +39,7 @@ const AddWorkout: NextPage = () => {
         return Router.push(`/workout/${id}`);
       })
       .catch((err) => {
-        setErrMsg(err.data.path);
+        setErrMsg(err?.data.path || "");
       });
   };
   const handleExerciseClick = useCallback((exerciseId: number) => {

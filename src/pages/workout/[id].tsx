@@ -39,7 +39,7 @@ const Dashboard: NextPage = () => {
             : 0,
       })
       .catch((err) => {
-        setErrMsg(err.data.path);
+        setErrMsg(err?.data.path || "");
       });
   };
   return (

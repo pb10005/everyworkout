@@ -57,7 +57,7 @@ const AddWorkout: NextPage = () => {
           <div className="md:col-span-6 md:col-start-4">
             {mutation.isError && (
               <p className="mb-2 rounded-lg bg-red-100 p-4 text-red-900">
-                エラーが発生しました: {mutation.error.data.path}
+                エラーが発生しました: {mutation.error.data?.path}
               </p>
             )}
             <div className="mb-2">

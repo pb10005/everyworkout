@@ -64,18 +64,18 @@ const Dashboard: NextPage = () => {
             <p className="text-sm text-gray-500">トレーニング履歴</p>
             {loadingW && <Loading />}
             {successW && (
-              <>
-                {data?.length && data?.length > 0
-                  ? data?.map((d) => {
-                      return (
-                        <>
-                          <RecordCard key={d.id} workout={d} />
-                          <Link href="/workout/history">View More</Link>
-                        </>
-                      );
-                    })
-                  : "No data"}
-              </>
+              <div>
+                {data?.length && data?.length > 0 ? (
+                  <>
+                    {data?.map((d) => {
+                      return <RecordCard key={d.id} workout={d} />;
+                    })}
+                    <Link href="/workout/history">View More</Link>
+                  </>
+                ) : (
+                  "No data"
+                )}
+              </div>
             )}
           </section>
         </div>

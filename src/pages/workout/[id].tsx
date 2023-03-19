@@ -38,8 +38,9 @@ const Dashboard: NextPage = () => {
             ? data?.reps || 0
             : 0,
       })
-      .catch((err) => {
-        setErrMsg(err?.data.path || "");
+      .catch(({ data }) => {
+        const errPath = data.path || "";
+        setErrMsg(errPath);
       });
   };
   return (

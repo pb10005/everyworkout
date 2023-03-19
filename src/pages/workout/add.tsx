@@ -38,8 +38,9 @@ const AddWorkout: NextPage = () => {
       .then(({ id }) => {
         return Router.push(`/workout/${id}`);
       })
-      .catch((err) => {
-        setErrMsg(err?.data.path || "");
+      .catch(({ data }) => {
+        const errPath = data?.path || "";
+        setErrMsg(errPath);
       });
   };
   const handleExerciseClick = useCallback((exerciseId: number) => {

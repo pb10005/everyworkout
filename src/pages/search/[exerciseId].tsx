@@ -31,7 +31,8 @@ const SearchByExerciseId: NextPage = () => {
       exerciseId: parseInt(exerciseId || "-1"),
   });
   
-  const maxPage = Math.ceil(count / perPage);
+  const tmp = count || -1;
+  const maxPage = tmp > 0 ? Math.ceil(tmp / perPage): 0;
   
   
   const viewPrev = () => {

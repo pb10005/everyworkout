@@ -26,13 +26,13 @@ const SearchByExerciseId: NextPage = () => {
       perPage,
     });
    
-  const { data:count } = api.workout.getUserWorkoutsCountByExerciseId.useQuery({
+  const { data:tmp } = api.workout.getUserWorkoutsCountByExerciseId.useQuery({
       userId: sessionData?.user?.id || "",
       exerciseId: parseInt(exerciseId || "-1"),
   });
   
-  const tmp = count || -1;
-  const maxPage = tmp > 0 ? Math.ceil(tmp / perPage): 0;
+  const count = tmp || -1;
+  const maxPage = count > 0 ? Math.ceil(count / perPage): 0;
   
   
   const viewPrev = () => {

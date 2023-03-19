@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
-import { Navigation } from "../../components/Navigation";
-import { MaximumCard } from "../../components/MaximumCard";
+import { Navigation, MaximumCard, Loading } from "../../components";
 
 const History: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -13,10 +12,11 @@ const History: NextPage = () => {
   const { exerciseId: ids } = router.query;
   const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
 
-  const { data } = api.maximum.getUserMaximumsByExerciseId.useQuery({
-    userId: sessionData?.user?.id || "",
-    exerciseId: parseInt(exerciseId),
-  });
+  const { data, isLoading, isSuccess } =
+    api.maximum.getUserMaximumsByExerciseId.useQuery({
+      userId: sessionData?.user?.id || "",
+      exerciseId: parseInt(exerciseId),
+    });
   return (
     <>
       <Head>
@@ -29,23 +29,25 @@ const History: NextPage = () => {
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">ベスト更新履歴</p>
-
-            <section className="grid md:grid-cols-3">
-              {data?.length && data?.length > 0
-                ? data?.map((d) => {
-                    return (
-                      <div key={d.id} className="md:grid-span-1 px-1 md:mb-1">
-                        <MaximumCard
-                          date={d.date}
-                          exerciseName={d.exercise.name}
-                          metrics_code={d.metrics_code}
-                          value={d.value}
-                        />
-                      </div>
-                    );
-                  })
-                : "No data"}
-            </section>
+            {isLoading && <Loading />}
+            {isSuccess && (
+              <section className="grid md:grid-cols-3">
+                {data?.length && data?.length > 0
+                  ? data?.map((d) => {
+                      return (
+                        <div key={d.id} className="md:grid-span-1 px-1 md:mb-1">
+                          <MaximumCard
+                            date={d.date}
+                            exerciseName={d.exercise.name}
+                            metrics_code={d.metrics_code}
+                            value={d.value}
+                          />
+                        </div>
+                      );
+                    })
+                  : "No data"}
+              </section>
+            )}
           </section>
         </div>
       </div>

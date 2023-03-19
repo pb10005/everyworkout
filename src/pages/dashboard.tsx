@@ -4,19 +4,26 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
-import { Navigation } from "../components/Navigation";
-import { RecordCard } from "../components/RecordCard";
-import { MaximumCard } from "../components/MaximumCard";
+import { Navigation, Loading, MaximumCard, RecordCard } from "../components";
 
 const Dashboard: NextPage = () => {
   const { data: sessionData } = useSession();
-  const { data } = api.workout.getUserWorkouts.useQuery({
+  const {
+    isLoading: loadingW,
+    isSuccess: successW,
+    data,
+  } = api.workout.getUserWorkouts.useQuery({
     userId: sessionData?.user?.id || "",
     limit: 3,
   });
-  const { data: maximum } = api.maximum.getUserMaximums.useQuery({
+  const {
+    isLoading: loadingM,
+    isSuccess: successM,
+    data: maximum,
+  } = api.maximum.getUserMaximums.useQuery({
     userId: sessionData?.user?.id || "",
   });
+
   return (
     <>
       <Head>
@@ -29,38 +36,46 @@ const Dashboard: NextPage = () => {
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">自己ベスト</p>
-            <section className="grid md:grid-cols-3">
-              {maximum?.length && maximum?.length > 0
-                ? maximum?.map((m) => {
-                    return (
-                      <div
-                        key={`${m.exerciseId}${m.metrics_code}`}
-                        className="md:grid-span-1 px-1 md:mb-1"
-                      >
-                        <Link href={`/maximum/${m.exerciseId}`}>
-                          <MaximumCard
-                            exerciseName={m.exercise?.name}
-                            metrics_code={m.metrics_code}
-                            value={m.value}
-                          />
-                        </Link>
-                      </div>
-                    );
-                  })
-                : "No data"}
-            </section>
+            {loadingM && <Loading />}
+            {successM && (
+              <section className="grid md:grid-cols-3">
+                {maximum?.length && maximum?.length > 0
+                  ? maximum?.map((m) => {
+                      return (
+                        <div
+                          key={`${m.exerciseId}${m.metrics_code}`}
+                          className="md:grid-span-1 px-1 md:mb-1"
+                        >
+                          <Link href={`/maximum/${m.exerciseId}`}>
+                            <MaximumCard
+                              exerciseName={m.exercise?.name}
+                              metrics_code={m.metrics_code}
+                              value={m.value}
+                            />
+                          </Link>
+                        </div>
+                      );
+                    })
+                  : "No data"}
+              </section>
+            )}
           </section>
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">トレーニング履歴</p>
-            {data?.length && data?.length > 0
-              ? data?.map((d) => {
-                  return <RecordCard key={d.id} workout={d} />;
-                })
-              : "No data"}
-            {data?.length && data?.length > 0 ? (
-              <Link href="/workout/history">View More</Link>
-            ) : (
-              ""
+            {loadingW && <Loading />}
+            {successW && (
+              <>
+                {data?.length && data?.length > 0
+                  ? data?.map((d) => {
+                      return (
+                        <>
+                          <RecordCard key={d.id} workout={d} />
+                          <Link href="/workout/history">View More</Link>
+                        </>
+                      );
+                    })
+                  : "No data"}
+              </>
             )}
           </section>
         </div>

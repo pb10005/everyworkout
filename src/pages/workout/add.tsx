@@ -4,9 +4,12 @@ import Head from "next/head";
 import { useSession } from "next-auth/react";
 import Router from "next/router";
 
-import { Button } from "../../components/Button";
-import { Navigation } from "../../components/Navigation";
-import { ExerciseSelector } from "../../components/ExerciseSelector";
+import {
+  Button,
+  Navigation,
+  ExerciseSelector,
+  Loading,
+} from "../../components";
 import { api } from "../../utils/api";
 
 const AddWorkout: NextPage = () => {
@@ -19,7 +22,6 @@ const AddWorkout: NextPage = () => {
   const [reps, setReps] = useState<string>("10");
   const [sets, setSets] = useState<string>("3");
   const [note, setNote] = useState<string>("");
-
   const mutation = api.workout.add.useMutation();
   const send = async () => {
     await mutation
@@ -53,6 +55,11 @@ const AddWorkout: NextPage = () => {
         <Navigation />
         <div className="grid md:grid-cols-12">
           <div className="md:col-span-6 md:col-start-4">
+            {mutation.isError && (
+              <p className="mb-2 rounded-lg bg-red-100 p-4 text-red-900">
+                エラーが発生しました: {mutation.error.data?.path}
+              </p>
+            )}
             <div className="mb-2">
               <label
                 className="mb-2 block text-sm font-bold text-gray-700"
@@ -143,7 +150,10 @@ const AddWorkout: NextPage = () => {
                 onChange={(e) => setNote(e.target.value)}
               />
             </div>
-            <Button onClick={() => void send()}>登録</Button>
+            {!mutation.isLoading && (
+              <Button onClick={() => void send()}>登録</Button>
+            )}
+            {mutation.isLoading && <Loading />}
           </div>
         </div>
       </main>

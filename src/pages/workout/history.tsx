@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
-import { Navigation } from "../../components/Navigation";
-import { RecordCard } from "../../components/RecordCard";
+import { Navigation, RecordCard, Loading } from "../../components";
 
 const History: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -15,12 +14,13 @@ const History: NextPage = () => {
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
   );
-  const { data } = api.workout.getUserWorkoutsByDate.useQuery({
-    userId: sessionData?.user?.id || "",
-    date: new Date(date).toISOString(),
-    skip,
-    perPage,
-  });
+  const { data, isLoading, isSuccess } =
+    api.workout.getUserWorkoutsByDate.useQuery({
+      userId: sessionData?.user?.id || "",
+      date: new Date(date).toISOString(),
+      skip,
+      perPage,
+    });
   return (
     <>
       <Head>
@@ -49,11 +49,16 @@ const History: NextPage = () => {
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
-            {data?.length && data?.length > 0
-              ? data?.map((d) => {
-                  return <RecordCard key={d.id} workout={d} />;
-                })
-              : "No data"}
+            {isLoading && <Loading />}
+            {isSuccess && (
+              <>
+                {data?.length && data?.length > 0
+                  ? data?.map((d) => {
+                      return <RecordCard key={d.id} workout={d} />;
+                    })
+                  : "No data"}
+              </>
+            )}
           </section>
         </div>
       </div>

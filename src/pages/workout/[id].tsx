@@ -21,27 +21,21 @@ const Dashboard: NextPage = () => {
   });
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
   const [metricsCode, setMetricsCode] = useState<string>("01");
-  const [errMsg, setErrMsg] = useState<string>("");
 
   const mutation = api.maximum.add.useMutation();
   const registerMaximum = async () => {
-    await mutation
-      .mutateAsync({
-        userId: sessionData?.user?.id || "",
-        exerciseId: data?.exerciseId || -1,
-        date: data?.date.toISOString() || "",
-        metrics_code: metricsCode,
-        value:
-          metricsCode === "01"
-            ? data?.weight || 0
-            : metricsCode === "02"
-            ? data?.reps || 0
-            : 0,
-      })
-      .catch(({ data }) => {
-        const errPath = data.path || "";
-        setErrMsg(errPath);
-      });
+    await mutation.mutateAsync({
+      userId: sessionData?.user?.id || "",
+      exerciseId: data?.exerciseId || -1,
+      date: data?.date.toISOString() || "",
+      metrics_code: metricsCode,
+      value:
+        metricsCode === "01"
+          ? data?.weight || 0
+          : metricsCode === "02"
+          ? data?.reps || 0
+          : 0,
+    });
   };
   return (
     <>
@@ -64,7 +58,9 @@ const Dashboard: NextPage = () => {
           )}
           {mutation.isError && (
             <>
-              <p className="rounded-lg bg-red-100 p-4 text-red-900">{errMsg}</p>
+              <p className="rounded-lg bg-red-100 p-4 text-red-900">
+                {mutation.error.data.path}
+              </p>
             </>
           )}
           {successGet && (

@@ -22,7 +22,6 @@ const AddWorkout: NextPage = () => {
   const [reps, setReps] = useState<string>("10");
   const [sets, setSets] = useState<string>("3");
   const [note, setNote] = useState<string>("");
-  const [errMsg, setErrMsg] = useState<string>("");
   const mutation = api.workout.add.useMutation();
   const send = async () => {
     await mutation
@@ -37,10 +36,6 @@ const AddWorkout: NextPage = () => {
       })
       .then(({ id }) => {
         return Router.push(`/workout/${id}`);
-      })
-      .catch(({ data }) => {
-        const errPath = data?.path || "";
-        setErrMsg(errPath);
       });
   };
   const handleExerciseClick = useCallback((exerciseId: number) => {
@@ -59,7 +54,7 @@ const AddWorkout: NextPage = () => {
           <div className="md:col-span-6 md:col-start-4">
             {mutation.isError && (
               <p className="mb-2 rounded-lg bg-red-100 p-4 text-red-900">
-                エラーが発生しました: {errMsg}
+                エラーが発生しました: {mutation.error.data.path}
               </p>
             )}
             <div className="mb-2">

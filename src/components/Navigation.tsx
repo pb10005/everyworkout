@@ -12,6 +12,9 @@ export const Navigation: React.FC = () => {
           <Link href="/dashboard">Dashboard</Link>
         </span>
         <span className="px-2">
+          <Link href="/search">Search</Link>
+        </span>
+        <span className="px-2">
           <Link href="/workout/add">Add Workout</Link>
         </span>
       </div>

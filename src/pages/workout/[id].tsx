@@ -63,7 +63,7 @@ const Dashboard: NextPage = () => {
           {mutation.isError && (
             <>
               <p className="rounded-lg bg-red-100 p-4 text-red-900">
-                {mutation.error.data?.path}
+                エラーが発生しました: {mutation.error.data?.path}
               </p>
             </>
           )}

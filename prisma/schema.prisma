@@ -73,6 +73,7 @@ model Maximum {
   metrics_code    String
   value           Float
   date            DateTime
+  @@unique([userId, exerciseId, metrics_code, value, date])
 }
 
 // Necessary for Next auth

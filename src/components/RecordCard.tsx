@@ -30,10 +30,16 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
           <Link href={`/workout/${id}`}>{exercise.name}</Link>
         </p>
         <div className="text-sm text-gray-500">{dateDisplay}</div>
-        <div className="p-2 text-right">
-          <span className="text-xl font-extrabold">{weight}</span> kg /
-          <span className="text-xl font-extrabold">{reps}</span> reps /
-          <span className="text-xl font-extrabold">{sets}</span> sets
+        <div className="flex justify-center p-2 text-right">
+          <span>
+            <span className="text-2xl font-extrabold">{weight}</span>kg
+          </span>
+          <span className="mx-4">
+            <span className="text-2xl font-extrabold">{reps}</span>reps
+          </span>
+          <span>
+            <span className="text-2xl font-extrabold">{sets}</span>sets
+          </span>
         </div>
       </div>
     </>

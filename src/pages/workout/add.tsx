@@ -36,6 +36,9 @@ const AddWorkout: NextPage = () => {
       })
       .then(({ id }) => {
         return Router.push(`/workout/${id}`);
+      })
+      .catch(() => {
+        return;
       });
   };
   const handleExerciseClick = useCallback((exerciseId: number) => {

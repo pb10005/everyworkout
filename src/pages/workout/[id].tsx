@@ -24,18 +24,22 @@ const Dashboard: NextPage = () => {
 
   const mutation = api.maximum.add.useMutation();
   const registerMaximum = async () => {
-    await mutation.mutateAsync({
-      userId: sessionData?.user?.id || "",
-      exerciseId: data?.exerciseId || -1,
-      date: data?.date.toISOString() || "",
-      metrics_code: metricsCode,
-      value:
-        metricsCode === "01"
-          ? data?.weight || 0
-          : metricsCode === "02"
-          ? data?.reps || 0
-          : 0,
-    });
+    await mutation
+      .mutateAsync({
+        userId: sessionData?.user?.id || "",
+        exerciseId: data?.exerciseId || -1,
+        date: data?.date.toISOString() || "",
+        metrics_code: metricsCode,
+        value:
+          metricsCode === "01"
+            ? data?.weight || 0
+            : metricsCode === "02"
+            ? data?.reps || 0
+            : 0,
+      })
+      .catch(() => {
+        return;
+      });
   };
   return (
     <>

@@ -1,0 +1,5 @@
+.mode csv
+.import ./data/BodyPart.csv BodyPart
+.import ./data/Muscle.csv Muscle
+.import ./data/Exercise.csv Exercise
+.import ./data/ExerciseMuscle.csv ExerciseMuscle

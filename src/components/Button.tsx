@@ -17,7 +17,7 @@ export const Button: React.FC<Props> = (props: Props) => {
   return (
     <>
       <button
-        className={style[styleType] + " px-4 py-2 rounded mr-2"}
+        className={`${style[styleType]} px-4 py-2 rounded mr-2`}
         onClick={onClick}
       >
         {children}

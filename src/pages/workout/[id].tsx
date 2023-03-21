@@ -40,7 +40,7 @@ const Dashboard: NextPage = () => {
       });
   };
   const deleteWorkout = async () => {
-    deleteMutation.mutateAsync({
+    await deleteMutation.mutateAsync({
       id: id || ""
     });
   };

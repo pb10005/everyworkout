@@ -27,7 +27,6 @@ const SearchByExerciseId: NextPage = () => {
     });
    
   const { data:tmp } = api.workout.getUserWorkoutsCountByExerciseId.useQuery({
-      userId: sessionData?.user?.id || "",
       exerciseId: parseInt(exerciseId || "-1"),
   });
   

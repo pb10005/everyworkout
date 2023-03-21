@@ -20,7 +20,6 @@ const SearchByExerciseId: NextPage = () => {
 
   const { data, isLoading, isSuccess } =
     api.workout.getUserWorkoutsByExerciseId.useQuery({
-      userId: sessionData?.user?.id || "",
       exerciseId: parseInt(exerciseId || "-1"),
       skip: page * perPage,
       perPage,

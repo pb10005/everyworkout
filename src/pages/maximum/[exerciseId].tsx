@@ -50,11 +50,11 @@ const History: NextPage = () => {
             )}
             <p className="text-sm text-gray-500">ベスト更新履歴</p>
             {isLoading && <Loading />}
-            {isSuccess && (
+            {isSuccess && (<>
+              <div className="mb-2 md:grid-span-3">
+                <Button onClick={toggleDeleteMode}>削除モード</Button>
+              </div>
               <section className="grid md:grid-cols-3">
-                <div className="mb-2">
-                  <Button onClick={toggleDeleteMode}>削除モード</Button>
-                </div>
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
                     return (
@@ -70,7 +70,7 @@ const History: NextPage = () => {
                     );
                   })
                   : "No data"}
-              </section>
+              </section></>
             )}
           </section>
         </div>

@@ -11,7 +11,7 @@ const Dashboard: NextPage = () => {
     isSuccess: successW,
     data,
   } = api.workout.getUserWorkouts.useQuery({
-    limit: 3,
+    take: 3,
   });
   const {
     isLoading: loadingM,
@@ -27,7 +27,7 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div className="grid md:grid-cols-12">
+      <div className="grid md:grid-cols-12 bg-gray-50">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">自己ベスト</p>
@@ -63,7 +63,16 @@ const Dashboard: NextPage = () => {
                 {data?.length && data?.length > 0 ? (
                   <>
                     {data?.map((d) => {
-                      return <RecordCard key={d.id} workout={d} />;
+                      return <RecordCard key={d.id}
+                        id={d.id}
+                        exerciseName={d.exercise.name}
+                        date={d.date}
+                        weight={d.weight}
+                        reps={d.reps}
+                        sets={d.sets}
+                        note={d.note}
+                        muscles={d.exercise.muscles.map(m => m.muscle)}
+                        />;
                     })}
                     <Link href="/workout/history">View More</Link>
                   </>

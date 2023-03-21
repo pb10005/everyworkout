@@ -50,8 +50,8 @@ const AddWorkout: NextPage = () => {
       </Head>
       <main>
         <Navigation />
-        <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4">
+        <div className="grid md:grid-cols-12 bg-gray-50">
+          <div className="md:col-span-6 md:col-start-4 bg-white p-2">
             {mutation.isLoading && <Loading />}
             {mutation.isError && (
               <p className="mb-2 rounded-lg bg-red-100 p-4 text-red-900">

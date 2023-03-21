@@ -84,8 +84,8 @@ const Dashboard: NextPage = () => {
               <p className="text-sm text-gray-500">{dateDisplay}</p>
               {data?.exercise.muscles.map(m => {
                 return (
-                  <div className="flex gap-1">
-                    <span key={m.muscle.id} className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.muscle.name}</span>
+                  <div key={m.muscle.id} className="flex gap-1">
+                    <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.muscle.name}</span>
                   </div>
                 )
               })}

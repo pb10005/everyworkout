@@ -1,19 +1,34 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { api } from "../../utils/api";
 
-import { Navigation, MaximumCard, Loading } from "../../components";
+import { Navigation, MaximumCard, Loading, Button } from "../../components";
 
 const History: NextPage = () => {
   const router = useRouter();
   const { exerciseId: ids } = router.query;
   const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
+  const [isDeleteMode, setDeleteMode] = useState<boolean>(false);
 
   const { data, isLoading, isSuccess } =
     api.maximum.getUserMaximumsByExerciseId.useQuery({
       exerciseId: parseInt(exerciseId),
     });
+
+  const mutation = api.maximum.delete.useMutation();
+
+  const toggleDeleteMode = () => {
+    setDeleteMode(!isDeleteMode);
+  };
+
+  const deleteMaximum = async (id: string) => {
+    await mutation.mutateAsync({
+      id
+    });
+  };
+
   return (
     <>
       <Head>
@@ -25,23 +40,35 @@ const History: NextPage = () => {
       <div className="grid md:grid-cols-12">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
+            {mutation.isLoading && <Loading />}
+            {mutation.isSuccess && (
+              <>
+                <p className="rounded-lg bg-green-100 p-4 text-green-900">
+                  削除完了
+                </p>
+              </>
+            )}
             <p className="text-sm text-gray-500">ベスト更新履歴</p>
             {isLoading && <Loading />}
             {isSuccess && (
               <section className="grid md:grid-cols-3">
+                <div className="mb-2">
+                  <Button onClick={toggleDeleteMode}>削除モード</Button>
+                </div>
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
-                      return (
-                        <div key={d.id} className="md:grid-span-1 px-1 md:mb-1">
-                          <MaximumCard
-                            date={d.date}
-                            exerciseName={d.exercise.name}
-                            metrics_code={d.metrics_code}
-                            value={d.value}
-                          />
-                        </div>
-                      );
-                    })
+                    return (
+                      <div key={d.id} className="md:grid-span-1 px-1 md:mb-1 flex">
+                        {isDeleteMode ? <Button onClick={() => void deleteMaximum(d.id)} type="danger">-</Button> : ""}
+                        <MaximumCard
+                          date={d.date}
+                          exerciseName={d.exercise.name}
+                          metrics_code={d.metrics_code}
+                          value={d.value}
+                        />
+                      </div>
+                    );
+                  })
                   : "No data"}
               </section>
             )}

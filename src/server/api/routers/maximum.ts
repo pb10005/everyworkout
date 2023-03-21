@@ -23,7 +23,20 @@ export const maximumRouter = createTRPCRouter({
         },
       });
       return maximum;
-    }),
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({
+      id: z.string()
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.maximum.deleteMany({
+        where: {
+          userId: ctx.session.user.id,
+          id: input.id
+        }
+      })
+    }),
 
   getUserMaximums: protectedProcedure
     .query(async ({ ctx }) => {

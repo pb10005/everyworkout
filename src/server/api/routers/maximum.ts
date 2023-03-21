@@ -1,12 +1,11 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const maximumRouter = createTRPCRouter({
-  add: publicProcedure
+  add: protectedProcedure
     .input(
       z.object({
-        userId: z.string(),
         metrics_code: z.string(),
         value: z.number(),
         exerciseId: z.number(),
@@ -16,7 +15,7 @@ export const maximumRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const maximum = await ctx.prisma.maximum.create({
         data: {
-          userId: input.userId,
+          userId: ctx.session.user.id,
           date: input.date,
           metrics_code: input.metrics_code,
           value: input.value,
@@ -24,20 +23,15 @@ export const maximumRouter = createTRPCRouter({
         },
       });
       return maximum;
-    }),
+    }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.maximum.findMany({ include: { exercise: true } });
-  }),
-
-  getUserMaximums: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ ctx, input }) => {
+  getUserMaximums: protectedProcedure
+    .query(async ({ ctx }) => {
       const exercises = await ctx.prisma.exercise.findMany({});
       const maximums = await ctx.prisma.maximum.groupBy({
         by: ["exerciseId", "metrics_code"],
         _max: { value: true },
-        where: { userId: input.userId },
+        where: { userId: ctx.session.user.id },
         orderBy: {
           exerciseId: "asc",
         },
@@ -53,11 +47,11 @@ export const maximumRouter = createTRPCRouter({
       });
     }),
 
-  getUserMaximumsByExerciseId: publicProcedure
-    .input(z.object({ userId: z.string(), exerciseId: z.number() }))
+  getUserMaximumsByExerciseId: protectedProcedure
+    .input(z.object({ exerciseId: z.number() }))
     .query(async ({ ctx, input }) => {
       const maximums = await ctx.prisma.maximum.findMany({
-        where: { userId: input.userId, exerciseId: input.exerciseId },
+        where: { userId: ctx.session.user.id, exerciseId: input.exerciseId },
         orderBy: {
           date: "desc",
         },

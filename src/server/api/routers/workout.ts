@@ -1,12 +1,11 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const workoutRouter = createTRPCRouter({
-  add: publicProcedure
+  add: protectedProcedure
     .input(
       z.object({
-        userId: z.string(),
         date: z.string().datetime(),
         weight: z.number(),
         reps: z.number(),
@@ -18,7 +17,7 @@ export const workoutRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const workout = await ctx.prisma.workout.create({
         data: {
-          userId: input.userId,
+          userId: ctx.session.user.id,
           date: input.date,
           weight: input.weight,
           reps: input.reps,
@@ -30,40 +29,36 @@ export const workoutRouter = createTRPCRouter({
       return workout;
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.workout.findMany({ include: { exercise: true } });
-  }),
 
-  getWorkoutById: publicProcedure
+  getWorkoutById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.workout.findUnique({
-        where: { id: input.id },
+      return ctx.prisma.workout.findFirstOrThrow({
+        where: { id: input.id, userId: ctx.session.user.id },
         include: { exercise: true },
       });
     }),
 
-  getUserWorkouts: publicProcedure
-    .input(z.object({ userId: z.string(), limit: z.number() }))
+  getUserWorkouts: protectedProcedure
+    .input(z.object({ limit: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.prisma.workout.findMany({
-        where: { userId: input.userId },
+        where: { userId: ctx.session.user.id },
         orderBy: { date: "desc" },
         take: input.limit,
         include: { exercise: true },
       });
     }),
     
-  getUserWorkoutsByExerciseId: publicProcedure.input(
+  getUserWorkoutsByExerciseId: protectedProcedure.input(
     z.object({
-      userId: z.string(),
       exerciseId: z.number(),
       skip: z.number(),
       perPage: z.number()
     })
   ).query(({ctx, input}) => {
     return ctx.prisma.workout.findMany({
-      where: {userId: input.userId, exerciseId: input.exerciseId},
+      where: {userId: ctx.session.user.id, exerciseId: input.exerciseId},
       orderBy: { date: "desc" },
       skip: input.skip,
       take: input.perPage,
@@ -71,21 +66,19 @@ export const workoutRouter = createTRPCRouter({
     })
   }),
   
-  getUserWorkoutsCountByExerciseId: publicProcedure.input(
+  getUserWorkoutsCountByExerciseId: protectedProcedure.input(
     z.object({
-      userId: z.string(),
       exerciseId: z.number(),
     })
   ).query(({ctx, input}) => {
     return ctx.prisma.workout.count({
-      where: {userId: input.userId, exerciseId: input.exerciseId},
+      where: {userId: ctx.session.user.id, exerciseId: input.exerciseId},
     })
   }),
   
-  getUserWorkoutsByDate: publicProcedure
+  getUserWorkoutsByDate: protectedProcedure
     .input(
       z.object({
-        userId: z.string(),
         date: z.string().datetime(),
         skip: z.number(),
         perPage: z.number(),
@@ -93,7 +86,7 @@ export const workoutRouter = createTRPCRouter({
     )
     .query(({ ctx, input }) => {
       return ctx.prisma.workout.findMany({
-        where: { userId: input.userId, date: input.date },
+        where: { userId: ctx.session.user.id, date: input.date },
         orderBy: { date: "desc" },
         skip: input.skip,
         take: input.perPage,

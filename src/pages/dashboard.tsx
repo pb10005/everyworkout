@@ -1,28 +1,23 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
 import { Navigation, Loading, MaximumCard, RecordCard } from "../components";
 
 const Dashboard: NextPage = () => {
-  const { data: sessionData } = useSession();
   const {
     isLoading: loadingW,
     isSuccess: successW,
     data,
   } = api.workout.getUserWorkouts.useQuery({
-    userId: sessionData?.user?.id || "",
     limit: 3,
   });
   const {
     isLoading: loadingM,
     isSuccess: successM,
     data: maximum,
-  } = api.maximum.getUserMaximums.useQuery({
-    userId: sessionData?.user?.id || "",
-  });
+  } = api.maximum.getUserMaximums.useQuery();
 
   return (
     <>

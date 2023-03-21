@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useSession } from "next-auth/react";
 import Router from "next/router";
 
 import {
@@ -13,7 +12,6 @@ import {
 import { api } from "../../utils/api";
 
 const AddWorkout: NextPage = () => {
-  const { data: sessionData } = useSession();
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
   );
@@ -26,7 +24,6 @@ const AddWorkout: NextPage = () => {
   const send = async () => {
     await mutation
       .mutateAsync({
-        userId: sessionData?.user?.id || "",
         date: new Date(date).toISOString(),
         weight: parseFloat(weight),
         reps: parseInt(reps),

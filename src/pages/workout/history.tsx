@@ -16,7 +16,6 @@ const History: NextPage = () => {
   );
   const { data, isLoading, isSuccess } =
     api.workout.getUserWorkoutsByDate.useQuery({
-      userId: sessionData?.user?.id || "",
       date: new Date(date).toISOString(),
       skip,
       perPage,

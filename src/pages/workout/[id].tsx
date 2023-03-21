@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { Button, Navigation, Loading } from "../../components";
 import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
-  const { data: sessionData } = useSession();
   const router = useRouter();
   const { id: ids } = router.query;
   const id = Array.isArray(ids) ? ids[0] : ids;
@@ -26,7 +24,6 @@ const Dashboard: NextPage = () => {
   const registerMaximum = async () => {
     await mutation
       .mutateAsync({
-        userId: sessionData?.user?.id || "",
         exerciseId: data?.exerciseId || -1,
         date: data?.date.toISOString() || "",
         metrics_code: metricsCode,

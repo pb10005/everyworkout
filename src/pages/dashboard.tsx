@@ -33,13 +33,13 @@ const Dashboard: NextPage = () => {
             <p className="text-sm text-gray-500">自己ベスト</p>
             {loadingM && <Loading />}
             {successM && (
-              <section className="grid md:grid-cols-3">
+              <section className="grid md:grid-cols-3 gap-1">
                 {maximum?.length && maximum?.length > 0
                   ? maximum?.map((m) => {
                       return (
                         <div
                           key={`${m.exerciseId}${m.metrics_code}`}
-                          className="md:grid-span-1 px-1 md:mb-1"
+                          className="md:grid-span-1"
                         >
                           <Link href={`/maximum/${m.exerciseId}`}>
                             <MaximumCard

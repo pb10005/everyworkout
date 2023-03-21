@@ -21,7 +21,7 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <div className="mb-2 flex justify-between rounded-lg bg-gradient-to-r from-amber-400 via-amber-100 to-amber-500 p-2 shadow-lg">
+      <div className="flex justify-between rounded-lg bg-gradient-to-r from-amber-400 via-amber-100 to-amber-500 p-2 shadow shadow-amber-500/50">
         <section>
           <p className="text-lg font-bold">
             <span>{exerciseName}</span>

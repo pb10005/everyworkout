@@ -54,11 +54,11 @@ const History: NextPage = () => {
               <div className="mb-2 md:grid-span-3">
                 <Button onClick={toggleDeleteMode}>削除モード</Button>
               </div>
-              <section className="grid md:grid-cols-3">
+              <section className="grid md:grid-cols-3 gap-1">
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
                     return (
-                      <div key={d.id} className="md:grid-span-1 px-1 md:mb-1 flex">
+                      <div key={d.id} className="md:grid-span-1 flex">
                         {isDeleteMode ? <Button onClick={() => void deleteMaximum(d.id)} type="danger">-</Button> : ""}
                         <MaximumCard
                           date={d.date}

@@ -1,28 +1,25 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
 import { Navigation, RecordCard, Loading, Button } from "../../components";
 
 const SearchByExerciseId: NextPage = () => {
-  const { data: sessionData } = useSession();
   
   const router = useRouter();
   const { exerciseId: ids } = router.query;
   const exerciseId = Array.isArray(ids) ? ids[0] : ids;
   
   const [page, setPage] = useState<number>(0);
-  const [perPage, setPerPage] = useState<number>(10);
+  const [perPage, _] = useState<number>(10);
 
   const { data, isLoading, isSuccess } =
-    api.workout.getUserWorkoutsByExerciseId.useQuery({
+    api.workout.getUserWorkouts.useQuery({
       exerciseId: parseInt(exerciseId || "-1"),
       skip: page * perPage,
-      perPage,
+      take: perPage,
     });
    
   const { data:tmp } = api.workout.getUserWorkoutsCountByExerciseId.useQuery({
@@ -52,7 +49,7 @@ const SearchByExerciseId: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div className="grid md:grid-cols-12">
+      <div className="grid md:grid-cols-12 bg-gray-50">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">種目別トレーニング履歴</p>
@@ -67,7 +64,15 @@ const SearchByExerciseId: NextPage = () => {
               <>
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
-                      return <RecordCard key={d.id} workout={d} />;
+                      return <RecordCard key={d.id}
+                      id={d.id}
+                      exerciseName={d.exercise.name}
+                      date={d.date}
+                      weight={d.weight}
+                      reps={d.reps}
+                      sets={d.sets}
+                      note={d.note}
+                      muscles={d.exercise.muscles.map(m => m.muscle)} />;
                     })
                   : "No data"}
               </>

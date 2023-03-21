@@ -3,12 +3,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { api } from "../../utils/api";
 
 import { Navigation, ExerciseSelector } from "../../components";
 
 const Search: NextPage = () => {
-  const { data: sessionData } = useSession();
   const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
   
   const handleExerciseClick = (id: number) => {
@@ -23,7 +21,7 @@ const Search: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div className="grid md:grid-cols-12">
+      <div className="grid md:grid-cols-12 bg-gray-50">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">種目別トレーニング履歴</p>

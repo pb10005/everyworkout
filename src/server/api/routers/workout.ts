@@ -45,34 +45,62 @@ export const workoutRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.prisma.workout.findFirstOrThrow({
         where: { id: input.id, userId: ctx.session.user.id },
-        include: { exercise: true },
+        include: {
+          exercise: {
+            select: {
+              id: true,
+              name: true,
+              muscles: {
+                include: {
+                  muscle: {
+                    select: {
+                      id: true,
+                      name: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
       });
     }),
 
-  getUserWorkouts: protectedProcedure
-    .input(z.object({ limit: z.number() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.workout.findMany({
-        where: { userId: ctx.session.user.id },
-        orderBy: { date: "desc" },
-        take: input.limit,
-        include: { exercise: true },
-      });
-    }),
-
-  getUserWorkoutsByExerciseId: protectedProcedure.input(
+  getUserWorkouts: protectedProcedure.input(
     z.object({
-      exerciseId: z.number(),
-      skip: z.number(),
-      perPage: z.number()
+      exerciseId: z.number().optional(),
+      date: z.string().datetime().optional(),
+      skip: z.number().optional(),
+      take: z.number().optional()
     })
   ).query(({ ctx, input }) => {
     return ctx.prisma.workout.findMany({
-      where: { userId: ctx.session.user.id, exerciseId: input.exerciseId },
+      where: {
+        userId: ctx.session.user.id,
+        exerciseId: input.exerciseId,
+        date: input.date
+      },
       orderBy: { date: "desc" },
-      skip: input.skip,
-      take: input.perPage,
-      include: { exercise: true }
+      skip: input.skip || 0,
+      take: input.take,
+      include: {
+        exercise: {
+          select: {
+            id: true,
+            name: true,
+            muscles: {
+              include: {
+                muscle: {
+                  select: {
+                    id: true,
+                    name: true,
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     })
   }),
 
@@ -86,21 +114,4 @@ export const workoutRouter = createTRPCRouter({
     })
   }),
 
-  getUserWorkoutsByDate: protectedProcedure
-    .input(
-      z.object({
-        date: z.string().datetime(),
-        skip: z.number(),
-        perPage: z.number(),
-      })
-    )
-    .query(({ ctx, input }) => {
-      return ctx.prisma.workout.findMany({
-        where: { userId: ctx.session.user.id, date: input.date },
-        orderBy: { date: "desc" },
-        skip: input.skip,
-        take: input.perPage,
-        include: { exercise: true },
-      });
-    }),
 });

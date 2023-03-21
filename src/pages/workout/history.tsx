@@ -1,24 +1,21 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
 import { Navigation, RecordCard, Loading } from "../../components";
 
 const History: NextPage = () => {
-  const { data: sessionData } = useSession();
   const [skip, setSkip] = useState<number>(0);
   const [perPage, setPerPage] = useState<number>(10);
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
   );
   const { data, isLoading, isSuccess } =
-    api.workout.getUserWorkoutsByDate.useQuery({
+    api.workout.getUserWorkouts.useQuery({
       date: new Date(date).toISOString(),
       skip,
-      perPage,
+      take: perPage,
     });
   return (
     <>
@@ -28,7 +25,7 @@ const History: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div className="grid md:grid-cols-12">
+      <div className="grid md:grid-cols-12 bg-gray-50">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">トレーニング履歴</p>
@@ -53,8 +50,17 @@ const History: NextPage = () => {
               <>
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
-                      return <RecordCard key={d.id} workout={d} />;
-                    })
+                    return <RecordCard key={d.id}
+                      id={d.id}
+                      exerciseName={d.exercise.name}
+                      date={d.date}
+                      weight={d.weight}
+                      reps={d.reps}
+                      sets={d.sets}
+                      note={d.note}
+                      muscles={d.exercise.muscles.map(m => m.muscle)}
+                    />;
+                  })
                   : "No data"}
               </>
             )}

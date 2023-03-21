@@ -53,8 +53,8 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navigation />
-      <div className="grid md:grid-cols-12">
-        <div className="md:col-span-6 md:col-start-4">
+      <div className="grid md:grid-cols-12 bg-gray-50">
+        <div className="md:col-span-6 md:col-start-4 bg-white p-2">
           {loadingGet && <Loading />}
           {mutation.isLoading && <Loading />}
           {mutation.isSuccess && (
@@ -82,6 +82,13 @@ const Dashboard: NextPage = () => {
             <>
               <p className="text-xl">{data?.exercise.name}</p>
               <p className="text-sm text-gray-500">{dateDisplay}</p>
+              {data?.exercise.muscles.map(m => {
+                return (
+                  <div key={m.muscle.id} className="flex gap-1">
+                    <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.muscle.name}</span>
+                  </div>
+                )
+              })}
               <section className="p-2">
                 <div>
                   <span className="text-lg font-bold">{data?.weight}</span> kg

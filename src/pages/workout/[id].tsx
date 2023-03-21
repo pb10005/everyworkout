@@ -21,6 +21,7 @@ const Dashboard: NextPage = () => {
   const [metricsCode, setMetricsCode] = useState<string>("01");
 
   const mutation = api.maximum.add.useMutation();
+  const deleteMutation = api.workout.delete.useMutation();
   const registerMaximum = async () => {
     await mutation
       .mutateAsync({
@@ -31,13 +32,19 @@ const Dashboard: NextPage = () => {
           metricsCode === "01"
             ? data?.weight || 0
             : metricsCode === "02"
-            ? data?.reps || 0
-            : 0,
+              ? data?.reps || 0
+              : 0,
       })
       .catch(() => {
         return;
       });
   };
+  const deleteWorkout = async () => {
+    deleteMutation.mutateAsync({
+      id: id || ""
+    });
+  };
+
   return (
     <>
       <Head>
@@ -54,6 +61,13 @@ const Dashboard: NextPage = () => {
             <>
               <p className="rounded-lg bg-green-100 p-4 text-green-900">
                 登録完了
+              </p>
+            </>
+          )}
+          {deleteMutation.isSuccess && (
+            <>
+              <p className="rounded-lg bg-green-100 p-4 text-green-900">
+                削除完了
               </p>
             </>
           )}
@@ -107,6 +121,11 @@ const Dashboard: NextPage = () => {
                     Max記録登録
                   </Button>
                 )}
+                {!deleteMutation.isLoading &&
+                  <Button onClick={() => void deleteWorkout()} type="danger">
+                    削除
+                  </Button>
+                }
               </section>
             </>
           )}

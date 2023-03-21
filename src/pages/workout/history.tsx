@@ -42,7 +42,7 @@ const History: NextPage = () => {
                 type="date"
                 placeholder="日付"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => { e.target.value && setDate(e.target.value) }}
               />
             </div>
             {isLoading && <Loading />}

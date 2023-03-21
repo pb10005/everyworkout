@@ -1,22 +1,19 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
 import { Navigation, RecordCard, Loading, Button } from "../../components";
 
 const SearchByExerciseId: NextPage = () => {
-  const { data: sessionData } = useSession();
   
   const router = useRouter();
   const { exerciseId: ids } = router.query;
   const exerciseId = Array.isArray(ids) ? ids[0] : ids;
   
   const [page, setPage] = useState<number>(0);
-  const [perPage, setPerPage] = useState<number>(10);
+  const [perPage, _] = useState<number>(10);
 
   const { data, isLoading, isSuccess } =
     api.workout.getUserWorkouts.useQuery({

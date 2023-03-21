@@ -1,14 +1,11 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 
 import { Navigation, RecordCard, Loading } from "../../components";
 
 const History: NextPage = () => {
-  const { data: sessionData } = useSession();
   const [skip, setSkip] = useState<number>(0);
   const [perPage, setPerPage] = useState<number>(10);
   const [date, setDate] = useState<string>(

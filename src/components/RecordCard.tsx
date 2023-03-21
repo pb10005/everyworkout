@@ -25,7 +25,6 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
     weight,
     reps,
     sets,
-    note,
     muscles
   } = props;
   const dateDisplay = date.toISOString().split("T")[0];
@@ -38,8 +37,8 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
         <div className="text-sm text-gray-500">{dateDisplay}</div>
         {muscles.map(m => {
           return (
-            <div className="flex gap-1">
-              <span key={m.id} className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.name}</span>
+            <div key={m.id} className="flex gap-1">
+              <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.name}</span>
             </div>
           )
         })}

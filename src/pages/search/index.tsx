@@ -3,12 +3,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { api } from "../../utils/api";
 
 import { Navigation, ExerciseSelector } from "../../components";
 
 const Search: NextPage = () => {
-  const { data: sessionData } = useSession();
   const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
   
   const handleExerciseClick = (id: number) => {

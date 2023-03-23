@@ -3,20 +3,28 @@ import Head from "next/head";
 import { useState } from "react";
 import { api } from "../../utils/api";
 
-import { Navigation, RecordCard, Loading } from "../../components";
+import { Navigation, RecordCard, Loading, Paginator } from "../../components";
 
 const History: NextPage = () => {
-  const [skip, setSkip] = useState<number>(0);
-  const [perPage, setPerPage] = useState<number>(10);
+  const [page, setPage] = useState<number>(0);
+  const [perPage, _] = useState<number>(10);
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
   );
   const { data, isLoading, isSuccess } =
     api.workout.getUserWorkouts.useQuery({
       date: new Date(date).toISOString(),
-      skip,
+      skip: page * perPage,
       take: perPage,
     });
+
+  const { data: tmp } = api.workout.getUserWorkoutsCount.useQuery({
+    date: new Date(date).toISOString(),
+  });
+
+  const count = tmp || -1;
+  const maxPage = count > 0 ? Math.ceil(count / perPage) : 0;
+
   return (
     <>
       <Head>
@@ -45,6 +53,13 @@ const History: NextPage = () => {
                 onChange={(e) => { e.target.value && setDate(e.target.value) }}
               />
             </div>
+            {count > 0 && <Paginator
+              className="mb-2"
+              page={page}
+              perPage={perPage}
+              maxPage={maxPage}
+              setPage={setPage}
+            />}
             {isLoading && <Loading />}
             {isSuccess && (
               <>

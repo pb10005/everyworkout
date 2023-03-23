@@ -4,6 +4,7 @@ import { ExerciseSelector } from "./ExerciseSelector";
 import { Loading } from "./Loading";
 import { MaximumCard } from "./MaximumCard";
 import { Navigation } from "./Navigation";
+import { Paginator } from "./Paginator";
 import { RecordCard } from "./RecordCard";
 
 export {
@@ -13,5 +14,6 @@ export {
   Loading,
   MaximumCard,
   Navigation,
+  Paginator,
   RecordCard,
 };

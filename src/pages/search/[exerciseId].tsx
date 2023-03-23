@@ -4,14 +4,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../utils/api";
 
-import { Navigation, RecordCard, Loading, Button } from "../../components";
+import { Navigation, RecordCard, Loading, Paginator } from "../../components";
 
 const SearchByExerciseId: NextPage = () => {
-  
+
   const router = useRouter();
   const { exerciseId: ids } = router.query;
   const exerciseId = Array.isArray(ids) ? ids[0] : ids;
-  
+
   const [page, setPage] = useState<number>(0);
   const [perPage, _] = useState<number>(10);
 
@@ -21,26 +21,15 @@ const SearchByExerciseId: NextPage = () => {
       skip: page * perPage,
       take: perPage,
     });
-   
-  const { data:tmp } = api.workout.getUserWorkoutsCountByExerciseId.useQuery({
-      exerciseId: parseInt(exerciseId || "-1"),
+
+  const { data: tmp } = api.workout.getUserWorkoutsCount.useQuery({
+    exerciseId: parseInt(exerciseId || "-1"),
   });
-  
+
   const count = tmp || -1;
-  const maxPage = count > 0 ? Math.ceil(count / perPage): 0;
-  
-  
-  const viewPrev = () => {
-    const currentPage = Math.max(0, page-1);
-    setPage(currentPage);
-  };  
-  
-  const viewNext = () => {
-    const currentPage = Math.min(page + 1, maxPage - 1);
-    setPage(currentPage);
-  };  
-  
-    
+  const maxPage = count > 0 ? Math.ceil(count / perPage) : 0;
+
+
   return (
     <>
       <Head>
@@ -53,18 +42,20 @@ const SearchByExerciseId: NextPage = () => {
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             <p className="text-sm text-gray-500">種目別トレーニング履歴</p>
-            {isLoading && <Loading />}
             {count > 0 && (
-              <div className="flex justify-center">
-                <Button onClick={viewPrev}>Prev</Button>
-                <span className="inline-block py-2 mx-4">{page + 1}/{maxPage}</span>
-                <Button onClick={viewNext}>Next</Button>
-              </div>)}
+              <Paginator
+                className="mb-2"
+                page={page}
+                perPage={perPage}
+                maxPage={maxPage}
+                setPage={setPage}
+              />)}
+            {isLoading && <Loading />}
             {isSuccess && (
               <>
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
-                      return <RecordCard key={d.id}
+                    return <RecordCard key={d.id}
                       id={d.id}
                       exerciseName={d.exercise.name}
                       date={d.date}
@@ -73,7 +64,7 @@ const SearchByExerciseId: NextPage = () => {
                       sets={d.sets}
                       note={d.note}
                       muscles={d.exercise.muscles.map(m => m.muscle)} />;
-                    })
+                  })
                   : "No data"}
               </>
             )}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, memo, useCallback } from "react";
-import { Badge } from "../components/Badge";
+import { Badge, Loading } from "../components";
 import { api } from "../utils/api";
 
 type Props = {
@@ -44,11 +44,12 @@ const MuscleList = (props: MuscleListProps) => {
 
 const ExerciseList = (props: ExerciseListProps) => {
   const { muscleId, selectedExerciseId, handleExerciseClick } = props;
-  const exercises = api.exercise.getByMuscleId.useQuery({ muscleId }).data;
+  const { isLoading, isSuccess, data } = api.exercise.getByMuscleId.useQuery({ muscleId });
   return (
     <>
       <div>
-        {exercises?.map((d) => (
+        {isLoading && <Loading />}
+        {isSuccess && data?.map((d) => (
           <Badge
             onClick={() => handleExerciseClick(d.exerciseId)}
             key={d.exerciseId}
@@ -66,7 +67,7 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
   const { selectedExerciseId, handleExerciseClick } = props;
   const [muscleId, setMuscleId] = useState(-1);
 
-  const { data } = api.muscle.getAll.useQuery();
+  const { isLoading, isSuccess, data } = api.muscle.getAll.useQuery();
   const muscles = data;
   const MemoMuscleList = memo(MuscleList);
 
@@ -75,16 +76,20 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
   }, []);
   return (
     <>
-      <MemoMuscleList
-        muscleId={muscleId}
-        muscles={muscles}
-        handleMuscleClick={handleMuscleClick}
-      />
-      <ExerciseList
-        muscleId={muscleId}
-        selectedExerciseId={selectedExerciseId}
-        handleExerciseClick={handleExerciseClick}
-      />
+      {isLoading && <Loading />}
+      {isSuccess && <>
+        <MemoMuscleList
+          muscleId={muscleId}
+          muscles={muscles}
+          handleMuscleClick={handleMuscleClick}
+        />
+        <ExerciseList
+          muscleId={muscleId}
+          selectedExerciseId={selectedExerciseId}
+          handleExerciseClick={handleExerciseClick}
+        />
+      </>}
+
     </>
   );
 };

@@ -104,13 +104,18 @@ export const workoutRouter = createTRPCRouter({
     })
   }),
 
-  getUserWorkoutsCountByExerciseId: protectedProcedure.input(
+  getUserWorkoutsCount: protectedProcedure.input(
     z.object({
-      exerciseId: z.number(),
+      exerciseId: z.number().optional(),
+      date: z.string().datetime().optional(),
     })
   ).query(({ ctx, input }) => {
     return ctx.prisma.workout.count({
-      where: { userId: ctx.session.user.id, exerciseId: input.exerciseId },
+      where: {
+        userId: ctx.session.user.id,
+        exerciseId: input.exerciseId,
+        date: input.date
+      },
     })
   }),
 

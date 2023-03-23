@@ -25,7 +25,7 @@ export const Paginator: React.FC<Props> = (props: Props) => {
 
     return (
         <>
-            <div className={`flex justify-center ${className}`}>
+            <div className={`flex justify-center ${className || ""}`}>
                 <Button onClick={viewPrev}>Prev</Button>
                 <span className="inline-block py-2 mx-4">{page + 1}/{maxPage}</span>
                 <Button onClick={viewNext}>Next</Button>

@@ -1,6 +1,7 @@
 import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { ExerciseSelector } from "./ExerciseSelector";
+import { FloatingButton } from "./FloatingButton";
 import { Loading } from "./Loading";
 import { MaximumCard } from "./MaximumCard";
 import { Navigation } from "./Navigation";
@@ -11,6 +12,7 @@ export {
   Badge,
   Button,
   ExerciseSelector,
+  FloatingButton,
   Loading,
   MaximumCard,
   Navigation,

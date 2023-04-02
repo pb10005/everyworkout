@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../utils/api";
+import { MinusCircleIcon } from "@heroicons/react/20/solid";
 
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, CartesianGrid } from "recharts";
 import { Heading, Navigation, MaximumCard, Loading, Button } from "../../components";
@@ -84,8 +85,10 @@ const History: NextPage = () => {
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
                     return (
-                      <div key={d.id} className="md:grid-span-1 flex">
-                        {isDeleteMode ? <Button onClick={() => void deleteMaximum(d.id)} type="danger">-</Button> : ""}
+                      <div key={d.id} className="md:grid-span-1 flex items-center">
+                        {isDeleteMode ?
+                          <MinusCircleIcon className="w-6 h-6 text-red-900 cursor-pointer" onClick={() => void deleteMaximum(d.id)}></MinusCircleIcon>
+                          : ""}
                         <MaximumCard
                           date={d.date}
                           exerciseName={d.exercise.name}

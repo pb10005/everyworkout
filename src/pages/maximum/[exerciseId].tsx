@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../utils/api";
 
-import { LineChart, XAxis, YAxis, Line, CartesianGrid } from "recharts";
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, CartesianGrid } from "recharts";
 import { Heading, Navigation, MaximumCard, Loading, Button } from "../../components";
 
 const History: NextPage = () => {
@@ -60,20 +60,23 @@ const History: NextPage = () => {
             <p className="text-sm text-gray-500">ベスト更新履歴</p>
             {isLoading && <Loading />}
             {isSuccess && (<>
-              <LineChart
-                width={600}
-                height={400}
-                data={lineData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                  dataKey="date"
-                  domain={['dataMin', 'dataMax']}
-                  tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
-                  type='number' />
-                <YAxis />
-                <Line type="monotone" dataKey="value" />
-              </LineChart>
+              <div className="w-full">
+                <ResponsiveContainer
+                  width="100%"
+                  height={300}>
+                  <LineChart
+                    data={lineData} >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="date"
+                      domain={['dataMin', 'dataMax']}
+                      tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
+                      type='number' />
+                    <YAxis />
+                    <Line type="monotone" dataKey="value" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
               <div className="mb-2 md:grid-span-3">
                 <Button onClick={toggleDeleteMode}>削除モード</Button>
               </div>
@@ -96,8 +99,8 @@ const History: NextPage = () => {
               </section></>
             )}
           </section>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 };

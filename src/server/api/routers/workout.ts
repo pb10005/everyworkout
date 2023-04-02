@@ -2,6 +2,10 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
+type VolumeProp = {
+  totalVolume: number
+};
+
 export const workoutRouter = createTRPCRouter({
   add: protectedProcedure
     .input(
@@ -118,5 +122,14 @@ export const workoutRouter = createTRPCRouter({
       },
     })
   }),
+
+  getUserWorkoutVolume: protectedProcedure.input(
+    z.object({
+      date: z.string().datetime().optional(),
+    })).query(({ ctx, input }) => {
+      const dateString = input.date?.split("T")[0] || "";
+      const volume = ctx.prisma.$queryRaw<VolumeProp[]>`select sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and to_char(date,'YYYY-MM-DD')=${dateString} and weight > 0 group by date;`
+      return volume;
+    }),
 
 });

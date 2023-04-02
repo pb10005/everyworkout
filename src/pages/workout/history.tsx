@@ -22,6 +22,12 @@ const History: NextPage = () => {
     date: new Date(date).toISOString(),
   });
 
+  const { data: volume } = api.workout.getUserWorkoutVolume.useQuery({
+    date: new Date(date).toISOString(),
+  });
+
+  const totalVolume = volume && (volume?.length > 0) ? volume[0]?.totalVolume : 0;
+
   const count = tmp || -1;
   const maxPage = count > 0 ? Math.ceil(count / perPage) : 0;
 
@@ -64,6 +70,10 @@ const History: NextPage = () => {
             {isLoading && <Loading />}
             {isSuccess && (
               <>
+                <div className="flex flex-col text-center py-2">
+                  <span className="text-3xl font-extrabold">{totalVolume}</span>
+                  <span className="text-sm">合計ボリューム</span>
+                </div>
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
                     return <RecordCard key={d.id}

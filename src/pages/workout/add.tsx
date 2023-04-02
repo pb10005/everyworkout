@@ -5,6 +5,7 @@ import Router from "next/router";
 
 import {
   Button,
+  Heading,
   Navigation,
   ExerciseSelector,
   Loading,
@@ -49,6 +50,7 @@ const AddWorkout: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12 bg-gray-50">
           <div className="md:col-span-6 md:col-start-4 bg-white p-2">

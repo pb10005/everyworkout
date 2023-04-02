@@ -16,7 +16,7 @@ export const FloatingButton: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Link
-        className="fixed z-90 right-4 bottom-5 w-20 h-20 rounded-full bg-blue-600 drop-shadow-lg flex justify-center items-center"
+        className="fixed z-90 right-3 bottom-5 w-16 h-16 rounded-full bg-blue-600 drop-shadow-lg flex justify-center items-center"
         href={href}
       >
         {children}

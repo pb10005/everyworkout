@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../utils/api";
 
+import { LineChart, XAxis, YAxis, Line, CartesianGrid } from "recharts";
 import { Heading, Navigation, MaximumCard, Loading, Button } from "../../components";
 
 const History: NextPage = () => {
@@ -16,6 +17,13 @@ const History: NextPage = () => {
     api.maximum.getUserMaximumsByExerciseId.useQuery({
       exerciseId: parseInt(exerciseId),
     });
+
+  const lineData = data?.map(x => {
+    return {
+      date: x.date.getTime(),
+      value: x.value
+    }
+  });
 
   const mutation = api.maximum.delete.useMutation();
 
@@ -52,6 +60,20 @@ const History: NextPage = () => {
             <p className="text-sm text-gray-500">ベスト更新履歴</p>
             {isLoading && <Loading />}
             {isSuccess && (<>
+              <LineChart
+                width={600}
+                height={400}
+                data={lineData}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="date"
+                  domain={['dataMin', 'dataMax']}
+                  tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
+                  type='number' />
+                <YAxis />
+                <Line type="monotone" dataKey="value" />
+              </LineChart>
               <div className="mb-2 md:grid-span-3">
                 <Button onClick={toggleDeleteMode}>削除モード</Button>
               </div>

@@ -30,9 +30,10 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
           )}
         </section>
         <section>
-          <p>
-            <span className="text-3xl font-extrabold">{value}</span> {unit}
-          </p>
+          <div className="flex flex-col items-center">
+            <span className="text-3xl font-extrabold">{value}</span>
+            <span className="text-xs text-gray-500">{unit}</span>
+          </div>
         </section>
       </div>
     </>

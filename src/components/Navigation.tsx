@@ -14,7 +14,7 @@ export const Navigation: React.FC = () => {
             </Link>
             <Link className="flex flex-col w-20 py-1 items-center text-gray-900 hover:bg-gray-900 hover:text-gray-100" href="/search">
               <MagnifyingGlassIcon className="w-6 h-6" />
-              <span className="text-xs font-medium">search</span>
+              <span className="text-xs font-medium">Search</span>
             </Link>
           </div>
         </div>

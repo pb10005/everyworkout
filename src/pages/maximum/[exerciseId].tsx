@@ -5,7 +5,7 @@ import { useState } from "react";
 import { api } from "../../utils/api";
 import { MinusCircleIcon } from "@heroicons/react/20/solid";
 
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, CartesianGrid } from "recharts";
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, CartesianGrid, Tooltip } from "recharts";
 import { Heading, Navigation, MaximumCard, Loading, Button } from "../../components";
 
 const History: NextPage = () => {
@@ -71,11 +71,15 @@ const History: NextPage = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       dataKey="date"
-                      domain={['dataMin', 'dataMax']}
+                      domain={['auto', 'auto']}
                       tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
-                      type='number' />
-                    <YAxis />
+                      type="number" />
+                    <YAxis
+                      type="number"
+                      domain={['dataMin - 5', 'dataMax + 5']} />
                     <Line type="monotone" dataKey="value" />
+                    <Tooltip
+                      labelFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

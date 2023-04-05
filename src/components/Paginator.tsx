@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Button } from ".";
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
     page: number;
     perPage: number;
     maxPage: number;
-    setPage: (page: number) => void; 
+    setPage: (page: number) => void;
 };
 
 export const Paginator: React.FC<Props> = (props: Props) => {
@@ -25,10 +26,10 @@ export const Paginator: React.FC<Props> = (props: Props) => {
 
     return (
         <>
-            <div className={`flex justify-center ${className || ""}`}>
-                <Button onClick={viewPrev}>Prev</Button>
-                <span className="inline-block py-2 mx-4">{page + 1}/{maxPage}</span>
-                <Button onClick={viewNext}>Next</Button>
+            <div className={`py-2 flex justify-center justify-items gap-2 ${className || ""}`}>
+                <ChevronLeftIcon className="w-5 h-5 cursor-pointer" onClick={viewPrev}></ChevronLeftIcon>
+                <span className="inline-block">{page + 1}/{maxPage}</span>
+                    <ChevronRightIcon className="w-5 h-5 cursor-pointer" onClick={viewNext}></ChevronRightIcon>
             </div>
         </>
     );

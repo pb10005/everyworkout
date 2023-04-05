@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { api } from "../../utils/api";
 
 import { Heading, Navigation, RecordCard, Loading, Paginator } from "../../components";
@@ -31,6 +32,20 @@ const History: NextPage = () => {
   const count = tmp || -1;
   const maxPage = count > 0 ? Math.ceil(count / perPage) : 0;
 
+  const decrementDate = () => {
+    const tmp = new Date(date);
+    tmp.setDate(tmp.getDate() - 1);
+    const dateString = tmp.toISOString().split("T")[0] || "";
+    setDate(dateString);
+  };
+
+  const incrementDate = () => {
+    const tmp = new Date(date);
+    tmp.setDate(tmp.getDate() + 1);
+    const dateString = tmp.toISOString().split("T")[0] || "";
+    setDate(dateString);
+  };
+
   return (
     <>
       <Head>
@@ -51,6 +66,10 @@ const History: NextPage = () => {
               >
                 日付を選択
               </label>
+              <div className="flex justify-between items-center">
+                <span onClick={() => decrementDate()} className="cursor-pointer"><ChevronLeftIcon className="inline w-8 h-8"></ChevronLeftIcon>前日</span>
+                <span onClick={() => incrementDate()} className="cursor-pointer">翌日<ChevronRightIcon className="inline w-8 h-8"></ChevronRightIcon></span>
+              </div>
               <input
                 className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                 id="date"
@@ -60,13 +79,6 @@ const History: NextPage = () => {
                 onChange={(e) => { e.target.value && setDate(e.target.value) }}
               />
             </div>
-            {count > 0 && <Paginator
-              className="mb-2"
-              page={page}
-              perPage={perPage}
-              maxPage={maxPage}
-              setPage={setPage}
-            />}
             {isLoading && <Loading />}
             {isSuccess && (
               <>
@@ -74,6 +86,13 @@ const History: NextPage = () => {
                   <span className="text-3xl font-extrabold">{totalVolume}</span>
                   <span className="text-sm">合計ボリューム</span>
                 </div>
+                {count > 0 && <Paginator
+                  className="mb-2"
+                  page={page}
+                  perPage={perPage}
+                  maxPage={maxPage}
+                  setPage={setPage}
+                />}
                 {data?.length && data?.length > 0
                   ? data?.map((d) => {
                     return <RecordCard key={d.id}

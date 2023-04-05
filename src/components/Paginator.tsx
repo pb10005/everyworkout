@@ -27,9 +27,9 @@ export const Paginator: React.FC<Props> = (props: Props) => {
     return (
         <>
             <div className={`py-2 flex justify-center justify-items gap-2 ${className || ""}`}>
-                <ChevronLeftIcon className="w-5 h-5 cursor-pointer" onClick={viewPrev}></ChevronLeftIcon>
+                <ChevronLeftIcon className="w-6 h-6 cursor-pointer" onClick={viewPrev}></ChevronLeftIcon>
                 <span className="inline-block">{page + 1}/{maxPage}</span>
-                    <ChevronRightIcon className="w-5 h-5 cursor-pointer" onClick={viewNext}></ChevronRightIcon>
+                    <ChevronRightIcon className="w-6 h-6 cursor-pointer" onClick={viewNext}></ChevronRightIcon>
             </div>
         </>
     );

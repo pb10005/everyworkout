@@ -1,6 +1,6 @@
 # EveryWorkout
 
-ワークアウトの成長記録
+ワークアウトの成長を記録する
 
 ## 機能
 - ログイン(Discord, Google)

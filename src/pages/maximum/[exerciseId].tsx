@@ -66,7 +66,8 @@ const History: NextPage = () => {
                   width="100%"
                   height={300}>
                   <LineChart
-                    data={lineData} >
+                    data={lineData}
+                    margin={{ top: 5, right: 15, left: -5, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       dataKey="date"
@@ -87,7 +88,7 @@ const History: NextPage = () => {
                     return (
                       <div key={d.id} className="md:grid-span-1 flex items-center">
                         {isDeleteMode ?
-                          <MinusCircleIcon className="w-6 h-6 text-red-900 cursor-pointer" onClick={() => void deleteMaximum(d.id)}></MinusCircleIcon>
+                          <MinusCircleIcon className="w-6 h-6 text-red-600 cursor-pointer" onClick={() => void deleteMaximum(d.id)}></MinusCircleIcon>
                           : ""}
                         <MaximumCard
                           date={d.date}

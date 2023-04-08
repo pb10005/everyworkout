@@ -5,12 +5,21 @@ import { api } from "../utils/api";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
 
-import { FloatingButton, Heading, Navigation, Loading, MaximumCard, RecordCard } from "../components";
+import {
+  FloatingButton,
+  Heading,
+  Navigation,
+  NotLoggedInCard,
+  Loading,
+  MaximumCard,
+  RecordCard
+} from "../components";
 
 const Dashboard: NextPage = () => {
   const {
     isLoading: loadingW,
     isSuccess: successW,
+    isError: errorW,
     data,
   } = api.workout.getUserWorkouts.useQuery({
     take: 3,
@@ -18,6 +27,7 @@ const Dashboard: NextPage = () => {
   const {
     isLoading: loadingM,
     isSuccess: successM,
+    isError: errorM,
     data: maximum,
   } = api.maximum.getUserMaximums.useQuery();
 
@@ -33,38 +43,41 @@ const Dashboard: NextPage = () => {
       <div className="grid md:grid-cols-12 bg-gray-50">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
-            <p className="text-sm text-gray-500">自己ベスト</p>
             {loadingM && <Loading />}
+            {(errorW && errorM) && <NotLoggedInCard />}
             {successM && (
-              <section className="grid md:grid-cols-3 gap-1">
-                {maximum?.length && maximum?.length > 0
-                  ? maximum?.map((m) => {
-                    return (
-                      <div
-                        key={`${m.exerciseId}${m.metrics_code}`}
-                        className="md:grid-span-1"
-                      >
-                        <Link href={`/maximum/${m.exerciseId}`}>
-                          <MaximumCard
-                            exerciseName={m.exercise?.name}
-                            metrics_code={m.metrics_code}
-                            value={m.value}
-                          />
-                        </Link>
-                      </div>
-                    );
-                  })
-                  : "No data"}
-              </section>
+              <>
+                <p className="text-sm text-gray-500">自己ベスト</p>
+                <section className="grid md:grid-cols-3 gap-1">
+                  {maximum?.length && maximum?.length > 0
+                    ? maximum?.map((m) => {
+                      return (
+                        <div
+                          key={`${m.exerciseId}${m.metrics_code}`}
+                          className="md:grid-span-1"
+                        >
+                          <Link href={`/maximum/${m.exerciseId}`}>
+                            <MaximumCard
+                              exerciseName={m.exercise?.name}
+                              metrics_code={m.metrics_code}
+                              value={m.value}
+                            />
+                          </Link>
+                        </div>
+                      );
+                    })
+                    : "No data"}
+                </section>
+              </>
             )}
           </section>
           <section className="mb-2 p-2">
-            <p className="text-sm text-gray-500">トレーニング履歴</p>
             {loadingW && <Loading />}
             {successW && (
               <div>
                 {data?.length && data?.length > 0 ? (
                   <>
+                    <p className="text-sm text-gray-500">トレーニング履歴</p>
                     {data?.map((d) => {
                       return <RecordCard key={d.id}
                         id={d.id}

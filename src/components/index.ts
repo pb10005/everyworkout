@@ -6,6 +6,7 @@ import { Heading } from "./Heading";
 import { Loading } from "./Loading";
 import { MaximumCard } from "./MaximumCard";
 import { Navigation } from "./Navigation";
+import { NotLoggedInCard } from "./NotLoggedInCard";
 import { Paginator } from "./Paginator";
 import { RecordCard } from "./RecordCard";
 
@@ -18,6 +19,7 @@ export {
   Loading,
   MaximumCard,
   Navigation,
+  NotLoggedInCard,
   Paginator,
   RecordCard,
 };

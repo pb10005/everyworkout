@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+#lp {
+    margin-top: -45px;
+    margin-bottom: -45px;
+}
+
 body {
     padding-top: 45px;
     padding-bottom: 45px;

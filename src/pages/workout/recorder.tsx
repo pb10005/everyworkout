@@ -195,7 +195,7 @@ const WorkoutRecorder: NextPage = () => {
                                 インターバル
                             </label>
                             <div className="shadow-lg rounded p-3 bg-gray-100">
-                                <Timer expiryTimeDelta={expiryTimeDelta}></Timer>
+                                <Timer expiryTimeDelta={expiryTimeDelta} onExpire={onNextSet}></Timer>
                             </div>
                             <div className="flex justify-center my-2">
                                 <Button onClick={endSets}>セットを終了して記録</Button>

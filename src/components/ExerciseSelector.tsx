@@ -5,7 +5,7 @@ import { api } from "../utils/api";
 
 type Props = {
   selectedExerciseId: number;
-  handleExerciseClick: (exerciseId: number) => void;
+  handleExerciseClick: (exerciseId: number, exerciseName: string) => void;
 };
 
 type Muscle = {
@@ -22,7 +22,7 @@ type MuscleListProps = {
 type ExerciseListProps = {
   muscleId: number;
   selectedExerciseId: number;
-  handleExerciseClick: (exerciseId: number) => void;
+  handleExerciseClick: (exerciseId: number, exerciseName: string) => void;
 };
 
 const MuscleList = (props: MuscleListProps) => {
@@ -51,7 +51,7 @@ const ExerciseList = (props: ExerciseListProps) => {
         {isLoading && <Loading />}
         {isSuccess && data?.map((d) => (
           <Badge
-            onClick={() => handleExerciseClick(d.exerciseId)}
+            onClick={() => handleExerciseClick(d.exerciseId, d.exercise.name)}
             key={d.exerciseId}
             label={
               (d.exerciseId === selectedExerciseId ? "✔" : "") + d.exercise.name

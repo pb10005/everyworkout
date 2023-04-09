@@ -9,6 +9,7 @@ import { Navigation } from "./Navigation";
 import { NotLoggedInCard } from "./NotLoggedInCard";
 import { Paginator } from "./Paginator";
 import { RecordCard } from "./RecordCard";
+import { Timer } from "./Timer";
 
 export {
   Badge,
@@ -22,4 +23,5 @@ export {
   NotLoggedInCard,
   Paginator,
   RecordCard,
+  Timer,
 };

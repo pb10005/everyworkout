@@ -179,7 +179,10 @@ const WorkoutRecorder: NextPage = () => {
                         {!isEnd && sets !== "-1" && <>
                             <p className="text-xl font-bold">{selectedExerciseName}</p>
                             <div className="flex flex-col justify-center gap-2">
-                                <div><span className="text-3xl font-extrabold">{weight}</span>kg</div>
+                                <div className="flex justify-center gap-2">
+                                    <div><span className="text-3xl font-extrabold">{weight}</span>kg</div>
+                                    <div><span className="text-3xl font-extrabold">{reps}</span>reps</div>
+                                </div>
                                 <div className="flex justify-center items-center">
                                     <ChevronLeftIcon onClick={onPrevSet} className="w-10 h-10 cursor-pointer"></ChevronLeftIcon>
                                     <span className="text-3xl font-extrabold">{parseInt(sets) + 1}</span>セット目
@@ -191,7 +194,9 @@ const WorkoutRecorder: NextPage = () => {
                             >
                                 インターバル
                             </label>
-                            <Timer expiryTimeDelta={expiryTimeDelta}></Timer>
+                            <div className="shadow-lg rounded p-3 bg-gray-100">
+                                <Timer expiryTimeDelta={expiryTimeDelta}></Timer>
+                            </div>
                             <div className="flex justify-center my-2">
                                 <Button onClick={endSets}>セットを終了して記録</Button>
                             </div>

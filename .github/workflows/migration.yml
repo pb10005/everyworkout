@@ -2,13 +2,11 @@ name: Prisma Migrate
 
 on:
   push:
-    branch:
-　　　 - main
+    branches: [ main ]
     paths:
       - "./prisma/**/*.*"
   workflow_dispatch:
-    branch:
-      - main
+    branches: [ main ]
 
 jobs:
   install:

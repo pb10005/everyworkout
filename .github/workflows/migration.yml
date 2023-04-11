@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.PROD_GITHUB_TOKEN}}
       - name: Setup Nodejs
         uses: actions/setup-node@v2
         with:
@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.PROD_GITHUB_TOKEN}}
 
       - name: Setup Nodejs
         uses: actions/setup-node@v2
@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.PROD_GITHUB_TOKEN}}
 
       - name: Setup Nodejs
         uses: actions/setup-node@v2

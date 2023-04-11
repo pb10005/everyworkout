@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -28,8 +25,8 @@ model Muscle {
   name_kana   String           @default("")
   description String?
   bodyPartId  Int
-  bodyPart    BodyPart         @relation(fields: [bodyPartId], references: [id])
   exercises   ExerciseMuscle[]
+  bodyPart    BodyPart         @relation(fields: [bodyPartId], references: [id])
 }
 
 model Workout {
@@ -41,9 +38,11 @@ model Workout {
   sets       Int
   note       String?
   exerciseId Int
-  user       User?     @relation(fields: [userId], references:[id])
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
   createdAt  DateTime @default(now())
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([userId, exerciseId, date])
 }
 
 model Exercise {
@@ -51,44 +50,45 @@ model Exercise {
   name        String
   description String?
   muscles     ExerciseMuscle[]
-  workouts    Workout[]
   maximums    Maximum[]
+  workouts    Workout[]
 }
 
 model ExerciseMuscle {
   id         Int      @id @default(autoincrement())
   exerciseId Int
   muscleId   Int
+  is_main    Boolean
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   muscle     Muscle   @relation(fields: [muscleId], references: [id])
-  is_main    Boolean
 }
 
 model Maximum {
-  id              String  @id @default(cuid())
-  userId          String
-  user            User     @relation(fields: [userId], references:[id])
-  exerciseId      Int
-  exercise        Exercise  @relation(fields:[exerciseId], references: [id])
-  metrics_code    String
-  value           Float
-  date            DateTime
+  id           String   @id @default(cuid())
+  userId       String
+  exerciseId   Int
+  metrics_code String
+  value        Float
+  date         DateTime
+  exercise     Exercise @relation(fields: [exerciseId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+
   @@unique([userId, exerciseId, metrics_code, value, date])
+  @@index([exerciseId, metrics_code])
 }
 
-// Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? // @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -110,9 +110,9 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
+  maximums      Maximum[]
   sessions      Session[]
   workouts      Workout[]
-  maximums      Maximum[]
 }
 
 model VerificationToken {

@@ -42,6 +42,7 @@ model Workout {
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   user       User?    @relation(fields: [userId], references: [id])
 
+  @@index([id, userId])
   @@index([userId, exerciseId, date])
 }
 
@@ -61,6 +62,7 @@ model ExerciseMuscle {
   is_main    Boolean
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   muscle     Muscle   @relation(fields: [muscleId], references: [id])
+  @@index([muscleId, is_main])
 }
 
 model Maximum {
@@ -74,6 +76,7 @@ model Maximum {
   user         User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, exerciseId, metrics_code, value, date])
+  @@index([id, userId])
   @@index([exerciseId, metrics_code])
 }
 

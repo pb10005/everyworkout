@@ -1,10 +1,42 @@
-import { useState } from "react";
+import { ChangeEventHandler, FormEvent, FormEventHandler, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { PencilSquareIcon } from "@heroicons/react/20/solid";
 
 import { Button, Heading, Navigation, Loading } from "../../components";
 import { api } from "../../utils/api";
+
+type Props = {
+  note: string;
+  setNote: ChangeEventHandler<HTMLInputElement>;
+  submit: () => void;
+  cancel: () => void;
+};
+
+function EditNoteForm(props: Props) {
+  const { note, setNote, submit, cancel } = props;
+  const onSubmit = (e: FormEvent<Element>) => {
+    e.preventDefault();
+    submit();
+  }
+  return (<>
+    <form onSubmit={onSubmit}>
+      <input
+        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+        type="text"
+        id="note"
+        placeholder="メモ"
+        value={note}
+        onChange={setNote}
+      />
+      <div className="my-2">
+        <Button type="button" onClick={cancel}>キャンセル</Button>
+        <Button type="submit" onClick={() => void (0)}>送信</Button>
+      </div>
+    </form>
+  </>);
+}
 
 const Dashboard: NextPage = () => {
   const router = useRouter();
@@ -17,11 +49,22 @@ const Dashboard: NextPage = () => {
   } = api.workout.getWorkoutById.useQuery({
     id: id || "",
   });
+
+  const utils = api.useContext();
+
   const dateDisplay = data?.date.toISOString().split("T")[0] || "";
   const [metricsCode, setMetricsCode] = useState<string>("01");
+  const [isEditMode, setEditMode] = useState<boolean>(false);
+  const [note, setNote] = useState<string>("");
 
   const mutation = api.maximum.add.useMutation();
+  const updateMutation = api.workout.update.useMutation({
+    async onSuccess() {
+      await utils.workout.getWorkoutById.invalidate()
+    }
+  });
   const deleteMutation = api.workout.delete.useMutation();
+
   const registerMaximum = async () => {
     await mutation
       .mutateAsync({
@@ -43,6 +86,22 @@ const Dashboard: NextPage = () => {
     await deleteMutation.mutateAsync({
       id: id || ""
     });
+  };
+
+  const enablEeditMode = () => {
+    setNote(data?.note || "");
+    setEditMode(true);
+  };
+
+  const onSubmit = async () => {
+    await updateMutation.mutateAsync({ id: id || "", note });
+    setNote("");
+    setEditMode(false);
+  };
+
+  const onCancel = () => {
+    setNote("");
+    setEditMode(false);
   };
 
   return (
@@ -102,9 +161,13 @@ const Dashboard: NextPage = () => {
                 </div>
               </section>
               <section className="my-2">
-                {data?.note && (
+                <p className="flex items-center py-2">
+                  <span>メモ</span>
+                  {!isEditMode && <PencilSquareIcon onClick={enablEeditMode} className="w-6 h-6 inline cursor-pointer"></PencilSquareIcon>}
+                </p>
+                {isEditMode && <EditNoteForm note={note} setNote={(e) => setNote(e.target.value)} submit={() => void onSubmit()} cancel={() => onCancel()}></EditNoteForm>}
+                {!isEditMode && data?.note && (
                   <>
-                    <p>メモ</p>
                     <p className="rounded bg-gray-200 p-4">{data?.note}</p>
                   </>
                 )}
@@ -130,7 +193,7 @@ const Dashboard: NextPage = () => {
                   </Button>
                 )}
                 {!deleteMutation.isLoading &&
-                  <Button onClick={() => void deleteWorkout()} type="danger">
+                  <Button onClick={() => void deleteWorkout()} layout="danger">
                     削除
                   </Button>
                 }

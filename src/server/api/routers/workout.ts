@@ -38,6 +38,23 @@ export const workoutRouter = createTRPCRouter({
       return workout;
     }),
 
+  update: protectedProcedure
+    .input(z.object({
+      id: z.string(),
+      note: z.string()
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.workout.updateMany({
+        where: {
+          id: input.id,
+          userId: ctx.session.user.id,
+        },
+        data: {
+          note: input.note
+        }
+      })
+    }),
+
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -140,7 +157,7 @@ export const workoutRouter = createTRPCRouter({
   getUserWorkoutVolumeByExerciseId: protectedProcedure.input(
     z.object({
       exerciseId: z.number()
-    })).query(({ctx, input}) => {
+    })).query(({ ctx, input }) => {
       const volume = ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
       return volume;
     })

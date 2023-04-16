@@ -3,10 +3,30 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../utils/api";
-import { MinusCircleIcon } from "@heroicons/react/20/solid";
+import { MinusCircleIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
 
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, CartesianGrid, Tooltip } from "recharts";
+import {
+  Bar,
+  ResponsiveContainer,
+  ComposedChart,
+  XAxis,
+  YAxis,
+  Legend,
+  Line,
+  CartesianGrid,
+  Tooltip
+} from "recharts";
 import { Heading, Navigation, MaximumCard, Loading, Button } from "../../components";
+
+type ChartProp = {
+  date: number;
+  maximum?: number;
+  volume?: number;
+};
+
+interface Iterable<ChartProp> {
+  [Symbol.iterator]: Iterator<ChartProp>;
+}
 
 const History: NextPage = () => {
   const router = useRouter();
@@ -19,6 +39,29 @@ const History: NextPage = () => {
       exerciseId: parseInt(exerciseId),
     });
 
+  const daily = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({
+    exerciseId: parseInt(exerciseId),
+  });
+
+  const test = data?.map<ChartProp>(x => {
+    return {
+      date: x.date.getTime(),
+      maximum: x.value,
+    }
+  }) || [];
+
+  const test2 = daily.data?.map<ChartProp>(x => {
+    return {
+      date: x.date.getTime(),
+      volume: x.totalVolume
+    }
+  }) || [];
+  const chartData = [
+    ...test,
+    ...test2,
+  ];
+
+  console.log(chartData);
   const lineData = data?.map(x => {
     return {
       date: x.date.getTime(),
@@ -65,8 +108,8 @@ const History: NextPage = () => {
                 <ResponsiveContainer
                   width="100%"
                   height={300}>
-                  <LineChart
-                    data={lineData}
+                  <ComposedChart
+                    data={chartData}
                     margin={{ top: 5, right: 15, left: -5, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
@@ -75,12 +118,22 @@ const History: NextPage = () => {
                       tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
                       type="number" />
                     <YAxis
+                      yAxisId={1}
                       type="number"
+                      dataKey="maximum"
                       domain={['dataMin - 5', 'dataMax + 5']} />
-                    <Line type="monotone" dataKey="value" />
+                    <YAxis
+                      yAxisId={2}
+                      orientation="right"
+                      type="number"
+                      dataKey="volume"
+                      domain={[0, 'auto']} />
+                    <Bar yAxisId={2} dataKey="volume" barSize={20} fill="#413ea0" />
+                    <Line yAxisId={1} type="monotone" dataKey="maximum" />
+                    <Legend align="center" verticalAlign="top"/>
                     <Tooltip
                       labelFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()} />
-                  </LineChart>
+                  </ComposedChart>
                 </ResponsiveContainer>
               </div>
               <div className="mb-2 md:grid-span-3">

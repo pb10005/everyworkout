@@ -6,6 +6,11 @@ type VolumeProp = {
   totalVolume: number
 };
 
+type DailyVolumeProp = {
+  date: Date;
+  totalVolume: number;
+};
+
 export const workoutRouter = createTRPCRouter({
   add: protectedProcedure
     .input(
@@ -132,4 +137,11 @@ export const workoutRouter = createTRPCRouter({
       return volume;
     }),
 
+  getUserWorkoutVolumeByExerciseId: protectedProcedure.input(
+    z.object({
+      exerciseId: z.number()
+    })).query(({ctx, input}) => {
+      const volume = ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
+      return volume;
+    })
 });

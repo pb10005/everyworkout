@@ -1,9 +1,11 @@
-'use client';
-
 import "../src/styles/globals.css";
 import SessionProvider from "./SessionProvider";
+import { ClientProvider } from "./trpcClient";
 
-import { api } from "../src/utils/api";
+export const metadata = {
+    title: 'Every Workout',
+    description: 'ワークアウトの成長を記録する',
+};
 
 function RootLayout({
     // Layouts must accept a children prop.
@@ -14,16 +16,18 @@ function RootLayout({
 }) {
     return (
         <SessionProvider>
-            <html lang="ja">
-                <head>
-                    <link rel="manifest" href="/manifest.json" />
-                    <link rel="apple-touch-icon" href="/icon.png"></link>
-                    <meta name="theme-color" content="#fff" />
-                </head>
-                <body>{children}</body>
-            </html>
+            <ClientProvider>
+                <html lang="ja">
+                    <head>
+                        <link rel="manifest" href="/manifest.json" />
+                        <link rel="apple-touch-icon" href="/icon.png"></link>
+                        <meta name="theme-color" content="#fff" />
+                    </head>
+                    <body>{children}</body>
+                </html>
+            </ClientProvider>
         </SessionProvider>
     );
 }
 
-export default api.withTRPC(RootLayout);
+export default RootLayout;

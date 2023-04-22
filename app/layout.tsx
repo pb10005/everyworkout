@@ -1,11 +1,9 @@
+'use client';
+
 import "../src/styles/globals.css";
 import SessionProvider from "./SessionProvider";
 
-
-export const metadata = {
-    title: 'Every Workout',
-    description: 'ワークアウトの成長を記録する'
-};
+import { api } from "../src/utils/api";
 
 function RootLayout({
     // Layouts must accept a children prop.
@@ -28,4 +26,4 @@ function RootLayout({
     );
 }
 
-export default RootLayout;
+export default api.withTRPC(RootLayout);

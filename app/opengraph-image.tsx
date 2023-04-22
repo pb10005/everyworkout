@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/server';
 
+export const title = 'Every Workout';
+export const description = 'ワークアウトの成長を記録する';
 export const size = { width: 1200, height: 600 };
 export const alt = 'About Acme';
 export const contentType = 'image/png';

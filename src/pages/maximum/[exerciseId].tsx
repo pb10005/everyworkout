@@ -61,7 +61,6 @@ const History: NextPage = () => {
     ...test2,
   ];
 
-  console.log(chartData);
   const lineData = data?.map(x => {
     return {
       date: x.date.getTime(),

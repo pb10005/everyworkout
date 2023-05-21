@@ -100,7 +100,7 @@ const History: NextPage = () => {
                 </p>
               </>
             )}
-            <p className="text-sm text-gray-500">ベスト更新履歴</p>
+            <p className="text-sm text-gray-500">種目別グラフ</p>
             {isLoading && <Loading />}
             {isSuccess && (<>
               <div className="w-full">
@@ -136,6 +136,7 @@ const History: NextPage = () => {
                 </ResponsiveContainer>
               </div>
               <div className="mb-2 md:grid-span-3">
+                <p className="text-sm text-gray-500 my-2">ベスト更新履歴</p>
                 <Button onClick={toggleDeleteMode}>削除モード</Button>
               </div>
               <section className="grid md:grid-cols-3 gap-1">

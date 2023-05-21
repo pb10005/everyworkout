@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
 
 import { Button, Heading, Navigation, Loading } from "../../components";
 import { api } from "../../utils/api";
@@ -140,7 +141,7 @@ const Dashboard: NextPage = () => {
           )}
           {successGet && (
             <>
-              <p className="text-xl">{data?.exercise.name}</p>
+              <p className="text-xl"><Link href={`/maximum/${data?.exerciseId}`}>{data?.exercise.name}</Link></p>
               <p className="text-sm text-gray-500">{dateDisplay}</p>
               {data?.exercise.muscles.map(m => {
                 return (

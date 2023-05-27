@@ -3,6 +3,7 @@ import { muscleRouter } from "./routers/muscle";
 import { exerciseRouter } from "./routers/exercise";
 import { workoutRouter } from "./routers/workout";
 import { maximumRouter } from "./routers/maximum";
+import { profileRouter } from "./routers/profile";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   exercise: exerciseRouter,
   workout: workoutRouter,
   maximum: maximumRouter,
+  profile: profileRouter,
 });
 
 // export type definition of API

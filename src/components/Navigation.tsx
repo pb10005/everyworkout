@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { HomeIcon, MagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
+import { HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, UserIcon } from "@heroicons/react/20/solid";
 
 export const Navigation: React.FC = () => {
   return (
@@ -19,6 +19,10 @@ export const Navigation: React.FC = () => {
             <Link className="flex flex-col w-20 py-1 items-center text-gray-900 hover:bg-gray-900 hover:text-gray-100" href="/workout/recorder">
               <PencilSquareIcon className="w-6 h-6" />
               <span className="text-xs font-medium">Record</span>
+            </Link>
+            <Link className="flex flex-col w-20 py-1 items-center text-gray-900 hover:bg-gray-900 hover:text-gray-100" href="/profile">
+              <UserIcon className="w-6 h-6" />
+              <span className="text-xs font-medium">Profile</span>
             </Link>
           </div>
         </div>

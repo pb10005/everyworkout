@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/router";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Router from "next/router";
@@ -14,12 +15,22 @@ import {
 } from "../../components";
 import { api } from "../../utils/api";
 
+type WorkoutProp = {
+    selectedExerciseId: number;
+    weight: string;
+    reps: string;
+    sets: string;
+    expiryTimeDelta: number;
+};
+
 const WorkoutRecorder: NextPage = () => {
+    const router = useRouter();
     const [date, setDate] = useState<string>(
         new Date().toISOString().split("T")[0] || ""
     );
     const [error, setError] = useState<string>("");
     const [isEnd, setEnd] = useState<boolean>(false);
+
     const [selectedExerciseId, selectExerciseId] = useState(-1);
     const [selectedExerciseName, setExerciseName] = useState("");
     const [weight, setWeight] = useState<string>("50");
@@ -27,7 +38,9 @@ const WorkoutRecorder: NextPage = () => {
     const [sets, setSets] = useState<string>("-1");
     const [note, setNote] = useState<string>("");
     const [expiryTimeDelta, setExpiryTimeDelta] = useState<number>(120);
+
     const mutation = api.workout.add.useMutation();
+    
     const send = async () => {
         await mutation
             .mutateAsync({
@@ -55,27 +68,61 @@ const WorkoutRecorder: NextPage = () => {
             setError("種目を選んでください");
             return;
         }
+
+        saveSession("0");
         setSets("0");
         setError("");
     };
 
+    const saveSession = (currentSet: string) => {
+        const data: WorkoutProp = {
+            selectedExerciseId,
+            weight,
+            reps,
+            sets: currentSet,
+            expiryTimeDelta,
+        };
+
+        window.sessionStorage.setItem('workout', JSON.stringify(data));
+    };
     const endSets = () => {
         const tmp = parseInt(sets) + 1;
         setSets(tmp.toString());
         setEnd(true);
     };
 
+    const clear = async () => {
+        window.sessionStorage.removeItem("workout");
+        await router.push('/dashboard');
+    };
+
     const onPrevSet = () => {
         const tmp = Math.max(parseInt(sets) - 1, 0);
         setSets(tmp.toString());
+        saveSession(tmp.toString());
         setExpiryTimeDelta(expiryTimeDelta);
     };
 
     const onNextSet = () => {
         const tmp = parseInt(sets) + 1;
         setSets(tmp.toString());
+        saveSession(tmp.toString());
         setExpiryTimeDelta(expiryTimeDelta);
     };
+
+
+    useEffect(() => {
+        const item = window.sessionStorage.getItem('workout');
+        const workout = item && JSON.parse(item) as WorkoutProp;
+        if(workout) {
+            selectExerciseId(workout.selectedExerciseId);
+            setWeight(workout.weight);
+            setReps(workout.reps);
+            setExpiryTimeDelta(workout.expiryTimeDelta);
+            setSets(workout.sets);
+        }
+    }, []);
+
     return (
         <>
             <Head>
@@ -199,6 +246,7 @@ const WorkoutRecorder: NextPage = () => {
                             </div>
                             <div className="flex justify-center my-2">
                                 <Button onClick={endSets}>セットを終了して記録</Button>
+                                <Button onClick={() => void clear()}>記録しないで終了</Button>
                             </div>
                         </>}
                         {isEnd && <>

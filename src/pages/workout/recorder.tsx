@@ -18,6 +18,7 @@ import { api } from "../../utils/api";
 type WorkoutProp = {
     date: string;
     selectedExerciseId: number;
+    selectedExerciseName: string;
     weight: string;
     reps: string;
     sets: string;
@@ -53,6 +54,7 @@ const WorkoutRecorder: NextPage = () => {
                 exerciseId: selectedExerciseId,
             })
             .then(({ id }) => {
+                window.sessionStorage.removeItem('workout');
                 return Router.push(`/workout/${id}`);
             })
             .catch(() => {
@@ -79,6 +81,7 @@ const WorkoutRecorder: NextPage = () => {
         const data: WorkoutProp = {
             date,
             selectedExerciseId,
+            selectedExerciseName,
             weight,
             reps,
             sets: currentSet,
@@ -119,6 +122,7 @@ const WorkoutRecorder: NextPage = () => {
         if(workout) {
             setDate(workout.date);
             selectExerciseId(workout.selectedExerciseId);
+            setExerciseName(workout.selectedExerciseName);
             setWeight(workout.weight);
             setReps(workout.reps);
             setExpiryTimeDelta(workout.expiryTimeDelta);

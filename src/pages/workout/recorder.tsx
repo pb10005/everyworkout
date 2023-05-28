@@ -16,6 +16,7 @@ import {
 import { api } from "../../utils/api";
 
 type WorkoutProp = {
+    date: string;
     selectedExerciseId: number;
     weight: string;
     reps: string;
@@ -76,6 +77,7 @@ const WorkoutRecorder: NextPage = () => {
 
     const saveSession = (currentSet: string) => {
         const data: WorkoutProp = {
+            date,
             selectedExerciseId,
             weight,
             reps,
@@ -115,6 +117,7 @@ const WorkoutRecorder: NextPage = () => {
         const item = window.sessionStorage.getItem('workout');
         const workout = item && JSON.parse(item) as WorkoutProp;
         if(workout) {
+            setDate(workout.date);
             selectExerciseId(workout.selectedExerciseId);
             setWeight(workout.weight);
             setReps(workout.reps);

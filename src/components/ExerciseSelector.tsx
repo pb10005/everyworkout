@@ -21,8 +21,8 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
 
   return (
     <>
+      {(isBodyPartLoading || isMuscleLoading) && <Loading />}
       {selectedBodyPartId < 0 && bodyPartExists && <div className="gap-1 bg-white">
-        {isBodyPartLoading && <Loading />}
         <ul className="gap-1 divide-y">
           {bodyParts.map(bp => (
             <li className="p-2 cursor-poiner hover:bg-gray-200" key={bp.id} onClick={() => void handleBodyPartClick(bp.id)}>
@@ -33,7 +33,6 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
         </ul>
       </div>}
       {selectedBodyPartId > 0 && muscleExists && <>
-        {isMuscleLoading && <Loading />}
         <ChevronLeftIcon className="w-8 h-8 cursor-pointer" onClick={() => void selectBodyPartId(-1)} />
         <div className="gap-1 bg-white">
           {muscles.map(d => (

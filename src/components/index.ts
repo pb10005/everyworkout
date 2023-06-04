@@ -1,3 +1,4 @@
+import { AuthShowcase } from "./AuthShowcase";
 import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { ExerciseSelector } from "./ExerciseSelector";
@@ -12,6 +13,7 @@ import { RecordCard } from "./RecordCard";
 import { Timer } from "./Timer";
 
 export {
+  AuthShowcase,
   Badge,
   Button,
   ExerciseSelector,

@@ -5,9 +5,6 @@ services:
     image: node:latest
     working_dir: /app
     tty: true
-    ports:
-      - 3000:3000
-      - 5555:5555
     volumes:
       - .:/app
   postgres:

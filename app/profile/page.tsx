@@ -3,6 +3,7 @@
 import { type NextPage } from "next";
 import { api } from "../../src/utils/api";
 
+import { AuthShowcase } from "../../src/components";
 import { Heading, Navigation } from "../../src/components";
 
 const Profile: NextPage = () => {
@@ -24,6 +25,7 @@ const Profile: NextPage = () => {
                 <div>{data?.email}</div>
               </>}
             </section>
+            <AuthShowcase />
           </div>
         </div>
       </main>

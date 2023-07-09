@@ -41,6 +41,13 @@ const Dashboard: NextPage = () => {
         <div className="grid md:grid-cols-12">
           <div className="md:col-span-6 md:col-start-4">
             <section className="mb-2 p-2">
+              <p className="text-sm text-gray-500">便利ツール</p>
+              <div className="flex gap-1">
+                <Link href="/rm-calculator">RM計算機</Link>
+                <Link href="/timer">タイマー</Link>
+              </div>
+            </section>
+            <section className="mb-2 p-2">
               {loadingM && <Loading />}
               {(errorW && errorM) && <NotLoggedInCard />}
               {successM && (

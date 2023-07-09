@@ -1,4 +1,5 @@
-import { ChangeEventHandler, FormEvent, FormEventHandler, useState } from "react";
+import type { ChangeEventHandler, FormEvent} from "react";
+import { FormEventHandler, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";

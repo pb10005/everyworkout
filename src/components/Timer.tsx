@@ -5,7 +5,7 @@ import { ArrowPathIcon, PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
 
 type Props = {
     expiryTimeDelta: number;
-    onExpire: () => void;
+    onExpire?: () => void;
 };
 
 export const Timer: React.FC<Props> = (props: Props) => {
@@ -25,7 +25,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
     } = useTimer({
         expiryTimestamp: expiryTimestamp,
         autoStart: false,
-        onExpire: () => { setExpired(true); resetInterval(); onExpire(); }
+        onExpire: () => { setExpired(true); resetInterval(); if(onExpire) onExpire(); }
     });
 
     const zeroPadding = (val: number) => {

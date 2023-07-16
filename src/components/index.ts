@@ -10,6 +10,7 @@ import { Navigation } from "./Navigation";
 import { NotLoggedInCard } from "./NotLoggedInCard";
 import { Paginator } from "./Paginator";
 import { RecordCard } from "./RecordCard";
+import { RMCalcualtor } from "./RMCalculator";
 import { Timer } from "./Timer";
 
 export {
@@ -25,5 +26,6 @@ export {
   NotLoggedInCard,
   Paginator,
   RecordCard,
+  RMCalcualtor,
   Timer,
 };

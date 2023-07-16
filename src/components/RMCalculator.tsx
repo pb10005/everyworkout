@@ -1,16 +1,12 @@
 import React from "react";
 import { useState } from "react";
 
-type Props = {
-
-};
-
 enum Exercise {
     BenchPress = 1,
     Squat = 2,
-};
+}
 
-export const RMCalcualtor: React.FC<Props> = (props: Props) => {
+export const RMCalcualtor: React.FC = () => {
     const [weight, setWeight] = useState<number>(60);
     const [reps, setReps] = useState<number>(10);
 

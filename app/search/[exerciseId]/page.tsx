@@ -35,7 +35,7 @@ const SearchByExerciseId: NextPage = () => {
 
   return (
     <>
-    <main className="h-screen bg-gray-50">
+    <main className="h-screen bg-gray-100">
       <Heading />
       <Navigation />
       <div className="grid md:grid-cols-12">

@@ -23,7 +23,7 @@ function RootLayout({
                         <link rel="apple-touch-icon" href="/icon.png"></link>
                         <meta name="theme-color" content="#fff" />
                     </head>
-                    <body>{children}</body>
+                    <body className="bg-gray-300">{children}</body>
                 </html>
             </ClientProvider>
         </SessionProvider>

@@ -140,7 +140,7 @@ const WorkoutRecorder: NextPage = () => {
             <main>
                 <Heading />
                 <Navigation />
-                <div className="grid md:grid-cols-12 bg-gray-50">
+                <div className="grid md:grid-cols-12 bg-gray-100">
                     <div className="md:col-span-6 md:col-start-4 bg-white p-2">
                         {mutation.isLoading && <Loading />}
                         {mutation.isError && (

@@ -89,7 +89,7 @@ const History: NextPage = () => {
       </Head>
       <Heading />
       <Navigation />
-      <div className="grid md:grid-cols-12 bg-gray-50">
+      <div className="grid md:grid-cols-12 bg-gray-100">
         <div className="md:col-span-6 md:col-start-4">
           <section className="mb-2 p-2">
             {mutation.isLoading && <Loading />}

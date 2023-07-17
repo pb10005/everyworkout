@@ -84,7 +84,7 @@ export const RMCalcualtor: React.FC = () => {
                 <p className="text-sm text-gray-500">1RM換算重量</p>
                 <p><span className="text-2xl font-extrabold mr-1">{result}</span>kg</p>
             </div>
-            <p>参考: <a target="_blank" href="https://fwj.jp/magazine/rm/">https://fwj.jp/magazine/rm/</a></p>
+            <p>参考: <a target="_blank" rel="noreferrer" href="https://fwj.jp/magazine/rm/">https://fwj.jp/magazine/rm/</a></p>
         </>
     );
 };

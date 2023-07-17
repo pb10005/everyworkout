@@ -2,13 +2,14 @@ import * as React from "react";
 
 type Props = {
   children: React.ReactNode;
+  className?: string;
   type?: "button" | "reset" | "submit" | undefined;
   layout?: string;
   onClick: () => void;
 };
 
 export const Button: React.FC<Props> = (props: Props) => {
-  const { type, layout, children, onClick } = props;
+  const { className, type, layout, children, onClick } = props;
 
   const styleType = layout || "normal";
   const style: { [key: string]: string } = {
@@ -19,7 +20,7 @@ export const Button: React.FC<Props> = (props: Props) => {
     <>
       <button
         type={type}
-        className={`${style[styleType] || ""} px-4 py-2 rounded-full mr-2`}
+        className={`${style[styleType] || ""} px-4 py-2 rounded-full mr-2 ${className || ''}`}
         onClick={onClick}
       >
         {children}

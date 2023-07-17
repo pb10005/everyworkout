@@ -36,7 +36,9 @@ const TimerPage: NextPage = () => {
                     <Button onClick={() => void modifyExpiryTD(-10)}>-10sec</Button>
                     <Button onClick={() => void modifyExpiryTD(-60)}>-1min</Button>
                   </div>
-                  <Button onClick={() => void setStarted(true)}>開始</Button>
+                  <div className="flex justify-center items-center text-xl">
+                    <Button className="w-full" onClick={() => void setStarted(true)}>開始</Button>
+                  </div>
                 </>}
               {
                 isStarted && <>

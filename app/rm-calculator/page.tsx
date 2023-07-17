@@ -1,7 +1,6 @@
 "use client";
 
 import { type NextPage } from "next";
-import { api } from "../../src/utils/api";
 
 import { Heading, Navigation } from "../../src/components";
 import { useRouter } from 'next/navigation'
@@ -20,8 +19,8 @@ const RMCalculator: NextPage = () => {
         <div className="grid md:grid-cols-12">
           <div className="md:col-span-6 md:col-start-4">
             <section className="mb-2 p-2">
-                <ChevronLeftIcon className="w-6 h-6 cursor-pointer" onClick={() => router.back()}></ChevronLeftIcon>
-                <RMCalcualtor />
+              <ChevronLeftIcon className="w-6 h-6 cursor-pointer" onClick={() => router.back()}></ChevronLeftIcon>
+              <RMCalcualtor />
             </section>
           </div>
         </div>

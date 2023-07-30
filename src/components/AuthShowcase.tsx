@@ -14,14 +14,14 @@ export const AuthShowcase: React.FC = () => {
                         {sessionData && (
                             <Link
                                 href="/dashboard"
-                                className="rounded-full px-10 py-3 font-semibold no-underline shadow"
+                                className="rounded-full px-10 py-3 font-semibold no-underline shadow bg-white"
                             >
                                 Dashboard
                             </Link>
                         )}
                     </p>
                     <button
-                        className="rounded-full px-10 py-3 font-semibold no-underline shadow"
+                        className="rounded-full px-10 py-3 font-semibold no-underline shadow bg-white"
                         onClick={sessionData ? () => void signOut() : () => void signIn()}
                     >
                         {sessionData ? "Sign out" : "Sign in"}

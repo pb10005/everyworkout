@@ -29,15 +29,15 @@ const TimerPage: NextPage = () => {
               {
                 !isStarted &&
                 <>
+                  <p className="mr-2 text-4xl font-extrabold text-center">{expiryTD}</p>
                   <div className="flex gap-1 justify-center items-center my-1">
-                    <Button onClick={() => void modifyExpiryTD(60)}>+1min</Button>
-                    <Button onClick={() => void modifyExpiryTD(10)}>+10sec</Button>
-                    <p className="mr-2 text-xl font-bold">{expiryTD}</p>
-                    <Button onClick={() => void modifyExpiryTD(-10)}>-10sec</Button>
                     <Button onClick={() => void modifyExpiryTD(-60)}>-1min</Button>
+                    <Button onClick={() => void modifyExpiryTD(-10)}>-10sec</Button>
+                    <Button onClick={() => void modifyExpiryTD(10)}>+10sec</Button>
+                    <Button onClick={() => void modifyExpiryTD(60)}>+1min</Button>
                   </div>
-                  <div className="flex justify-center items-center text-xl">
-                    <Button className="w-full" onClick={() => void setStarted(true)}>開始</Button>
+                  <div className="flex justify-center items-center text-xl mt-1">
+                    <Button onClick={() => void setStarted(true)}>開始</Button>
                   </div>
                 </>}
               {

@@ -48,7 +48,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
             <div className="text-6xl font-extrabold">
                 <span>{zeroPadding(minutes)}</span>:<span>{zeroPadding(seconds)}</span>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-1">
                 <Button onClick={resumeTimer}><PlayIcon className="w-10 h-10 cursor-pointer">再開</PlayIcon></Button>
                 <Button onClick={pause}><PauseIcon className="w-10 h-10 cursor-pointer">一時停止</PauseIcon></Button>
                 <Button onClick={resetInterval}><ArrowPathIcon className="w-10 h-10 cursor-pointer">開始</ArrowPathIcon></Button>

@@ -12,6 +12,7 @@ import { Paginator } from "./Paginator";
 import { RecordCard } from "./RecordCard";
 import { RMCalcualtor } from "./RMCalculator";
 import { Timer } from "./Timer";
+import { ToolList } from "./ToolList";
 
 export {
   AuthShowcase,
@@ -28,4 +29,5 @@ export {
   RecordCard,
   RMCalcualtor,
   Timer,
+  ToolList,
 };

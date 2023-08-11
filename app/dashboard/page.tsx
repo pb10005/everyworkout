@@ -81,18 +81,20 @@ const Dashboard: NextPage = () => {
                   {data?.length && data?.length > 0 ? (
                     <>
                       <p className="text-sm text-gray-500">トレーニング履歴</p>
-                      {data?.map((d) => {
-                        return <RecordCard key={d.id}
-                          id={d.id}
-                          exerciseName={d.exercise.name}
-                          date={d.date}
-                          weight={d.weight}
-                          reps={d.reps}
-                          sets={d.sets}
-                          note={d.note}
-                          muscles={d.exercise.muscles.map(m => m.muscle)}
-                        />;
-                      })}
+                      <div className="grid gap-2">
+                        {data?.map((d) => {
+                          return <RecordCard key={d.id}
+                            id={d.id}
+                            exerciseName={d.exercise.name}
+                            date={d.date}
+                            weight={d.weight}
+                            reps={d.reps}
+                            sets={d.sets}
+                            note={d.note}
+                            muscles={d.exercise.muscles.map(m => m.muscle)}
+                          />;
+                        })}
+                      </div>
                       <Link href="/workout/history">View More</Link>
                     </>
                   ) : (

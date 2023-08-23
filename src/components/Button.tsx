@@ -14,7 +14,7 @@ export const Button: React.FC<Props> = (props: Props) => {
   const styleType = layout || "normal";
   const style: { [key: string]: string } = {
     "normal": "bg-cyan-600 outline outline-2 outline-cyan-300 text-cyan-50 tracking-wide",
-    "danger": "bg-red-600 text-white tracking-wide"
+    "danger": "bg-red-600 outline outline-2 outline-orange-300 text-white tracking-wide"
   }
   return (
     <>

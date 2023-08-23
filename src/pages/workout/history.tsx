@@ -93,20 +93,22 @@ const History: NextPage = () => {
                   maxPage={maxPage}
                   setPage={setPage}
                 />}
-                {data?.length && data?.length > 0
-                  ? data?.map((d) => {
-                    return <RecordCard key={d.id}
-                      id={d.id}
-                      exerciseName={d.exercise.name}
-                      date={d.date}
-                      weight={d.weight}
-                      reps={d.reps}
-                      sets={d.sets}
-                      note={d.note}
-                      muscles={d.exercise.muscles.map(m => m.muscle)}
-                    />;
-                  })
-                  : "No data"}
+                <div className="flex flex-col gap-2">
+                  {data?.length && data?.length > 0
+                    ? data?.map((d) => {
+                      return <RecordCard key={d.id}
+                        id={d.id}
+                        exerciseName={d.exercise.name}
+                        date={d.date}
+                        weight={d.weight}
+                        reps={d.reps}
+                        sets={d.sets}
+                        note={d.note}
+                        muscles={d.exercise.muscles.map(m => m.muscle)}
+                      />;
+                    })
+                    : "No data"}
+                </div>
               </>
             )}
           </section>

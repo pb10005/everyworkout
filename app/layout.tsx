@@ -1,8 +1,9 @@
+import { Metadata } from "next";
 import "../src/styles/globals.css";
 import SessionProvider from "./SessionProvider";
 import { ClientProvider } from "./trpcClient";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'EVERYWORKOUT',
     description: 'ワークアウトの成長を記録する',
     twitter: {

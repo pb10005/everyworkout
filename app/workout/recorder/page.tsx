@@ -96,9 +96,9 @@ const WorkoutRecorder: NextPage = () => {
         setEnd(true);
     };
 
-    const clear = async () => {
+    const clear = () => {
         window.sessionStorage.removeItem("workout");
-        await router.push('/dashboard');
+        router.push('/dashboard');
     };
 
     const onPrevSet = () => {

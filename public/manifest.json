@@ -1,10 +1,10 @@
 {
-    "theme_color": "#3562f6",
-    "background_color": "#3562f6",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
     "start_url": "/dashboard",
-    "name": "Every Workout",
+    "name": "EVERYWORKOUT",
     "short_name": "everyworkout",
     "icons": [
         {

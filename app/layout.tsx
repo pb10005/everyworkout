@@ -3,7 +3,7 @@ import SessionProvider from "./SessionProvider";
 import { ClientProvider } from "./trpcClient";
 
 export const metadata = {
-    title: 'Every Workout',
+    title: 'EVERYWORKOUT',
     description: 'ワークアウトの成長を記録する',
     twitter: {
         card: "summary_large_image",

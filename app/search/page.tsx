@@ -1,14 +1,16 @@
 "use client";
 
 import { type NextPage } from "next";
+import { useRouter } from "next/navigation";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-import { Heading, Navigation, ExerciseSelector } from "../../src/components";
+import { Button, Heading, Navigation, ExerciseSelector } from "../../src/components";
 
 const Search: NextPage = () => {
+  const router = useRouter();
   const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
 
   const handleExerciseClick = (id: number) => {
@@ -30,9 +32,9 @@ const Search: NextPage = () => {
               />
             </section>
             {selectedExerciseId > 0 && (
-              <Link href={`/search/${selectedExerciseId}`} className="bg-blue-100 hover:bg-white rounded-lg py-2 px-4">
+              <Button onClick={() => router.push(`/search/${selectedExerciseId}`)} layout="normal">
                 検索
-              </Link>
+              </Button>
             )
             }
           </div>

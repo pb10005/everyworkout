@@ -1,6 +1,8 @@
 import { ImageResponse } from "next/server";
 import { prisma } from "../../../src/server/db";
 
+export const title = 'EVERYWORKOUT';
+export const description = 'ワークアウトの成長を記録する';
 export const revalidate = "force-cache";
 export const runtime = "nodejs";
 

@@ -35,42 +35,44 @@ const SearchByExerciseId: NextPage = () => {
 
   return (
     <>
-    <main className="bg-gray-100">
-      <Heading />
-      <Navigation />
-      <div className="grid md:grid-cols-12">
-        <div className="md:col-span-6 md:col-start-4">
-          <section className="mb-2 p-2">
-            <p className="text-sm text-gray-500">種目別トレーニング履歴</p>
-            {count > 0 && (
-              <Paginator
-                className="mb-2"
-                page={page}
-                perPage={perPage}
-                maxPage={maxPage}
-                setPage={setPage}
-              />)}
-            {isLoading && <Loading />}
-            {isSuccess && (
-              <>
-                {data?.length && data?.length > 0
-                  ? data?.map((d) => {
-                    return <RecordCard key={d.id}
-                      id={d.id}
-                      exerciseName={d.exercise.name}
-                      date={d.date}
-                      weight={d.weight}
-                      reps={d.reps}
-                      sets={d.sets}
-                      note={d.note}
-                      muscles={d.exercise.muscles.map(m => m.muscle)} />;
-                  })
-                  : "No data"}
-              </>
-            )}
-          </section>
+      <main className="bg-gray-100">
+        <Heading />
+        <Navigation />
+        <div className="grid md:grid-cols-12">
+          <div className="md:col-span-6 md:col-start-4">
+            <section className="mb-2 p-2">
+              <p className="text-sm text-gray-500">種目別トレーニング履歴</p>
+              {count > 0 && (
+                <Paginator
+                  className="mb-2"
+                  page={page}
+                  perPage={perPage}
+                  maxPage={maxPage}
+                  setPage={setPage}
+                />)}
+              {isLoading && <Loading />}
+              {isSuccess && (
+                <>
+                  <div className="flex flex-col gap-2">
+                    {data?.length && data?.length > 0
+                      ? data?.map((d) => {
+                        return <RecordCard key={d.id}
+                          id={d.id}
+                          exerciseName={d.exercise.name}
+                          date={d.date}
+                          weight={d.weight}
+                          reps={d.reps}
+                          sets={d.sets}
+                          note={d.note}
+                          muscles={d.exercise.muscles.map(m => m.muscle)} />;
+                      })
+                      : "No data"}
+                  </div>
+                </>
+              )}
+            </section>
+          </div>
         </div>
-      </div>
       </main>
     </>
   );

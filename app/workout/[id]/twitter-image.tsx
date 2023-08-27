@@ -13,6 +13,17 @@ export const size = {
 };
 export const contentType = "image/png";
 
+
+export const metadata = {
+  title: 'EVERYWORKOUT',
+  description: 'ワークアウトの成長を記録する',
+  twitter: {
+      card: "summary_large_image",
+      title: "EVERYWORKOUT",
+      description: "ワークアウト記録",
+  },
+};
+
 export default async function Image({ params }: { params: { id: string } }) {
   const data = await prisma.workout.findUnique({
     include: {

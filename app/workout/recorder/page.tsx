@@ -1,8 +1,8 @@
+"use client";
 import { useState, useCallback, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Router from "next/router";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 import {
@@ -12,8 +12,8 @@ import {
     ExerciseSelector,
     Loading,
     Timer,
-} from "../../components";
-import { api } from "../../utils/api";
+} from "../../../src/components";
+import { api } from "../../../src/utils/api";
 
 type WorkoutProp = {
     date: string;
@@ -55,7 +55,7 @@ const WorkoutRecorder: NextPage = () => {
             })
             .then(({ id }) => {
                 window.sessionStorage.removeItem('workout');
-                return Router.push(`/workout/${id}`);
+                return router.push(`/workout/${id}`);
             })
             .catch(() => {
                 return;

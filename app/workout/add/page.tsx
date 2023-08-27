@@ -1,7 +1,8 @@
+"use client";
 import { useState, useCallback } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 
 import {
   Button,
@@ -9,10 +10,11 @@ import {
   Navigation,
   ExerciseSelector,
   Loading,
-} from "../../components";
-import { api } from "../../utils/api";
+} from "../../../src/components";
+import { api } from "../../../src/utils/api";
 
 const AddWorkout: NextPage = () => {
+  const router = useRouter();
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
   );
@@ -33,7 +35,7 @@ const AddWorkout: NextPage = () => {
         exerciseId: selectedExerciseId,
       })
       .then(({ id }) => {
-        return Router.push(`/workout/${id}`);
+        return router.push(`/workout/${id}`);
       })
       .catch(() => {
         return;

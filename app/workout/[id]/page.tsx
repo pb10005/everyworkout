@@ -1,13 +1,14 @@
+"use client";
 import type { ChangeEventHandler, FormEvent} from "react";
 import { FormEventHandler, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter, useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
-import { Button, Heading, Navigation, Loading } from "../../components";
-import { api } from "../../utils/api";
+import { Button, Heading, Navigation, Loading } from "../../../src/components";
+import { api } from "../../../src/utils/api";
 
 type Props = {
   note: string;
@@ -42,8 +43,10 @@ function EditNoteForm(props: Props) {
 
 const Dashboard: NextPage = () => {
   const router = useRouter();
-  const { id: ids } = router.query;
+  const params = useParams();
+  const ids = params?.id || "";
   const id = Array.isArray(ids) ? ids[0] : ids;
+
   const {
     data,
     isLoading: loadingGet,

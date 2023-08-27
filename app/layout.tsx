@@ -5,6 +5,11 @@ import { ClientProvider } from "./trpcClient";
 export const metadata = {
     title: 'Every Workout',
     description: 'ワークアウトの成長を記録する',
+    twitter: {
+        card: "summary_large_image",
+        title: "EVERYWORKOUT",
+        description: "ワークアウト記録",
+    },
 };
 
 function RootLayout({

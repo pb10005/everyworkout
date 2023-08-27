@@ -4,7 +4,7 @@ import { prisma } from "../../../src/server/db";
 export const revalidate = "force-cache";
 export const runtime = "nodejs";
 
-export const alt = "OGP画像";
+export const alt = "画像";
 export const size = {
   width: 1200,
   height: 630,
@@ -35,7 +35,7 @@ export default async function Image({ params }: { params: { id: string } }) {
           height: "100%",
         }}
       >
-        <p style={{ fontSize: 64, fontWeight: 700 }}>{data?.exercise.name}</p>
+        <p className="text-cyan-600" style={{ fontSize: 64, fontWeight: 700 }}>{data?.exercise.name}</p>
         <div style={{ fontSize: 48, display: "flex", gap: ".5em" }}>
           <span>{data?.weight}kg</span>
           <span>{data?.reps}reps</span>

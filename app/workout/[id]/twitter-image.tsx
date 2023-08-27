@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { ImageResponse } from "next/server";
 import { prisma } from "../../../src/server/db";
 
@@ -13,7 +14,7 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'EVERYWORKOUT',
   description: 'ワークアウトの成長を記録する',
   twitter: {

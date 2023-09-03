@@ -111,96 +111,98 @@ const Dashboard: NextPage = () => {
 
   return (
     <>
-      <Heading />
-      <Navigation />
-      <div>{!(loadingGet || successGet) && <AuthShowcase />}</div>
-      <div className="grid md:grid-cols-12 bg-gray-100">
-        <div className="md:col-span-6 md:col-start-4 p-2">
-          {loadingGet && <Loading />}
-          {mutation.isLoading && <Loading />}
-          {mutation.isSuccess && (
-            <>
-              <p className="rounded-lg bg-green-100 p-4 text-green-900">
-                登録完了
-              </p>
-            </>
-          )}
-          {deleteMutation.isSuccess && (
-            <>
-              <p className="rounded-lg bg-green-100 p-4 text-green-900">
-                削除完了
-              </p>
-            </>
-          )}
-          {mutation.isError && (
-            <>
-              <p className="rounded-lg bg-red-100 p-4 text-red-900">
-                エラーが発生しました: {mutation.error.data?.path}
-              </p>
-            </>
-          )}
-          {successGet && (
-            <>
-              <p className="text-xl"><Link href={`/maximum/${data?.exerciseId}`}>{data?.exercise.name}</Link></p>
-              <p className="text-sm text-gray-500">{dateDisplay}</p>
-              {data?.exercise.muscles.map(m => {
-                return (
-                  <div key={m.muscle.id} className="flex gap-1">
-                    <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.muscle.name}</span>
-                  </div>
-                )
-              })}
-              <section className="p-2">
-                <div>
-                  <span className="text-lg font-bold">{data?.weight}</span> kg
-                </div>
-                <div>
-                  <span className="text-lg font-bold">{data?.reps}</span> reps
-                </div>
-                <div>
-                  <span className="text-lg font-bold">{data?.sets}</span> sets
-                </div>
-              </section>
-              <section className="my-2">
-                <p className="flex items-center py-2">
-                  <span>メモ</span>
-                  {!isEditMode && <PencilSquareIcon onClick={enablEeditMode} className="w-6 h-6 inline cursor-pointer"></PencilSquareIcon>}
+      <div className="py-2">
+        <Heading />
+        <Navigation />
+        <div>{!(loadingGet || successGet) && <AuthShowcase />}</div>
+        <div className="grid md:grid-cols-12 bg-gray-100">
+          <div className="md:col-span-6 md:col-start-4 p-2">
+            {loadingGet && <Loading />}
+            {mutation.isLoading && <Loading />}
+            {mutation.isSuccess && (
+              <>
+                <p className="rounded-lg bg-green-100 p-4 text-green-900">
+                  登録完了
                 </p>
-                {isEditMode && <EditNoteForm note={note} setNote={(e) => setNote(e.target.value)} submit={() => void onSubmit()} cancel={() => onCancel()}></EditNoteForm>}
-                {!isEditMode && data?.note && (
-                  <>
-                    <p className="rounded bg-gray-200 p-4">{data?.note}</p>
-                  </>
-                )}
-              </section>
-              <section className="rounded-xl border-2 border-gray-200 p-4">
-                <div className="mb-2">
-                  <label className="mr-2" htmlFor="metrics">
-                    指標
-                  </label>
-                  <select
-                    name="metrics"
-                    className="p-2"
-                    value={metricsCode}
-                    onChange={(e) => setMetricsCode(e.target.value)}
-                  >
-                    <option value="01">重量</option>
-                    <option value="02">reps</option>
-                  </select>
-                </div>
-                {!mutation.isLoading && (
-                  <Button onClick={() => void registerMaximum()}>
-                    Max記録登録
-                  </Button>
-                )}
-                {!deleteMutation.isLoading &&
-                  <Button onClick={() => void deleteWorkout()} layout="danger">
-                    削除
-                  </Button>
-                }
-              </section>
-            </>
-          )}
+              </>
+            )}
+            {deleteMutation.isSuccess && (
+              <>
+                <p className="rounded-lg bg-green-100 p-4 text-green-900">
+                  削除完了
+                </p>
+              </>
+            )}
+            {mutation.isError && (
+              <>
+                <p className="rounded-lg bg-red-100 p-4 text-red-900">
+                  エラーが発生しました: {mutation.error.data?.path}
+                </p>
+              </>
+            )}
+            {successGet && (
+              <>
+                <p className="text-xl"><Link href={`/maximum/${data?.exerciseId}`}>{data?.exercise.name}</Link></p>
+                <p className="text-sm text-gray-500">{dateDisplay}</p>
+                {data?.exercise.muscles.map(m => {
+                  return (
+                    <div key={m.muscle.id} className="flex gap-1">
+                      <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.muscle.name}</span>
+                    </div>
+                  )
+                })}
+                <section className="p-2">
+                  <div>
+                    <span className="text-lg font-bold">{data?.weight}</span> kg
+                  </div>
+                  <div>
+                    <span className="text-lg font-bold">{data?.reps}</span> reps
+                  </div>
+                  <div>
+                    <span className="text-lg font-bold">{data?.sets}</span> sets
+                  </div>
+                </section>
+                <section className="my-2">
+                  <p className="flex items-center py-2">
+                    <span>メモ</span>
+                    {!isEditMode && <PencilSquareIcon onClick={enablEeditMode} className="w-6 h-6 inline cursor-pointer"></PencilSquareIcon>}
+                  </p>
+                  {isEditMode && <EditNoteForm note={note} setNote={(e) => setNote(e.target.value)} submit={() => void onSubmit()} cancel={() => onCancel()}></EditNoteForm>}
+                  {!isEditMode && data?.note && (
+                    <>
+                      <p className="rounded bg-gray-200 p-4">{data?.note}</p>
+                    </>
+                  )}
+                </section>
+                <section className="rounded-xl border-2 border-gray-200 p-4">
+                  <div className="mb-2">
+                    <label className="mr-2" htmlFor="metrics">
+                      指標
+                    </label>
+                    <select
+                      name="metrics"
+                      className="p-2"
+                      value={metricsCode}
+                      onChange={(e) => setMetricsCode(e.target.value)}
+                    >
+                      <option value="01">重量</option>
+                      <option value="02">reps</option>
+                    </select>
+                  </div>
+                  {!mutation.isLoading && (
+                    <Button onClick={() => void registerMaximum()}>
+                      Max記録登録
+                    </Button>
+                  )}
+                  {!deleteMutation.isLoading &&
+                    <Button onClick={() => void deleteWorkout()} layout="danger">
+                      削除
+                    </Button>
+                  }
+                </section>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>

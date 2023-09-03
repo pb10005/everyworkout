@@ -11,7 +11,6 @@ import { Heading, Navigation, RecordCard, Loading, Paginator } from "../../../sr
 const SearchByExerciseId: NextPage = () => {
 
   const params = useParams();
-  console.log(params);
   const ids = params?.exerciseId || "";
   const exerciseId = Array.isArray(ids) ? ids[0] : ids;
 

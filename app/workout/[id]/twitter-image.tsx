@@ -57,7 +57,7 @@ export default async function Image({ params }: { params: { id: string } }) {
           <span>{data?.sets}sets</span>
         </div>
         <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-          <img src={"/logo_h.png"} alt="logo" width={300} height={100} />
+          <img src={`${metadata.metadataBase?.hostname ? 'https://' + metadata.metadataBase?.hostname : 'http://localhost:3000'}/logo_h.png`} alt="logo" width={500} height={150} />
         </div>
       </div>
     ),

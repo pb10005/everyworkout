@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   title: 'EVERYWORKOUT',
   description: 'ワークアウトの成長を記録する',
   twitter: {
-      card: "summary_large_image",
-      title: "EVERYWORKOUT",
-      description: "ワークアウト記録",
+    card: "summary_large_image",
+    title: "EVERYWORKOUT",
+    description: "ワークアウト記録",
   },
 };
 
@@ -47,13 +47,17 @@ export default async function Image({ params }: { params: { id: string } }) {
           justifyContent: "center",
           width: "100%",
           height: "100%",
+          gap: "1em"
         }}
       >
-        <p className="text-cyan-600" style={{ fontSize: 64, fontWeight: 700 }}>{data?.exercise.name}</p>
+        <p style={{ fontSize: 96, fontWeight: 900 }}>{data?.exercise.name}</p>
         <div style={{ fontSize: 48, display: "flex", gap: ".5em" }}>
           <span>{data?.weight}kg</span>
           <span>{data?.reps}reps</span>
           <span>{data?.sets}sets</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <img src={"/logo_h.png"} alt="logo" width={300} height={100} />
         </div>
       </div>
     ),

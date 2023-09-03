@@ -22,7 +22,7 @@ export const AuthShowcase: React.FC = () => {
                     </p>
                     <button
                         className="rounded-full px-10 py-3 font-semibold no-underline shadow bg-white"
-                        onClick={sessionData ? () => void signOut() : () => void signIn()}
+                        onClick={sessionData ? () => void signOut() : () => void signIn(undefined, { callbackUrl: "/" })}
                     >
                         {sessionData ? "Sign out" : "Sign in"}
                     </button>

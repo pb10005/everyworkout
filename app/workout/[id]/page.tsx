@@ -150,7 +150,7 @@ const Dashboard: NextPage = () => {
                 <p className="text-sm text-gray-500">{dateDisplay}</p>
                 <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
                   className="twitter-hashtag-button"
-                  data-url={`${origin || ''}/${pathname || ''}`}
+                  data-url={`${origin || ''}${pathname || ''}`}
                   data-show-count="false">
                   Tweet
                 </a><script async src="https://platform.twitter.com/widgets.js"></script>

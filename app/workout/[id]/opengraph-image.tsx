@@ -15,6 +15,7 @@ export const size = {
 export const contentType = "image/png";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://everyworkout.vercel.app/'),
   title: 'EVERYWORKOUT',
   description: 'ワークアウトの成長を記録する',
   twitter: {

@@ -3,12 +3,13 @@ import type { ChangeEventHandler, FormEvent } from "react";
 import { FormEventHandler, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, usePathname } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
 import { AuthShowcase, Button, Heading, Navigation, Loading } from "../../../src/components";
 import { api } from "../../../src/utils/api";
+import { metadata } from "./layout";
 
 type Props = {
   note: string;
@@ -44,6 +45,9 @@ function EditNoteForm(props: Props) {
 const Dashboard: NextPage = () => {
   const router = useRouter();
   const params = useParams();
+  const pathname = usePathname();
+  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+
   const ids = params?.id || "";
   const id = Array.isArray(ids) ? ids[0] : ids;
 
@@ -144,6 +148,12 @@ const Dashboard: NextPage = () => {
               <>
                 <p className="text-xl"><Link href={`/maximum/${data?.exerciseId}`}>{data?.exercise.name}</Link></p>
                 <p className="text-sm text-gray-500">{dateDisplay}</p>
+                <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
+                  className="twitter-hashtag-button"
+                  data-url={`${origin}/${pathname}`}
+                  data-show-count="false">
+                  Tweet
+                </a><script async src="https://platform.twitter.com/widgets.js"></script>
                 {data?.exercise.muscles.map(m => {
                   return (
                     <div key={m.muscle.id} className="flex gap-1">

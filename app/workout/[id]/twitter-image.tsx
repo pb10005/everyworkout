@@ -47,17 +47,48 @@ export default async function Image({ params }: { params: { id: string } }) {
           justifyContent: "center",
           width: "100%",
           height: "100%",
+          padding: "5px",
           gap: "1em"
         }}
       >
-        <p style={{ fontSize: 96, fontWeight: 900 }}>{data?.exercise.name}</p>
-        <div style={{ fontSize: 48, display: "flex", gap: ".5em" }}>
-          <span>{data?.weight}kg</span>
-          <span>{data?.reps}reps</span>
-          <span>{data?.sets}sets</span>
-        </div>
         <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
           <img src={`${metadata.metadataBase?.hostname ? 'https://' + metadata.metadataBase?.hostname : 'http://localhost:3000'}/logo_h.png`} alt="logo" width={500} height={150} />
+        </div>
+        <p style={{ fontSize: 96, fontWeight: 900 }}>{data?.exercise.name}</p>
+        <div style={{ display: "flex", gap: "4em" }}>
+          <div style={
+            {
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center"
+            }
+          }>
+            <span style={{ fontSize: 48 }}>{data?.weight}</span>
+            <span style={{ fontSize: 32 }}>kg</span>
+          </div>
+          <div style={
+            {
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center"
+            }
+          }>
+            <span style={{ fontSize: 48 }}>{data?.reps}</span>
+            <span style={{ fontSize: 32 }}>reps</span>
+          </div>
+          <div style={
+            {
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center"
+            }
+          }>
+            <span style={{ fontSize: 48 }}>{data?.sets}</span>
+            <span style={{ fontSize: 32 }}>sets</span>
+          </div>
         </div>
       </div>
     ),

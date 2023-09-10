@@ -1,15 +1,13 @@
 "use client";
 import type { ChangeEventHandler, FormEvent } from "react";
-import { FormEventHandler, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { type NextPage } from "next";
-import Head from "next/head";
 import { useRouter, useParams, usePathname } from "next/navigation";
-import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import Script from 'next/script';
 
-import { AuthShowcase, Button, Heading, Navigation, Loading } from "../../../src/components";
+import { AuthShowcase, Button, EditNoteForm, Heading, Navigation, Loading, WorkoutCard } from "../../../src/components";
 import { api } from "../../../src/utils/api";
-import { metadata } from "./layout";
 
 type Props = {
   note: string;
@@ -18,35 +16,13 @@ type Props = {
   cancel: () => void;
 };
 
-function EditNoteForm(props: Props) {
-  const { note, setNote, submit, cancel } = props;
-  const onSubmit = (e: FormEvent<Element>) => {
-    e.preventDefault();
-    submit();
-  }
-  return (<>
-    <form onSubmit={onSubmit}>
-      <input
-        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-        type="text"
-        id="note"
-        placeholder="メモ"
-        value={note}
-        onChange={setNote}
-      />
-      <div className="my-2">
-        <Button type="button" onClick={cancel}>キャンセル</Button>
-        <Button type="submit" onClick={() => void (0)}>送信</Button>
-      </div>
-    </form>
-  </>);
-}
-
-const Dashboard: NextPage = () => {
+const WorkoutPage: NextPage = () => {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+
+  const ref = useRef<HTMLDivElement>(null);
 
   const ids = params?.id || "";
   const id = Array.isArray(ids) ? ids[0] : ids;
@@ -59,19 +35,8 @@ const Dashboard: NextPage = () => {
     id: id || "",
   });
 
-  const utils = api.useContext();
-
-  const dateDisplay = data?.date.toISOString().split("T")[0] || "";
   const [metricsCode, setMetricsCode] = useState<string>("01");
-  const [isEditMode, setEditMode] = useState<boolean>(false);
-  const [note, setNote] = useState<string>("");
-
   const mutation = api.maximum.add.useMutation();
-  const updateMutation = api.workout.update.useMutation({
-    async onSuccess() {
-      await utils.workout.getWorkoutById.invalidate()
-    }
-  });
   const deleteMutation = api.workout.delete.useMutation();
 
   const registerMaximum = async () => {
@@ -95,22 +60,6 @@ const Dashboard: NextPage = () => {
     await deleteMutation.mutateAsync({
       id: id || ""
     });
-  };
-
-  const enablEeditMode = () => {
-    setNote(data?.note || "");
-    setEditMode(true);
-  };
-
-  const onSubmit = async () => {
-    await updateMutation.mutateAsync({ id: id || "", note });
-    setNote("");
-    setEditMode(false);
-  };
-
-  const onCancel = () => {
-    setNote("");
-    setEditMode(false);
   };
 
   return (
@@ -146,45 +95,28 @@ const Dashboard: NextPage = () => {
             )}
             {successGet && (
               <>
-                <p className="text-xl"><Link href={`/maximum/${data?.exerciseId}`}>{data?.exercise.name}</Link></p>
-                <p className="text-sm text-gray-500">{dateDisplay}</p>
-                <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
-                  className="twitter-hashtag-button"
-                  data-url={`${origin || ''}${pathname || ''}`}
-                  data-show-count="false">
-                  Tweet
-                </a><script async src="https://platform.twitter.com/widgets.js"></script>
-                {data?.exercise.muscles.map(m => {
-                  return (
-                    <div key={m.muscle.id} className="flex gap-1">
-                      <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.muscle.name}</span>
-                    </div>
-                  )
-                })}
-                <section className="p-2">
-                  <div>
-                    <span className="text-lg font-bold">{data?.weight}</span> kg
-                  </div>
-                  <div>
-                    <span className="text-lg font-bold">{data?.reps}</span> reps
-                  </div>
-                  <div>
-                    <span className="text-lg font-bold">{data?.sets}</span> sets
-                  </div>
-                </section>
-                <section className="my-2">
-                  <p className="flex items-center py-2">
-                    <span>メモ</span>
-                    {!isEditMode && <PencilSquareIcon onClick={enablEeditMode} className="w-6 h-6 inline cursor-pointer"></PencilSquareIcon>}
-                  </p>
-                  {isEditMode && <EditNoteForm note={note} setNote={(e) => setNote(e.target.value)} submit={() => void onSubmit()} cancel={() => onCancel()}></EditNoteForm>}
-                  {!isEditMode && data?.note && (
-                    <>
-                      <p className="rounded bg-gray-200 p-4">{data?.note}</p>
-                    </>
-                  )}
-                </section>
-                <section className="rounded-xl border-2 border-gray-200 p-4">
+                {data &&
+                  <WorkoutCard
+                    id={data?.id}
+                    exerciseName={data?.exercise.name}
+                    date={data?.date}
+                    weight={data?.weight}
+                    reps={data?.reps}
+                    sets={data?.sets}
+                    note={data.note}
+                    muscles={data.exercise.muscles.map(m => m.muscle)}
+                  />}
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm text-gray-500">共有</label>
+                  <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
+                    className="twitter-hashtag-button p-4"
+                    data-url={`${origin || ''}${pathname || ''}`}
+                    data-show-count="false">
+                    Tweet
+                  </a>
+                  <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload"></Script>
+                  <label className="text-sm text-gray-500">Max更新記録</label>
+                  <Link href={`/maximum/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
                   <div className="mb-2">
                     <label className="mr-2" htmlFor="metrics">
                       指標
@@ -200,16 +132,17 @@ const Dashboard: NextPage = () => {
                     </select>
                   </div>
                   {!mutation.isLoading && (
-                    <Button onClick={() => void registerMaximum()}>
+                    <Button onClick={() => void registerMaximum()} className="w-full">
                       Max記録登録
                     </Button>
                   )}
+                  <label className="text-sm text-gray-500">削除</label>
                   {!deleteMutation.isLoading &&
-                    <Button onClick={() => void deleteWorkout()} layout="danger">
+                    <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
                       削除
                     </Button>
                   }
-                </section>
+                </div>
               </>
             )}
           </div>
@@ -219,4 +152,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default WorkoutPage;

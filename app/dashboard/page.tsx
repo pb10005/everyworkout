@@ -83,7 +83,7 @@ const Dashboard: NextPage = () => {
                       <p className="text-sm text-gray-500">トレーニング履歴</p>
                       <div className="grid gap-2">
                         {data?.map((d) => {
-                          return <RecordCard key={d.id}
+                          return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
                             id={d.id}
                             exerciseName={d.exercise.name}
                             date={d.date}
@@ -92,7 +92,7 @@ const Dashboard: NextPage = () => {
                             sets={d.sets}
                             note={d.note}
                             muscles={d.exercise.muscles.map(m => m.muscle)}
-                          />;
+                          /></Link>;
                         })}
                       </div>
                       <Link href="/workout/history">View More</Link>

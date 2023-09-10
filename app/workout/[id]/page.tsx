@@ -63,9 +63,8 @@ const WorkoutPage: NextPage = () => {
   };
 
   useEffect(() => {
-    /* eslint-disable */
+    // @ts-ignore
     window.twttr?.widgets.load(ref.current);
-    /* eslint-enable */
   }, []);
 
   return (

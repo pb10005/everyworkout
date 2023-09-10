@@ -62,11 +62,6 @@ const WorkoutPage: NextPage = () => {
     });
   };
 
-  useEffect(() => {
-    // @ts-ignore
-    window.twttr?.widgets.load(ref.current);
-  }, []);
-
   return (
     <>
       <div className="py-2">

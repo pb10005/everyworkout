@@ -37,7 +37,9 @@ export async function POST(req: Request) {
     parameters: {
       max_new_tokens: 256,
       do_sample: true,
+      top_p: 0.9,
       truncate: 1000,
+      repetition_penalty: 1,
       return_full_text: false
     },
   });

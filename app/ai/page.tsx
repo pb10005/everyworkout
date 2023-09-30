@@ -29,17 +29,18 @@ export default function Completion() {
         input,
         stop,
         isLoading,
+        error,
         handleInputChange,
         handleSubmit,
     } = helper;
 
     useEffect(() => {
         const initialInput =
-`1日のワークアウトの合計ボリュームは${totalVolume ?? 0}kgでした。
+            `1日のワークアウトの合計ボリュームは${totalVolume ?? 0}kgでした。
 行った種目の内訳は以下の通りです。
 ${data?.map(d => {
-    return `- ${d.exercise.name}を${d.weight ?? 0}kgで${d.reps ?? 0}回×${d.sets ?? 0}セット ${d.note ? "コメント: " + d.note : ""}`
-}).join("\n") ?? "- トレーニング記録なし"}`;
+                return `- ${d.exercise.name}を${d.weight ?? 0}kgで${d.reps ?? 0}回×${d.sets ?? 0}セット ${d.note ? "コメント: " + d.note : ""}`
+            }).join("\n") ?? "- トレーニング記録なし"}`;
 
         helper.setInput(initialInput);
     }, [totalVolume]);
@@ -64,7 +65,7 @@ ${data?.map(d => {
             <main className="bg-gray-100">
                 <Heading />
                 <Navigation />
-                <div className="mx-auto w-full max-w-md flex flex-col stretch my-2 gap-2">
+                <div className="mx-auto w-full max-w-xl flex flex-col stretch my-2 gap-2">
                     <div className='text-2xl font-bold'>AIトレーナー</div>
                     <div className="mb-2">
                         <label
@@ -86,15 +87,16 @@ ${data?.map(d => {
                             onChange={(e) => { e.target.value && setDate(e.target.value) }}
                         />
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <label>
+                    <form className='w-full' onSubmit={handleSubmit}>
+                        <label htmlFor='input'>
                             トレーニングメモを記入してください。
-                            <textarea
-                                className="w-full max-w-md border border-gray-300 rounded shadow-xl p-2"
-                                value={input}
-                                onChange={handleInputChange}
-                            />
                         </label>
+                        <textarea
+                            name="input"
+                            className="w-full rounded shadow-xl p-2"
+                            value={input}
+                            onChange={handleInputChange}
+                        />
                         <div className='flex gap-2'>
                             <Button type="button" onClick={stop}>
                                 Stop

@@ -4,6 +4,7 @@ export const ToolList: React.FC = () => {
     const links = [
         {id: 1, label: "RM計算機", href: "/rm-calculator"},
         {id: 2, label: "タイマー", href: "/timer"},
+        {id: 3, label: "AIトレーナー(BETA)", href: "/ai"}
     ];
     return (
         <>  

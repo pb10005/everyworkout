@@ -23,6 +23,8 @@ export const serverSchema = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  HUGGINGFACE_API_KEY: z.string(),
+  HUGGINGFACE_URL: z.string(),
 });
 
 /**
@@ -39,6 +41,8 @@ export const serverEnv = {
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  HUGGINGFACE_API_KEY: process.env.HUGGINGFACE_API_KEY,
+  HUGGINGFACE_URL: process.env.HUGGINGFACE_URL
 };
 
 /**

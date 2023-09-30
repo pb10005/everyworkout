@@ -5,7 +5,7 @@ type Props = {
   className?: string;
   type?: "button" | "reset" | "submit" | undefined;
   layout?: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const Button: React.FC<Props> = (props: Props) => {

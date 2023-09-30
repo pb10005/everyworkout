@@ -27,8 +27,8 @@ export async function POST(req: Request) {
   const E_INST = "[/INST]";
   const B_SYS = "<<SYS>>\n";
   const E_SYS = "\n<</SYS>>\n\n";
-  const DEFAULT_SYSTEM_PROMPT = "あなたは専門的なウェイトトレーニングのインストラクターです。トレーニーの成長とモチベーション向上をサポートします。";
-  const INSTRUCTION = "\n\n以上のトレーニーのワークアウト記録について、アドバイスとコメントをしてください。箇条書きのMarkdown形式で出力してください。";
+  const DEFAULT_SYSTEM_PROMPT = "あなたは専門的なウェイトトレーニングの優秀なインストラクターです。";
+  const INSTRUCTION = "\n\n以上はトレーニーのワークアウト記録です。良い点と改善点について簡潔にコメントをしてください。箇条書きのMarkdown形式で出力してください。";
 
   const text = `${BOS_TOKEN}${B_INST}${B_SYS}${DEFAULT_SYSTEM_PROMPT}${E_SYS}${prompt}${INSTRUCTION}${E_INST}\n`;
   const response = Hf.textGenerationStream({

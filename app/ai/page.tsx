@@ -35,10 +35,10 @@ export default function Completion() {
 
     useEffect(() => {
         const initialInput =
-`1日のワークアウトの合計ボリュームは${totalVolume}kgでした。
+`1日のワークアウトの合計ボリュームは${totalVolume ?? 0}kgでした。
 行った種目の内訳は以下の通りです。
 ${data?.map(d => {
-    return `- ${d.exercise.name}を${d.weight}kgで${d.reps}回×${d.sets}セット ${d.note ? "コメント: " + d.note : ""}`
+    return `- ${d.exercise.name}を${d.weight ?? 0}kgで${d.reps ?? 0}回×${d.sets ?? 0}セット ${d.note ? "コメント: " + d.note : ""}`
 }).join("\n") ?? "- トレーニング記録なし"}`;
 
         helper.setInput(initialInput);

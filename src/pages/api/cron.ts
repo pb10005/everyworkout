@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { generateReport } from "../../utils/report";
  
-export default function handler(
+export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  response.status(200).json({ success: true });
+  const data = await generateReport();
+  response.status(200).json({ success: true, data: data });
 }

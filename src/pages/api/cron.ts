@@ -1,3 +1,8 @@
-export default function handler(req, res) {
-  res.status(200).end('Hello Cron!');
+import type { NextApiRequest, NextApiResponse } from 'next';
+ 
+export default function handler(
+  request: NextApiRequest,
+  response: NextApiResponse,
+) {
+  response.status(200).json({ success: true });
 }

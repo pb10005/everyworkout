@@ -34,7 +34,6 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "src/pages/cron.js"
+    "node_modules"
   ]
 }

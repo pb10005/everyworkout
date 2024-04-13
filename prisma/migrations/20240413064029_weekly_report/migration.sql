@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "Workout" ADD COLUMN     "weeklyReportPublished" BOOLEAN NOT NULL;
+ALTER TABLE "Workout" ADD COLUMN     "weeklyReportPublished" BOOLEAN NOT NULL DEFAULT FALSE;
 
 -- CreateTable
 CREATE TABLE "WeeklyReport" (

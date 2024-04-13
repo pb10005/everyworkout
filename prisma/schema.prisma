@@ -32,7 +32,7 @@ model Workout {
   sets                  Int
   note                  String?
   exerciseId            Int
-  weeklyReportPublished Boolean
+  weeklyReportPublished Boolean  @default(false)
   createdAt             DateTime @default(now())
   exercise              Exercise @relation(fields: [exerciseId], references: [id])
   user                  User?    @relation(fields: [userId], references: [id])

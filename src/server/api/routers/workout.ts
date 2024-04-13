@@ -33,6 +33,7 @@ export const workoutRouter = createTRPCRouter({
           sets: input.sets,
           note: input.note,
           exerciseId: input.exerciseId,
+          weeklyReportPublished: false
         },
       });
       return workout;

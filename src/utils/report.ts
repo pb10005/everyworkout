@@ -23,7 +23,7 @@ export const generateReport = async () => {
 
     const reports = result.map(r => {
         const name = users.find(u => u.id === r.userId)?.name;
-        const report = `${name}さんは${r._count}回ワークアウトしました`;
+        const report = `${name || 'Anonymous'}さんは${r._count}回ワークアウトしました`;
 
         return {
             userId: r.userId || '',

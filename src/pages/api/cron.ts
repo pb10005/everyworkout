@@ -5,7 +5,7 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  if (request.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (process.env.CRON_SECRET && request.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
     return response.status(401).end('Unauthorized');
   }
   const data = await generateReport();

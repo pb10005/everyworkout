@@ -51,3 +51,5 @@ yarn-error.log*
 
 # dump file
 *.dmp
+
+tools/*

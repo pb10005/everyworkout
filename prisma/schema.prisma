@@ -24,17 +24,18 @@ model Muscle {
 }
 
 model Workout {
-  id         String   @id @default(cuid())
-  userId     String?
-  date       DateTime @default(now())
-  weight     Float?
-  reps       Int
-  sets       Int
-  note       String?
-  exerciseId Int
-  createdAt  DateTime @default(now())
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  user       User?    @relation(fields: [userId], references: [id])
+  id                    String   @id @default(cuid())
+  userId                String?
+  date                  DateTime @default(now())
+  weight                Float?
+  reps                  Int
+  sets                  Int
+  note                  String?
+  exerciseId            Int
+  weeklyReportPublished Boolean
+  createdAt             DateTime @default(now())
+  exercise              Exercise @relation(fields: [exerciseId], references: [id])
+  user                  User?    @relation(fields: [userId], references: [id])
 
   @@index([id, userId])
   @@index([userId, exerciseId, date])
@@ -56,7 +57,16 @@ model ExerciseMuscle {
   is_main    Boolean
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   muscle     Muscle   @relation(fields: [muscleId], references: [id])
+
   @@index([muscleId, is_main])
+}
+
+model WeeklyReport {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  content   String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Maximum {
@@ -101,15 +111,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   maximums      Maximum[]
   sessions      Session[]
   workouts      Workout[]
+  weeklyReports WeeklyReport[]
 }
 
 model VerificationToken {

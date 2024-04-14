@@ -103,7 +103,7 @@ const History: NextPage = () => {
             <p className="text-sm text-gray-500">種目別グラフ</p>
             {isLoading && <Loading />}
             {isSuccess && (<>
-              <div className="w-full">
+              <div className="w-full bg-white">
                 <ResponsiveContainer
                   width="100%"
                   height={300}>

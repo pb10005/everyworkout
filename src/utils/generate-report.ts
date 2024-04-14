@@ -1,4 +1,3 @@
-import { exec } from "child_process";
 import { prisma } from "../server/db";
 
 export const generateReport = async () => {

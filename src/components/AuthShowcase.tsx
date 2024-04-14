@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Loading } from ".";
+import { Loading, Button } from ".";
+import { useRouter } from "next/navigation";
+import { router } from "@trpc/server";
 
 export const AuthShowcase: React.FC = () => {
     const { data: sessionData, status } = useSession();
+    const router = useRouter();
 
     return (
         <>
@@ -12,20 +15,19 @@ export const AuthShowcase: React.FC = () => {
                 {status !== "loading" && <div className="flex flex-col items-center justify-center gap-4">
                     <p className="text-center">
                         {sessionData && (
-                            <Link
-                                href="/dashboard"
-                                className="rounded-full px-10 py-3 font-semibold no-underline shadow bg-white"
+                            <Button
+                                onClick={() => router.push("/dashboard")}
                             >
                                 Dashboard
-                            </Link>
+                            </Button>
                         )}
                     </p>
-                    <button
-                        className="rounded-full px-10 py-3 font-semibold no-underline shadow bg-white"
+                    <Button
                         onClick={sessionData ? () => void signOut() : () => void signIn(undefined, { callbackUrl: "/dashboard" })}
+                        layout="danger"
                     >
-                        {sessionData ? "Sign out" : "Sign in"}
-                    </button>
+                        {sessionData ? "ログアウト" : "ログイン"}
+                    </Button>
                 </div>}
             </div>
         </>

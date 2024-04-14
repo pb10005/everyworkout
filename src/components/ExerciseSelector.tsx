@@ -26,7 +26,7 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
       {selectedBodyPartId < 0 && bodyPartExists && <div className="gap-1 bg-white">
         <ul className="gap-1 divide-y">
           {bodyParts.map(bp => (
-            <li className="p-2 cursor-poiner hover:bg-gray-200" key={bp.id} onClick={() => void handleBodyPartClick(bp.id)}>
+            <li className="p-2 cursor-pointer hover:bg-gray-200" key={bp.id} onClick={() => void handleBodyPartClick(bp.id)}>
               {bp.name}
             </li>
           ))

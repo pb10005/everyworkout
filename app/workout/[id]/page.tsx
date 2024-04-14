@@ -69,7 +69,7 @@ const WorkoutPage: NextPage = () => {
         <Navigation />
         <div>{!(loadingGet || successGet) && <AuthShowcase />}</div>
         <div className="grid md:grid-cols-12 bg-gray-100">
-          <div className="md:col-span-6 md:col-start-4 p-2">
+          <div className="md:col-span-6 md:col-start-4 p-2 flex flex-col gap-2">
             {loadingGet && <Loading />}
             {mutation.isLoading && <Loading />}
             {mutation.isSuccess && (

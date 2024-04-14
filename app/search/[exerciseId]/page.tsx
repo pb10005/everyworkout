@@ -34,7 +34,7 @@ const SearchByExerciseId: NextPage = () => {
 
   return (
     <>
-      <main className="bg-gray-100">
+      <main className="h-screen bg-gray-100">
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">

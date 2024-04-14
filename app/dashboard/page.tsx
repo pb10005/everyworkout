@@ -34,9 +34,21 @@ const Dashboard: NextPage = () => {
     data: maximum,
   } = api.maximum.getUserMaximums.useQuery();
 
+  const {
+    isLoading: loadingR,
+    isSuccess: successR,
+    isError: errorR,
+    data: reports
+  } = api.weeklyReport.getUserReports.useQuery();
+
+  const dateDisplay = (date: Date) => {
+    return date ? new Date(date).toISOString().split("T")[0] || ""
+      : ""
+  };
+
   return (
     <>
-      <main className="bg-gray-100">
+      <main className="h-screen bg-gray-100">
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">
@@ -75,13 +87,31 @@ const Dashboard: NextPage = () => {
               )}
             </section>
             <section className="mb-2 p-2">
+              <p className="text-sm text-gray-500">週次レポート</p>
+              {loadingM && <Loading />}
+              {(errorW && errorM) && <NotLoggedInCard />}
+              {successM && (
+                <>
+                  <ul className="gap-1 divide-y bg-white">
+                    {reports?.length && reports.length > 0
+                      ? reports?.map(r => (
+                        <li key={r.id} className="py-2 px-4 flex items-center gap-2">
+                          <span className="text-sm text-gray-500">{dateDisplay(r.createdAt)}</span>
+                          <span>{r.content}</span>
+                        </li>)
+                      )
+                      : "No data"}
+                  </ul>
+                </>
+              )}
+            </section>
+            <section className="mb-2 p-2">
               {loadingW && <Loading />}
               {successW && (
                 <div>
-                  {data?.length && data?.length > 0 ? (
-                    <>
-                      <p className="text-sm text-gray-500">トレーニング履歴</p>
-                      <div className="grid gap-2">
+                    <p className="text-sm text-gray-500">トレーニング履歴</p>
+                    <div className="grid gap-2">
+                      {data?.length && data?.length > 0 ? (<>
                         {data?.map((d) => {
                           return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
                             id={d.id}
@@ -94,12 +124,9 @@ const Dashboard: NextPage = () => {
                             muscles={d.exercise.muscles.map(m => m.muscle)}
                           /></Link>;
                         })}
-                      </div>
-                      <Link href="/workout/history">View More</Link>
-                    </>
-                  ) : (
-                    "No data"
-                  )}
+                        <Link href="/workout/history">View More</Link>
+                      </>) : "No data"}
+                    </div>
                 </div>
               )}
             </section>

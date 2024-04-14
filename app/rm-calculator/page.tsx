@@ -19,7 +19,7 @@ const RMCalculator: NextPage = () => {
         <div className="grid md:grid-cols-12">
           <div className="md:col-span-6 md:col-start-4">
             <section className="mb-2 p-2">
-              <ChevronLeftIcon className="w-6 h-6 cursor-pointer" onClick={() => router.back()}></ChevronLeftIcon>
+              <ChevronLeftIcon className="w-8 h-8 cursor-pointer" onClick={() => router.back()}></ChevronLeftIcon>
               <RMCalcualtor />
             </section>
           </div>

@@ -96,7 +96,7 @@ const Dashboard: NextPage = () => {
                     {reports?.length && reports.length > 0
                       ? reports?.map(r => (
                         <li key={r.id} className="py-2 px-4 flex items-center gap-2">
-                          <span className="text-sm text-gray-500">{dateDisplay(r.createdAt)}</span>
+                          <span className="text-sm text-gray-500">{r.executeDate || ''}</span>
                           <span>{r.content}</span>
                         </li>)
                       )

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateReport } from "../../utils/report";
+import { generateReport } from "../../utils/generate-report";
 
 /**
  *  毎週月曜10時に動くCron Job

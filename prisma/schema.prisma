@@ -62,11 +62,17 @@ model ExerciseMuscle {
 }
 
 model WeeklyReport {
-  id        Int      @id @default(autoincrement())
-  userId    String
-  content   String
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  executeDate String   @default("1975-01-01")
+  userId      String
+  content     String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model WeeklyReportMaster {
+  executeDate String  @id
+  isGenerated Boolean @default(false)
 }
 
 model Maximum {

@@ -8,10 +8,7 @@ export const addNewReport = async () => {
             where: {
                 executeDate: today
             },
-            update: {
-                executeDate: today,
-                isGenerated: false
-            },
+            update: {},
             create: {
                 executeDate: today,
                 isGenerated: false

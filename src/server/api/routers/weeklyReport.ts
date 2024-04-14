@@ -9,7 +9,7 @@ export const weeklyReportRouter = createTRPCRouter({
             userId: ctx.session?.user?.id
         },
         orderBy: {
-            createdAt: 'desc'
+            executeDate: 'desc'
         },
         take: 3
     });

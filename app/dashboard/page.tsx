@@ -109,10 +109,9 @@ const Dashboard: NextPage = () => {
               {loadingW && <Loading />}
               {successW && (
                 <div>
-                  {data?.length && data?.length > 0 ? (
-                    <>
-                      <p className="text-sm text-gray-500">トレーニング履歴</p>
-                      <div className="grid gap-2">
+                    <p className="text-sm text-gray-500">トレーニング履歴</p>
+                    <div className="grid gap-2">
+                      {data?.length && data?.length > 0 ? (<>
                         {data?.map((d) => {
                           return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
                             id={d.id}
@@ -125,12 +124,9 @@ const Dashboard: NextPage = () => {
                             muscles={d.exercise.muscles.map(m => m.muscle)}
                           /></Link>;
                         })}
-                      </div>
-                      <Link href="/workout/history">View More</Link>
-                    </>
-                  ) : (
-                    "No data"
-                  )}
+                        <Link href="/workout/history">View More</Link>
+                      </>) : "No data"}
+                    </div>
                 </div>
               )}
             </section>

@@ -10,13 +10,13 @@ export const FloatingButton: React.FC<Props> = (props: Props) => {
   const { children, href } = props;
 
   const style: { [key: string]: string } = {
-    "normal": "bg-blue-200 hover:bg-white",
+    "normal": "bg-[#42bfec] hover:bg-white",
     "danger": "bg-red-200 hover:bg-white"
   }
   return (
     <>
       <Link
-        className="fixed z-90 right-3 bottom-12 w-16 h-16 rounded-full bg-blue-600 drop-shadow-lg flex justify-center items-center"
+        className="fixed z-90 right-3 bottom-12 w-16 h-16 rounded-full bg-[#42bfec] drop-shadow-lg flex justify-center items-center"
         href={href}
       >
         {children}

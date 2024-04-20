@@ -47,15 +47,15 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
         <div className="col-span-12 my-3">
           <div className="flex justify-center items-center gap-2 divide-x">
             <span className="w-20 flex flex-col items-center">
-              <span className="text-2xl font-extrabold text-cyan-700">{weight}</span>
+              <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
               <span className="text-gray-500 text-xs">kg</span>
             </span>
             <span className="w-20 flex flex-col items-center">
-              <span className="text-2xl font-extrabold text-cyan-700">{reps}</span>
+              <span className="text-2xl font-extrabold text-[#42bfec]">{reps}</span>
               <span className="text-gray-500 text-xs">reps</span>
             </span>
             <span className="w-20 flex flex-col items-center">
-              <span className="text-2xl font-extrabold text-cyan-700">{sets}</span>
+              <span className="text-2xl font-extrabold text-[#42bfec]">{sets}</span>
               <span className="text-gray-500 text-xs">sets</span>
             </span>
           </div>

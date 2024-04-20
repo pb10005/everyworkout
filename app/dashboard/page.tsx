@@ -57,12 +57,12 @@ const Dashboard: NextPage = () => {
               <p className="text-sm text-gray-500">便利ツール</p>
               <ToolList />
             </section>
+            {(errorW && errorM && errorR) && <NotLoggedInCard />}
             <section className="mb-2 p-2">
+              <p className="text-sm text-gray-500">自己ベスト</p>
               {loadingM && <Loading />}
-              {(errorW && errorM) && <NotLoggedInCard />}
               {successM && (
                 <>
-                  <p className="text-sm text-gray-500">自己ベスト</p>
                   <section className="grid md:grid-cols-3 gap-1">
                     {maximum?.length && maximum?.length > 0
                       ? maximum?.map((m) => {
@@ -89,7 +89,6 @@ const Dashboard: NextPage = () => {
             <section className="mb-2 p-2">
               <p className="text-sm text-gray-500">週次レポート</p>
               {loadingM && <Loading />}
-              {(errorW && errorM) && <NotLoggedInCard />}
               {successM && (
                 <>
                   <ul className="gap-1 divide-y bg-white">
@@ -106,10 +105,10 @@ const Dashboard: NextPage = () => {
               )}
             </section>
             <section className="mb-2 p-2">
+              <p className="text-sm text-gray-500">トレーニング履歴</p>
               {loadingW && <Loading />}
               {successW && (
                 <div>
-                    <p className="text-sm text-gray-500">トレーニング履歴</p>
                     <div className="grid gap-2">
                       {data?.length && data?.length > 0 ? (<>
                         {data?.map((d) => {

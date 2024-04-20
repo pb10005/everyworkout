@@ -1,12 +1,12 @@
 {
-    "crons": [
-      {
+  "crons": [
+    {
       "path": "/api/add-new-weekly-report",
-      "schedule": "30 9 * * 1"
-      },
-      {
+      "schedule": "0 0 * * 1"
+    },
+    {
       "path": "/api/generate-weekly-report",
       "schedule": "0 10 * * 1"
-      }
-    ]
+    }
+  ]
 }

@@ -13,8 +13,8 @@ export const Button: React.FC<Props> = (props: Props) => {
 
   const styleType = layout || "normal";
   const style: { [key: string]: string } = {
-    "normal": "bg-cyan-600 text-cyan-50 tracking-widest",
-    "danger": "bg-red-600 text-white tracking-widest"
+    "normal": "bg-[#42bfec] text-white tracking-wide",
+    "danger": "bg-red-600 text-white tracking-wide"
   }
   return (
     <>

@@ -6,7 +6,7 @@
     },
     {
       "path": "/api/generate-weekly-report",
-      "schedule": "0 10 * * 1"
+      "schedule": "0 1 * * 1"
     }
   ]
 }

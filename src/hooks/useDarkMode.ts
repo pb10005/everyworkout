@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 
 export const useDarkMode = () => {
     const [darkMode, setDarkMode] = useState((): string => {
-        return localStorage.getItem('darkMode') || '';
+        return window.localStorage.getItem('darkMode') || '';
     });
 
     const toggleDarkMode = (): void => {
-        const darkMode = localStorage.getItem('darkMode') || '';
+        const darkMode = window.localStorage.getItem('darkMode') || '';
         if (darkMode === 'dark') {
             setDarkMode('');
         }
@@ -18,7 +18,7 @@ export const useDarkMode = () => {
 
     // stateとlocalStorageを同期する
     useEffect(() => {
-        localStorage.setItem('darkMode', darkMode);
+        window.localStorage.setItem('darkMode', darkMode);
         if (darkMode === 'dark') {
             document.documentElement.classList.remove('dark')
         }

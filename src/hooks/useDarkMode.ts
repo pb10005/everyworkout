@@ -4,7 +4,14 @@ import { useState, useEffect } from "react";
 export const useDarkMode = () => {
     const [darkMode, setDarkMode] = useState((): string => {
         try {
-            return window.localStorage.getItem('darkMode') || '';
+            const darkMode = window.localStorage.getItem('darkMode') || '';
+            if (darkMode === 'dark') {
+                document.documentElement.classList.add('dark')
+            }
+            else {
+                document.documentElement.classList.remove('dark')
+            }
+            return darkMode;
         } catch {
             return '';
         }

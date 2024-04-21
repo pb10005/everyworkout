@@ -7,6 +7,7 @@ import { useState } from "react";
 import { api } from "../../../src/utils/api";
 
 import { Heading, Navigation, RecordCard, Loading, Paginator } from "../../../src/components";
+import Link from "next/link";
 
 const SearchByExerciseId: NextPage = () => {
 
@@ -55,7 +56,7 @@ const SearchByExerciseId: NextPage = () => {
                   <div className="flex flex-col divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
                     {data?.length && data?.length > 0
                       ? data?.map((d) => {
-                        return <RecordCard key={d.id}
+                        return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
                           id={d.id}
                           exerciseName={d.exercise.name}
                           date={d.date}
@@ -63,7 +64,7 @@ const SearchByExerciseId: NextPage = () => {
                           reps={d.reps}
                           sets={d.sets}
                           note={d.note}
-                          muscles={d.exercise.muscles.map(m => m.muscle)} />;
+                          muscles={d.exercise.muscles.map(m => m.muscle)} /></Link>;
                       })
                       : "No data"}
                   </div>

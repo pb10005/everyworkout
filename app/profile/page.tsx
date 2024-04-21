@@ -3,14 +3,14 @@
 import { type NextPage } from "next";
 import { api } from "../../src/utils/api";
 
-import { AuthShowcase, Button } from "../../src/components";
+import { AuthShowcase, Button, Loading } from "../../src/components";
 import { Heading, Navigation } from "../../src/components";
 import { useDarkMode } from "../../src/hooks/useDarkMode";
 
 const Profile: NextPage = () => {
 
   const { data, isLoading, isSuccess } = api.profile.get.useQuery();
-  const { toggleDarkMode } = useDarkMode();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <>
@@ -18,8 +18,9 @@ const Profile: NextPage = () => {
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4 rounded-lg dark:outline outline-1 outline-gray-500 p-2">
-            <section className="mb-2 p-2">
+          <div className="md:col-span-6 md:col-start-4 rounded-lg dark:outline outline-1 outline-gray-500 p-2 flex flex-col gap-2">
+            <section className="p-2">
+              {isLoading && <Loading />}
               {isSuccess && <>
                 <p className="text-sm text-gray-700 dark:text-gray-300">ログインユーザー(公開されません)</p>
                 <div className="flex items-center gap-2">
@@ -31,7 +32,10 @@ const Profile: NextPage = () => {
                 </div>
               </>}
             </section>
-            <Button onClick={() => toggleDarkMode()}>ダークモード切り替え</Button>
+            <div className="flex items-center">
+              <Button onClick={() => toggleDarkMode()}>ダークモード切り替え</Button>
+              <span className="dark:text-white p-2">{darkMode === 'dark' ? 'ON': 'OFF'}</span>
+            </div>
             <AuthShowcase />
           </div>
         </div>

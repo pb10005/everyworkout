@@ -1,6 +1,6 @@
 "use client";
 import { type NextPage } from "next";
-import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { api } from "../../../src/utils/api";
@@ -92,7 +92,7 @@ const History: NextPage = () => {
                 <div className="flex flex-col divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
                   {data?.length && data?.length > 0
                     ? data?.map((d) => {
-                      return <RecordCard key={d.id}
+                      return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
                         id={d.id}
                         exerciseName={d.exercise.name}
                         date={d.date}
@@ -101,7 +101,7 @@ const History: NextPage = () => {
                         sets={d.sets}
                         note={d.note}
                         muscles={d.exercise.muscles.map(m => m.muscle)}
-                      />;
+                      /></Link>;
                     })
                     : <span className="p-2 dark:text-white">No data</span>}
                 </div>

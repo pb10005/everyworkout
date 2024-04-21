@@ -34,7 +34,7 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
       <div className="grid cols-12 p-2 bg-white dark:bg-gray-900 dark:text-white">
         <div className="md:col-span-10 md:col-start-2">
           <p className="font-bold">
-            <Link href={`/workout/${id}`}>{exerciseName}</Link>
+            {exerciseName}
           </p>
           <div className="text-sm text-gray-500">{dateDisplay}</div>
           {muscles.map(m => {

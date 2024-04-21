@@ -10,6 +10,7 @@ export const useDarkMode = () => {
         }
     });
 
+    // darkModeを切り替える
     const toggleDarkMode = (): void => {
         try {
             const darkMode = window.localStorage.getItem('darkMode') || '';
@@ -27,14 +28,12 @@ export const useDarkMode = () => {
         try {
             window.localStorage.setItem('darkMode', darkMode);
             if (darkMode === 'dark') {
-                document.documentElement.classList.remove('dark')
-            }
-            else {
                 document.documentElement.classList.add('dark')
             }
-        } catch {
-
-        }
+            else {
+                document.documentElement.classList.remove('dark')
+            }
+        } catch {}
 
     }, [darkMode, setDarkMode]);
 

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import "../src/styles/globals.css";
 import SessionProvider from "./SessionProvider";
 import { ClientProvider } from "./trpcClient";

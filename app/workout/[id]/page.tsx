@@ -1,12 +1,12 @@
 "use client";
-import type { ChangeEventHandler, FormEvent } from "react";
-import { useRef, useState, useEffect } from "react";
+import type { ChangeEventHandler } from "react";
+import { useRef, useState } from "react";
 import { type NextPage } from "next";
 import { useRouter, useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
 
-import { AuthShowcase, Button, EditNoteForm, Heading, Navigation, Loading, WorkoutCard } from "../../../src/components";
+import { AuthShowcase, Button, Heading, Navigation, Loading, WorkoutCard } from "../../../src/components";
 import { api } from "../../../src/utils/api";
 
 type Props = {

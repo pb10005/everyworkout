@@ -1,12 +1,6 @@
 import type { ChangeEventHandler, FormEvent } from "react";
-import { useState } from "react";
-import { type NextPage } from "next";
-import { useRouter, useParams, usePathname } from "next/navigation";
-import { PencilSquareIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
 
-import { AuthShowcase, Button, Heading, Navigation, Loading, WorkoutCard } from "../components";
-import { api } from "../utils/api";
+import { Button } from "../components";
 
 type Props = {
   note: string;

@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "../../utils/api";
-import { MinusCircleIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
+import { MinusCircleIcon } from "@heroicons/react/20/solid";
 import { useDarkMode } from "../../hooks/useDarkMode";
 
 import {
@@ -25,16 +25,12 @@ type ChartProp = {
   volume?: number;
 };
 
-interface Iterable<ChartProp> {
-  [Symbol.iterator]: Iterator<ChartProp>;
-}
 
 const History: NextPage = () => {
   const router = useRouter();
   const { exerciseId: ids } = router.query;
   const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
   const [isDeleteMode, setDeleteMode] = useState<boolean>(false);
-  const { darkMode } = useDarkMode();
 
   const { data, isLoading, isSuccess } =
     api.maximum.getUserMaximumsByExerciseId.useQuery({
@@ -63,12 +59,6 @@ const History: NextPage = () => {
     ...test2,
   ];
 
-  const lineData = data?.map(x => {
-    return {
-      date: x.date.getTime(),
-      value: x.value
-    }
-  });
 
   const mutation = api.maximum.delete.useMutation();
 

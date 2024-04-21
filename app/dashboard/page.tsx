@@ -1,7 +1,6 @@
 "use client";
 
 import { type NextPage } from "next";
-import Head from "next/head";
 import Link from "next/link";
 import { api } from "../../src/utils/api";
 import { PlusIcon } from "@heroicons/react/20/solid";
@@ -35,16 +34,10 @@ const Dashboard: NextPage = () => {
   } = api.maximum.getUserMaximums.useQuery();
 
   const {
-    isLoading: loadingR,
-    isSuccess: successR,
+    data: reports,
     isError: errorR,
-    data: reports
   } = api.weeklyReport.getUserReports.useQuery();
 
-  const dateDisplay = (date: Date) => {
-    return date ? new Date(date).toISOString().split("T")[0] || ""
-      : ""
-  };
 
   return (
     <>

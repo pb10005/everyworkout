@@ -64,11 +64,11 @@ const WorkoutPage: NextPage = () => {
 
   return (
     <>
-      <div className="py-2">
+      <div className="mt-4">
         <Heading />
         <Navigation />
         <div>{!(loadingGet || successGet) && <AuthShowcase />}</div>
-        <div className="grid md:grid-cols-12 bg-gray-100">
+        <div className="grid md:grid-cols-12">
           <div className="md:col-span-6 md:col-start-4 p-2 flex flex-col gap-2">
             {loadingGet && <Loading />}
             {mutation.isLoading && <Loading />}
@@ -95,54 +95,60 @@ const WorkoutPage: NextPage = () => {
             )}
             {successGet && (
               <>
-                {data &&
-                  <WorkoutCard
-                    id={data?.id}
-                    exerciseName={data?.exercise.name}
-                    date={data?.date}
-                    weight={data?.weight}
-                    reps={data?.reps}
-                    sets={data?.sets}
-                    note={data.note}
-                    muscles={data.exercise.muscles.map(m => m.muscle)}
-                  />}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm text-gray-500">共有</label>
-                  <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
-                    className="twitter-hashtag-button p-4"
-                    data-url={`${origin || ''}${pathname || ''}`}
-                    data-show-count="false">
-                    Tweet
-                  </a>
-                  <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload"></Script>
-                  <label className="text-sm text-gray-500">Max更新記録</label>
-                  <Link href={`/maximum/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
-                  <div className="mb-2">
-                    <label className="mr-2" htmlFor="metrics">
-                      指標
-                    </label>
-                    <select
-                      name="metrics"
-                      className="p-2"
-                      value={metricsCode}
-                      onChange={(e) => setMetricsCode(e.target.value)}
-                    >
-                      <option value="01">重量</option>
-                      <option value="02">reps</option>
-                    </select>
+                <section className="flex flex-col gap-4">
+                  <div>
+                    {data &&
+                      <WorkoutCard
+                        id={data?.id}
+                        exerciseName={data?.exercise.name}
+                        date={data?.date}
+                        weight={data?.weight}
+                        reps={data?.reps}
+                        sets={data?.sets}
+                        note={data.note}
+                        muscles={data.exercise.muscles.map(m => m.muscle)}
+                      />}
                   </div>
-                  {!mutation.isLoading && (
-                    <Button onClick={() => void registerMaximum()} className="w-full">
-                      Max記録登録
-                    </Button>
-                  )}
-                  <label className="text-sm text-gray-500">削除</label>
-                  {!deleteMutation.isLoading &&
-                    <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
-                      削除
-                    </Button>
-                  }
-                </div>
+                  <section className="flex gap-1 items-center">
+                    <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
+                      className="twitter-hashtag-button p-4"
+                      data-url={`${origin || ''}${pathname || ''}`}
+                      data-show-count="false">
+                      Tweet
+                    </a>
+                    <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload"></Script>
+                    <span>
+                      <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/maximum/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">
+                    <div className="flex gap-2 items-center">
+                      <label className="dark:text-gray-300" htmlFor="metrics">
+                        指標
+                      </label>
+                      <select
+                        name="metrics"
+                        className="p-2"
+                        value={metricsCode}
+                        onChange={(e) => setMetricsCode(e.target.value)}
+                      >
+                        <option value="01">重量</option>
+                        <option value="02">reps</option>
+                      </select>
+                    </div>
+                    {!mutation.isLoading && (
+                      <Button onClick={() => void registerMaximum()} className="w-full">
+                        Max記録登録
+                      </Button>
+                    )}
+                    <label className="text-sm text-gray-700 dark:text-gray-300">削除</label>
+                    {!deleteMutation.isLoading &&
+                      <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
+                        削除
+                      </Button>
+                    }
+                  </section>
+                </section>
               </>
             )}
           </div>

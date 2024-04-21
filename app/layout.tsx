@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "../src/styles/globals.css";
 import SessionProvider from "./SessionProvider";
 import { ClientProvider } from "./trpcClient";
+import { ThemeProvider } from "./ThemeProvider";
 
 export const metadata: Metadata = {
     title: 'EVERYWORKOUT',
@@ -21,18 +22,20 @@ function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <SessionProvider>
-            <ClientProvider>
-                <html lang="ja">
-                    <head>
-                        <link rel="manifest" href="/manifest.json" />
-                        <link rel="apple-touch-icon" href="/icon.png"></link>
-                        <meta name="theme-color" content="#fff" />
-                    </head>
-                    <body className="bg-gray-100">{children}</body>
-                </html>
-            </ClientProvider>
-        </SessionProvider>
+        <ThemeProvider>
+            <SessionProvider>
+                <ClientProvider>
+                    <html lang="ja" className="">
+                        <head>
+                            <link rel="manifest" href="/manifest.json" />
+                            <link rel="apple-touch-icon" href="/icon.png"></link>
+                            <meta name="theme-color" content="#fff" />
+                        </head>
+                        <body className="bg-gray-100 dark:bg-gray-900">{children}</body>
+                    </html>
+                </ClientProvider>
+            </SessionProvider>
+        </ThemeProvider>
     );
 }
 

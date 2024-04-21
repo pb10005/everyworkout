@@ -135,8 +135,8 @@ const WorkoutRecorder: NextPage = () => {
             <main>
                 <Heading />
                 <Navigation />
-                <div className="grid md:grid-cols-12 bg-gray-100">
-                    <div className="md:col-span-6 md:col-start-4 bg-white p-2 md:p-4 mt-4 rounded-lg">
+                <div className="grid md:grid-cols-12">
+                    <div className="md:col-span-6 md:col-start-4 bg-white p-2 md:p-4 mt-4 rounded-lg dark:bg-gray-900 dark:text-white dark:outline outline-1 outline-gray-500">
                         {mutation.isLoading && <Loading />}
                         {mutation.isError && (
                             <p className=" rounded-lg bg-red-100 p-4 text-red-900">
@@ -152,7 +152,7 @@ const WorkoutRecorder: NextPage = () => {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="date"
                                     >
                                         日付
@@ -167,7 +167,7 @@ const WorkoutRecorder: NextPage = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700">
+                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                                         種目
                                     </label>
                                     <ExerciseSelector
@@ -177,7 +177,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className="block text-sm font-bold text-gray-700"
+                                        className="block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="weight"
                                     >
                                         重量
@@ -194,7 +194,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className="block text-sm font-bold text-gray-700"
+                                        className="block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="reps"
                                     >
                                         rep数
@@ -210,7 +210,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                                 <div className="">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="username"
                                     >
                                         インターバル(秒)
@@ -241,7 +241,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                             </div>
                             <label
-                                className=" block text-sm font-bold text-gray-700"
+                                className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                             >
                                 インターバル
                             </label>
@@ -257,7 +257,7 @@ const WorkoutRecorder: NextPage = () => {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="date"
                                     >
                                         日付
@@ -265,14 +265,14 @@ const WorkoutRecorder: NextPage = () => {
                                     <p>{date}</p>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <label className="block text-sm font-bold text-gray-700">
+                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                                         種目
                                     </label>
                                     <p>{selectedExerciseName}</p>
                                 </div>
                                 <div className="">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="weight"
                                     >
                                         重量
@@ -281,7 +281,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="reps"
                                     >
                                         rep数
@@ -297,7 +297,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="sets"
                                     >
                                         セット数
@@ -313,7 +313,7 @@ const WorkoutRecorder: NextPage = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        className=" block text-sm font-bold text-gray-700"
+                                        className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
                                         htmlFor="note"
                                     >
                                         メモ

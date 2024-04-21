@@ -2,7 +2,7 @@ import * as React from "react";
 
 type Props = {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const Badge: React.FC<Props> = (props: Props) => {
@@ -11,7 +11,7 @@ export const Badge: React.FC<Props> = (props: Props) => {
   return (
     <>
       <span
-        className="mr-2 mb-1 inline-block rounded cursor-pointer bg-gray-200 p-2"
+        className="mb-1 p-2 inline-block rounded cursor-pointer bg-gray-200 dark:bg-gray-700 dark:text-white"
         onClick={onClick}
       >
         {label}

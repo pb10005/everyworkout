@@ -49,17 +49,17 @@ const AddWorkout: NextPage = () => {
       <main>
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12 bg-gray-100">
-          <div className="md:col-span-6 md:col-start-4 bg-white p-2">
+        <div className="grid md:grid-cols-12 mt-4">
+          <div className="md:col-span-6 md:col-start-4 bg-white rounded-lg p-2 grid gap-2">
             {mutation.isLoading && <Loading />}
             {mutation.isError && (
-              <p className="mb-2 rounded-lg bg-red-100 p-4 text-red-900">
+              <p className="rounded-lg bg-red-100 p-4 text-red-900">
                 エラーが発生しました: {mutation.error.data?.path}
               </p>
             )}
-            <div className="mb-2">
+            <div className="grid gap-2">
               <label
-                className="mb-2 block text-sm font-bold text-gray-700"
+                className="block text-sm font-bold text-gray-700"
                 htmlFor="date"
               >
                 日付
@@ -73,7 +73,7 @@ const AddWorkout: NextPage = () => {
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
-            <div className="mb-2">
+            <div className="">
               <label className="block text-sm font-bold text-gray-700">
                 種目
               </label>
@@ -82,9 +82,9 @@ const AddWorkout: NextPage = () => {
                 handleExerciseClick={handleExerciseClick}
               />
             </div>
-            <div className="mb-2">
+            <div className="">
               <label
-                className="mb-2 block text-sm font-bold text-gray-700"
+                className="block text-sm font-bold text-gray-700"
                 htmlFor="weight"
               >
                 重量
@@ -99,9 +99,9 @@ const AddWorkout: NextPage = () => {
                 onChange={(e) => setWeight(e.target.value)}
               />
             </div>
-            <div className="mb-2">
+            <div className="grid gap-2">
               <label
-                className="mb-2 block text-sm font-bold text-gray-700"
+                className="block text-sm font-bold text-gray-700"
                 htmlFor="reps"
               >
                 rep数
@@ -115,9 +115,9 @@ const AddWorkout: NextPage = () => {
                 onChange={(e) => setReps(e.target.value)}
               />
             </div>
-            <div className="mb-2">
+            <div className="">
               <label
-                className="mb-2 block text-sm font-bold text-gray-700"
+                className="block text-sm font-bold text-gray-700"
                 htmlFor="sets"
               >
                 セット数
@@ -131,9 +131,9 @@ const AddWorkout: NextPage = () => {
                 onChange={(e) => setSets(e.target.value)}
               />
             </div>
-            <div className="mb-2">
+            <div className="grid gap-2">
               <label
-                className="mb-2 block text-sm font-bold text-gray-700"
+                className="block text-sm font-bold text-gray-700"
                 htmlFor="note"
               >
                 メモ

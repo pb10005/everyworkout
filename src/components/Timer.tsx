@@ -46,11 +46,11 @@ export const Timer: React.FC<Props> = (props: Props) => {
 
     return (
         <>
-            <div className="flex flex-col divide-y bg-white rounded-lg shadow-xl">
+            <div className="flex flex-col divide-y bg-white dark:bg-gray-900 dark:divide-gray-500 dark:text-white rounded-lg shadow-xl dark:shadow-none dark:outline outline-1 outline-gray-500">
                 <div className="text-6xl font-extrabold p-4 text-center">
                     <span>{zeroPadding(minutes)}</span>:<span>{zeroPadding(seconds)}</span>
                 </div>
-                <div className="flex justify-between items-center divide-x">
+                <div className="flex justify-between items-center divide-x dark:divide-gray-500">
                     <button className="w-full flex justify-center" onClick={resumeTimer}>
                         <span>
                             <PlayIcon className="w-10 h-10 cursor-pointer">再開</PlayIcon>

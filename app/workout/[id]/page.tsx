@@ -128,7 +128,7 @@ const WorkoutPage: NextPage = () => {
                       </label>
                       <select
                         name="metrics"
-                        className="p-2"
+                        className="p-2 dark:bg-gray-700 dark:text-white dark:border-gray-500"
                         value={metricsCode}
                         onChange={(e) => setMetricsCode(e.target.value)}
                       >

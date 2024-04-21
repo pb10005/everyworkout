@@ -39,7 +39,9 @@ export const RMCalcualtor: React.FC = () => {
                         種目
                     </label>
                     <select
-                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none
+                            rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none
+                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                         id="exercise"
                         placeholder="種目"
                         value={exercise}
@@ -58,7 +60,9 @@ export const RMCalcualtor: React.FC = () => {
                         重量(kg)
                     </label>
                     <input
-                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                            text-gray-700 shadow focus:outline-none
+                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                         id="weight"
                         type="number"
                         placeholder="重量"
@@ -74,7 +78,9 @@ export const RMCalcualtor: React.FC = () => {
                         Reps
                     </label>
                     <input
-                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                            text-gray-700 shadow focus:outline-none
+                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                         id="reps"
                         type="number"
                         placeholder="Reps"

@@ -24,7 +24,9 @@ export function EditNoteForm(props: Props) {
   return (<>
     <form onSubmit={onSubmit} className="flex flex-col gap-2">
       <input
-        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+          text-gray-700 shadow focus:outline-none
+          dark:bg-gray-700 dark:text-white dark:border-gray-500"
         type="text"
         id="note"
         placeholder="メモ"

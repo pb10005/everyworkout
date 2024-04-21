@@ -158,7 +158,9 @@ const WorkoutRecorder: NextPage = () => {
                                         日付
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="date"
                                         type="date"
                                         placeholder="日付"
@@ -183,7 +185,9 @@ const WorkoutRecorder: NextPage = () => {
                                         重量
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="weight"
                                         type="number"
                                         step="2.5"
@@ -200,7 +204,9 @@ const WorkoutRecorder: NextPage = () => {
                                         rep数
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="reps"
                                         type="number"
                                         placeholder="rep数"
@@ -216,7 +222,9 @@ const WorkoutRecorder: NextPage = () => {
                                         インターバル(秒)
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="interval"
                                         type="number"
                                         placeholder="インターバル(秒)"
@@ -287,7 +295,9 @@ const WorkoutRecorder: NextPage = () => {
                                         rep数
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="reps"
                                         type="number"
                                         placeholder="rep数"
@@ -303,7 +313,9 @@ const WorkoutRecorder: NextPage = () => {
                                         セット数
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="sets"
                                         type="number"
                                         placeholder="セット数"
@@ -319,7 +331,9 @@ const WorkoutRecorder: NextPage = () => {
                                         メモ
                                     </label>
                                     <input
-                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                                            text-gray-700 shadow focus:outline-none
+                                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
                                         id="note"
                                         type="text"
                                         placeholder="メモ"

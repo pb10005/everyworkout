@@ -5,9 +5,9 @@ import { HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, UserIcon } from "@hero
 export const Navigation: React.FC = () => {
   return (
     <>
-      <div className="fixed bottom-0 left-0 w-full bg-white">
+      <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-center items-center gap-1">
+          <div className="flex justify-center items-center dark:divide-x divide-gray-500">
             <Link className="flex flex-col w-20 py-1 items-center text-[#42bfec] hover:bg-[#42bfec] hover:text-cyan-100" href="/dashboard">
                 <HomeIcon className="w-6 h-6" />
                 <span className="text-xs font-medium">Dashboard</span>

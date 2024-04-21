@@ -19,13 +19,13 @@ const Search: NextPage = () => {
 
   return (
     <>
-      <main className="h-screen bg-gray-100">
+      <main className="">
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4">
-            <section className="mb-2 p-2">
-              <p className="text-sm text-gray-500">種目別トレーニング履歴</p>
+          <div className="md:col-span-6 md:col-start-4 flex flex-col gap-2">
+            <section className="p-2">
+              <p className="text-sm text-gray-500 dark:text-gray-300">種目別トレーニング履歴</p>
               <ExerciseSelector
                 selectedExerciseId={selectedExerciseId}
                 handleExerciseClick={handleExerciseClick}

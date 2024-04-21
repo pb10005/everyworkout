@@ -48,18 +48,18 @@ const Dashboard: NextPage = () => {
 
   return (
     <>
-      <main className="bg-gray-100">
+      <main className="">
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4">
-            <section className="mb-2 p-2">
-              <p className="text-sm text-gray-500">便利ツール</p>
+          <div className="mt-2 md:col-span-6 md:col-start-4 gap-2">
+            <section className="p-2">
+              <p className="text-sm text-gray-500 dark:text-gray-200">便利ツール</p>
               <ToolList />
             </section>
             {(errorW && errorM && errorR) && <NotLoggedInCard />}
-            <section className="mb-2 p-2">
-              <p className="text-sm text-gray-500">自己ベスト</p>
+            <section className="p-2">
+              <p className="text-sm text-gray-500 dark:text-gray-200">自己ベスト</p>
               {loadingM && <Loading />}
               {successM && (
                 <>
@@ -86,17 +86,17 @@ const Dashboard: NextPage = () => {
                 </>
               )}
             </section>
-            <section className="mb-2 p-2">
-              <p className="text-sm text-gray-500">週次レポート</p>
+            <section className="p-2">
+              <p className="text-sm text-gray-500 dark:text-gray-200">週次レポート</p>
               {loadingM && <Loading />}
               {successM && (
                 <>
-                  <ul className="gap-1 divide-y bg-white">
+                  <ul className="gap-1 divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
                     {reports?.length && reports.length > 0
                       ? reports?.map(r => (
                         <li key={r.id} className="py-2 px-4 flex items-center gap-2">
-                          <span className="text-sm text-gray-500">{r.executeDate || ''}</span>
-                          <span>{r.content}</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-300">{r.executeDate || ''}</span>
+                          <span className="dark:text-white">{r.content}</span>
                         </li>)
                       )
                       : "No data"}
@@ -104,13 +104,14 @@ const Dashboard: NextPage = () => {
                 </>
               )}
             </section>
-            <section className="mb-2 p-2">
-              <p className="text-sm text-gray-500">トレーニング履歴</p>
+            <section className="p-2">
+              <p className="text-sm text-gray-500 dark:text-gray-200">トレーニング履歴</p>
               {loadingW && <Loading />}
               {successW && (
                 <div>
-                    <div className="grid gap-2">
-                      {data?.length && data?.length > 0 ? (<>
+                  <div className="grid gap-2">
+                    {data?.length && data?.length > 0 ? (<>
+                      <div className="grid divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
                         {data?.map((d) => {
                           return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
                             id={d.id}
@@ -123,15 +124,16 @@ const Dashboard: NextPage = () => {
                             muscles={d.exercise.muscles.map(m => m.muscle)}
                           /></Link>;
                         })}
-                        <Link href="/workout/history">View More</Link>
-                      </>) : "No data"}
-                    </div>
+                      </div>
+                      <Link className="dark:text-white" href="/workout/history">View More</Link>
+                    </>) : "No data"}
+                  </div>
                 </div>
               )}
             </section>
           </div>
           <FloatingButton href="/workout/add">
-            <PlusIcon className="w-10 h-10 text-white"></PlusIcon>
+            <PlusIcon className="w-10 h-10 text-white dark:text-gray-900"></PlusIcon>
           </FloatingButton>
         </div>
       </main>

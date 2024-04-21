@@ -34,16 +34,16 @@ const SearchByExerciseId: NextPage = () => {
 
   return (
     <>
-      <main className="h-screen bg-gray-100">
+      <main className="">
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4">
-            <section className="mb-2 p-2">
+        <div className="grid md:grid-cols-12 mt-4">
+          <div className="md:col-span-6 md:col-start-4 rounded-lg">
+            <section className="p-2">
               <p className="text-sm text-gray-500">種目別トレーニング履歴</p>
               {count > 0 && (
                 <Paginator
-                  className="mb-2"
+                  className="dark:text-gray-300"
                   page={page}
                   perPage={perPage}
                   maxPage={maxPage}
@@ -52,7 +52,7 @@ const SearchByExerciseId: NextPage = () => {
               {isLoading && <Loading />}
               {isSuccess && (
                 <>
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
                     {data?.length && data?.length > 0
                       ? data?.map((d) => {
                         return <RecordCard key={d.id}

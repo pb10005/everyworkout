@@ -3,16 +3,18 @@
 import { type NextPage } from "next";
 import { api } from "../../src/utils/api";
 
-import { AuthShowcase } from "../../src/components";
+import { AuthShowcase, Button } from "../../src/components";
 import { Heading, Navigation } from "../../src/components";
+import { useDarkMode } from "../../src/hooks/useDarkMode";
 
 const Profile: NextPage = () => {
 
   const { data, isLoading, isSuccess } = api.profile.get.useQuery();
+  const { toggleDarkMode } = useDarkMode();
 
   return (
     <>
-      <main className="h-screen bg-gray-100">
+      <main className="">
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">
@@ -25,6 +27,7 @@ const Profile: NextPage = () => {
                 <div>{data?.email}</div>
               </>}
             </section>
+            <Button onClick={() => toggleDarkMode()}>ダークモード切り替え</Button>
             <AuthShowcase />
           </div>
         </div>

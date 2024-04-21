@@ -30,10 +30,10 @@ export const RMCalcualtor: React.FC = () => {
     const result = calculate(weight, reps, exercise);
     return (
         <>
-            <div className="bg-white rounded-xl shadow-xl p-2">
+            <div className="bg-white rounded-xl shadow-xl p-2 dark:bg-gray-900 dark:text-white dark:outline outline-1 outline-gray-500">
                 <div className="mb-2">
                     <label
-                        className="mb-2 block text-sm font-bold text-gray-700"
+                        className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"
                         htmlFor="exercise"
                     >
                         種目
@@ -52,7 +52,7 @@ export const RMCalcualtor: React.FC = () => {
                 </div>
                 <div className="mb-2">
                     <label
-                        className="mb-2 block text-sm font-bold text-gray-700"
+                        className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"
                         htmlFor="weight"
                     >
                         重量(kg)
@@ -68,7 +68,7 @@ export const RMCalcualtor: React.FC = () => {
                 </div>
                 <div className="mb-2">
                     <label
-                        className="mb-2 block text-sm font-bold text-gray-700"
+                        className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"
                         htmlFor="reps"
                     >
                         Reps
@@ -84,7 +84,7 @@ export const RMCalcualtor: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <p className="text-sm text-gray-500">1RM換算重量</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">1RM換算重量</p>
                     <p><span className="text-2xl font-extrabold mr-1">{result}</span>kg</p>
                 </div>
                 <p>参考: <a target="_blank" rel="noreferrer" href="https://fwj.jp/magazine/rm/">https://fwj.jp/magazine/rm/</a></p>

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import "../../../src/styles/globals.css";
 import SessionProvider from "../../SessionProvider";
+import ThemeProvider from "../../ThemeProvider";
 import { ClientProvider } from "../../trpcClient";
 
 export const metadata: Metadata = {
@@ -23,14 +24,16 @@ function RootLayout({
     return (
         <SessionProvider>
             <ClientProvider>
-                <html lang="ja">
-                    <head>
-                        <link rel="manifest" href="/manifest.json" />
-                        <link rel="apple-touch-icon" href="/icon.png"></link>
-                        <meta name="theme-color" content="#fff" />
-                    </head>
-                    <body className="bg-gray-100">{children}</body>
-                </html>
+                <ThemeProvider>
+                    <html lang="ja">
+                        <head>
+                            <link rel="manifest" href="/manifest.json" />
+                            <link rel="apple-touch-icon" href="/icon.png"></link>
+                            <meta name="theme-color" content="#fff" />
+                        </head>
+                        <body className="bg-gray-100 dark:bg-gray-900">{children}</body>
+                    </html>
+                </ThemeProvider>
             </ClientProvider>
         </SessionProvider>
     );

@@ -1,5 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
+import { Badge } from "../components";
 
 type Muscle = {
   id: number;
@@ -30,8 +31,8 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
   const dateDisplay = date.toISOString().split("T")[0];
   return (
     <>
-      <div className="grid cols-12 rounded-lg p-2 shadow-lg bg-white">
-        <div className="sm:col-span-10 sm:col-start-2">
+      <div className="grid cols-12 p-2 bg-white dark:bg-gray-900 dark:text-white">
+        <div className="md:col-span-10 md:col-start-2">
           <p className="font-bold">
             <Link href={`/workout/${id}`}>{exerciseName}</Link>
           </p>
@@ -39,7 +40,7 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
           {muscles.map(m => {
             return (
               <div key={m.id} className="flex gap-1">
-                <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.name}</span>
+                <Badge label={m.name}></Badge>
               </div>
             )
           })}

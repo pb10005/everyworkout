@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
-import { EditNoteForm } from "./EditNoteForm";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 
 import { api } from "../utils/api";
+import { Badge, EditNoteForm } from "../components";
 
 type Muscle = {
     id: number;
@@ -55,18 +55,18 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
 
     return (
         <>
-            <div className="w-full flex justify-between rounded-lg p-2 bg-white shadow">
+            <div className="w-full flex justify-between rounded-lg p-2 bg-white dark:bg-gray-900 dark:text-white shadow dark:outline outline-1 outline-gray-500">
                 <div className="w-full">
                     <p className="text-2xl font-bold flex items-center gap-1">
                         <span>{exerciseName}</span>
                     </p>
                     {dateDisplay && (
-                        <p className="text-sm text-gray-700">{dateDisplay}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">{dateDisplay}</p>
                     )}
                     {muscles.map(m => {
                         return (
                             <div key={m.id} className="flex gap-1">
-                                <span className="inline-block text-sm bg-gray-100 rounded-lg p-2">{m.name}</span>
+                                <Badge label={m.name}></Badge>
                             </div>
                         )
                     })}
@@ -74,15 +74,15 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
                         <div className="flex justify-center items-center gap-2 divide-x">
                             <span className="w-20 flex flex-col items-center">
                                 <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
-                                <span className="text-gray-500 text-xs">kg</span>
+                                <span className="text-gray-700 text-xs dark:text-gray-300">kg</span>
                             </span>
                             <span className="w-20 flex flex-col items-center">
                                 <span className="text-2xl font-extrabold text-[#42bfec]">{reps}</span>
-                                <span className="text-gray-500 text-xs">reps</span>
+                                <span className="text-gray-700 text-xs dark:text-gray-300">reps</span>
                             </span>
                             <span className="w-20 flex flex-col items-center">
                                 <span className="text-2xl font-extrabold text-[#42bfec]">{sets}</span>
-                                <span className="text-gray-500 text-xs">sets</span>
+                                <span className="text-gray-700 text-xs dark:text-gray-300">sets</span>
                             </span>
                         </div>
                     </div>

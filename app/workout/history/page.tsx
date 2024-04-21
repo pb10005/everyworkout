@@ -67,7 +67,9 @@ const History: NextPage = () => {
                 <span onClick={() => incrementDate()} className="cursor-pointer">翌日<ChevronRightIcon className="inline w-8 h-8"></ChevronRightIcon></span>
               </div>
               <input
-                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+                  text-gray-700 shadow focus:outline-none
+                  dark:bg-gray-700 dark:text-white dark:border-gray-500"
                 id="date"
                 type="date"
                 placeholder="日付"

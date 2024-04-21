@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { prisma } from "../server/db";
 
 export const generateReport = async () => {
@@ -18,31 +19,61 @@ export const generateReport = async () => {
     
             // テーブルデータ取得
             const users = await prisma.user.findMany();
-        
-            const result = await prisma.workout.groupBy({
-                by: ["userId"],
-                _count: true,
+            const weekData = await prisma.workout.findMany({
+                select: {
+                    userId: true,
+                    exerciseId: true,
+                    weight: true,
+                    reps: true,
+                    sets: true
+                },
                 where: {
-                    date: {
-                      gte: dateGte,
-                      lt:  dateLt
-                    }
+                   date: {
+                    gte: dateGte,
+                    lt: dateLt
+                   } 
                 }
             });
+            
+            type StatProps = {
+                count: number;
+                volume: number;
+            };
+            
+            const stats = weekData.reduce((acc, suc) => {
+                const userId = suc.userId;
+                if(userId) {
+                    // すでにキーが存在する場合
+                    if(suc.weight) {
+                        acc[userId] = {
+                            count: (acc[userId]?.count || 0) + 1,
+                            volume: (acc[userId]?.volume || 0) + suc.weight * suc.reps * suc.sets
+                        }
+                    }
+                }
+
+                return acc;
+            }, {} as Partial<Record<string, StatProps>>);
         
             // レポートメッセージ生成
-            const reports = result.map(r => {
-                const name = users.find(u => u.id === r.userId)?.name;
-                const report = `${name || 'Anonymous'}さんは先週${r._count}回ワークアウトしました！`;
-        
+            const reports = users.map(u => {
+                const stat = u.id ? stats[u.id] : {count: 0, volume: 0};
+                const count = stat?.count || 0;
+                if(count <= 0) return null;
+                
+                const volume = stat?.volume || 0;
+
+                const report = `${u.name || 'Anonymous'}さんは先週${count}回ワークアウトしました！トータルボリュームは${stat?.volume || 0}kgでした。`;
+
                 return {
-                    userId: r.userId || '',
+                    userId: u.id || '',
                     content: report
                 }
             });
         
             // レポートを登録する
             for(const report of reports) {
+                if(report === null) continue;
                 const count = await prisma.weeklyReport.count({
                     where: {
                         executeDate: executeDate,

@@ -64,7 +64,7 @@ const Dashboard: NextPage = () => {
                             key={`${m.exerciseId}${m.metrics_code}`}
                             className="md:grid-span-1"
                           >
-                            <Link href={`/maximum/${m.exerciseId}`}>
+                            <Link href={`/exercise/${m.exerciseId}`}>
                               <MaximumCard
                                 exerciseName={m.exercise?.name}
                                 metrics_code={m.metrics_code}

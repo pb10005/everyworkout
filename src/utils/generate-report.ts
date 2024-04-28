@@ -38,6 +38,7 @@ export const generateReport = async () => {
             type StatProps = {
                 count: number;
                 volume: number;
+                exercises: Set<number>;
             };
             
             const stats = weekData.reduce((acc, suc) => {
@@ -45,25 +46,31 @@ export const generateReport = async () => {
                 if(userId) {
                     // すでにキーが存在する場合
                     if(suc.weight) {
+                        const tmp: Set<number> = acc[userId]?.exercises || new Set<number>();
+                        tmp.add(suc.exerciseId);
+
                         acc[userId] = {
                             count: (acc[userId]?.count || 0) + 1,
-                            volume: (acc[userId]?.volume || 0) + suc.weight * suc.reps * suc.sets
+                            volume: (acc[userId]?.volume || 0) + suc.weight * suc.reps * suc.sets,
+                            exercises: tmp
                         }
                     }
                 }
 
                 return acc;
-            }, {} as Partial<Record<string, StatProps>>);
+            }, {} as Record<string, StatProps>);
         
-            // レポートメッセージ生成
+            // ユーザー単位でレポートメッセージ生成
             const reports = users.map(u => {
-                const stat = u.id ? stats[u.id] : {count: 0, volume: 0};
+                const stat = u.id ? stats[u.id] : {count: 0, volume: 0, exercises: new Set<number>()};
                 const count = stat?.count || 0;
+                const exerciseCount = stat?.exercises.size;
+
                 if(count <= 0) return null;
                 
                 const volume = stat?.volume || 0;
 
-                const report = `${u.name || 'Anonymous'}さんは先週${count}回ワークアウトしました！トータルボリュームは${stat?.volume || 0}kgでした。`;
+                const report = `${u.name || 'Anonymous'}さんは先週${count}回ワークアウトしました！\n行った種目は${exerciseCount}種類で、トータルボリュームは${stat?.volume || 0}kgでした。`;
 
                 return {
                     userId: u.id || '',

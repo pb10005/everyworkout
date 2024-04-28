@@ -2,6 +2,7 @@ import { AuthShowcase } from "./AuthShowcase";
 import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { EditNoteForm } from "./EditNoteForm";
+import { ExerciseChart } from "./ExerciseChart";
 import { ExerciseSelector } from "./ExerciseSelector";
 import { FloatingButton } from "./FloatingButton";
 import { Heading } from "./Heading";
@@ -21,6 +22,7 @@ export {
   Badge,
   Button,
   EditNoteForm,
+  ExerciseChart,
   ExerciseSelector,
   FloatingButton,
   Heading,

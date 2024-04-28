@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useTimer } from "react-timer-hook";
-import { Button } from ".";
 import { ArrowPathIcon, PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
 
 type Props = {
@@ -19,7 +18,6 @@ export const Timer: React.FC<Props> = (props: Props) => {
     const {
         seconds,
         minutes,
-        isRunning,
         pause,
         resume,
         restart,

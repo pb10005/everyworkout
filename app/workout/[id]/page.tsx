@@ -2,7 +2,7 @@
 import type { ChangeEventHandler } from "react";
 import { useRef, useState } from "react";
 import { type NextPage } from "next";
-import { useRouter, useParams, usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
 
@@ -17,7 +17,6 @@ type Props = {
 };
 
 const WorkoutPage: NextPage = () => {
-  const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
@@ -118,7 +117,7 @@ const WorkoutPage: NextPage = () => {
                     </a>
                     <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload"></Script>
                     <span>
-                      <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/maximum/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
+                      <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
                     </span>
                   </section>
                   <section className="flex flex-col gap-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">

@@ -1,5 +1,3 @@
-import { router } from "@trpc/server";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export const ToolList: React.FC = () => {

@@ -1,47 +1,18 @@
-"use client";
+import { AuthShowcase, Heading, Navigation, SearchPage } from "../../src/components";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../src/pages/api/auth/[...nextauth]";
 
-import { type NextPage } from "next";
-import { useRouter } from "next/navigation";
-import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-
-import { Button, Heading, Navigation, ExerciseSelector } from "../../src/components";
-
-const Search: NextPage = () => {
-  const router = useRouter();
-  const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
-
-  const handleExerciseClick = (id: number) => {
-    selectExerciseId(id);
-  };
-
+export default async function Page() {
+  const session = await getServerSession(authOptions);
   return (
     <>
-      <main className="">
+      <main>
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4 flex flex-col gap-2">
-            <section className="p-2">
-              <p className="text-sm text-gray-500 dark:text-gray-300">種目別トレーニング履歴</p>
-              <ExerciseSelector
-                selectedExerciseId={selectedExerciseId}
-                handleExerciseClick={handleExerciseClick}
-              />
-            </section>
-            {selectedExerciseId > 0 && (
-              <Button onClick={() => router.push(`/search/${selectedExerciseId}`)} layout="normal">
-                検索
-              </Button>
-            )
-            }
-          </div>
-        </div>
+        {
+          session?.user ? <SearchPage /> : <AuthShowcase />
+        }
       </main>
     </>
   );
 };
-
-export default Search;

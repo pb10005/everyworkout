@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { ImageResponse } from "next/server";
 import { prisma } from "../../../src/server/db";
 

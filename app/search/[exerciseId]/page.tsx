@@ -1,7 +1,6 @@
 "use client";
 
 import { type NextPage } from "next";
-import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { api } from "../../../src/utils/api";
@@ -16,7 +15,7 @@ const SearchByExerciseId: NextPage = () => {
   const exerciseId = Array.isArray(ids) ? ids[0] : ids;
 
   const [page, setPage] = useState<number>(0);
-  const [perPage, _] = useState<number>(10);
+  const [perPage] = useState<number>(10);
 
   const { data, isLoading, isSuccess } =
     api.workout.getUserWorkouts.useQuery({

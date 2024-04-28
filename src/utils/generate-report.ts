@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { prisma } from "../server/db";
 
 export const generateReport = async () => {
@@ -64,12 +63,10 @@ export const generateReport = async () => {
             const reports = users.map(u => {
                 const stat = u.id ? stats[u.id] : {count: 0, volume: 0, exercises: new Set<number>()};
                 const count = stat?.count || 0;
-                const exerciseCount = stat?.exercises.size;
+                const exerciseCount = stat?.exercises.size || 0;
 
                 if(count <= 0) return null;
                 
-                const volume = stat?.volume || 0;
-
                 const report = `${u.name || 'Anonymous'}さんは先週${count}回ワークアウトしました！\n行った種目は${exerciseCount}種類で、トータルボリュームは${stat?.volume || 0}kgでした。`;
 
                 return {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ImageResponse } from "next/server";
-import { prisma } from "../../../src/server/db";
+import { prisma } from "../../../server/db";
 
 export const title = 'EVERYWORKOUT';
 export const description = 'ワークアウトの成長を記録する';
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   title: 'EVERYWORKOUT',
   description: 'ワークアウトの成長を記録する',
   twitter: {
-    card: "summary_large_image",
-    title: "EVERYWORKOUT",
-    description: "ワークアウト記録",
+      card: "summary_large_image",
+      title: "EVERYWORKOUT",
+      description: "ワークアウト記録",
   },
 };
 

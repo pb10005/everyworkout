@@ -1,9 +1,9 @@
 "use client";
 
-import { api } from "../../src/utils/api";
+import { api } from "../utils/api";
 
-import { Button, Loading } from "../../src/components";
-import { useDarkMode } from "../../src/hooks/useDarkMode";
+import { Button, Loading } from "../components";
+import { useDarkMode } from "../hooks/useDarkMode";
 
 export const ProfilePage: React.FC = () => {
 

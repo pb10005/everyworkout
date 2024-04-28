@@ -2,10 +2,10 @@
 
 import { type NextPage } from "next";
 
-import { Heading, Navigation } from "../../src/components";
+import { Heading, Navigation } from "../../components";
 import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
-import { RMCalcualtor } from "../../src/components";
+import { RMCalcualtor } from "../../components";
 
 const RMCalculator: NextPage = () => {
 

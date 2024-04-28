@@ -2,7 +2,7 @@
 
 import { type NextPage } from "next";
 import Image from "next/image";
-import { AuthShowcase } from "../src/components";
+import { AuthShowcase } from "../components";
 
 const Home: NextPage = () => {
   return (

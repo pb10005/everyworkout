@@ -1,5 +1,5 @@
 import { type NextPage } from "next";
-import { Heading, Navigation, SearchResultPage } from "../../../src/components";
+import { Heading, Navigation, SearchResultPage } from "../../../components";
 
 const SearchByExerciseId: NextPage = () => {
   return (

@@ -10,8 +10,8 @@ import {
   Navigation,
   ExerciseSelector,
   Loading,
-} from "../../../src/components";
-import { api } from "../../../src/utils/api";
+} from "../../../components";
+import { api } from "../../../utils/api";
 
 const AddWorkout: NextPage = () => {
   const router = useRouter();

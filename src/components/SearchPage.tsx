@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, ExerciseSelector } from "../../src/components";
+import { Button, ExerciseSelector } from "../components";
 
 export const SearchPage: React.FC = () => {
   const router = useRouter();

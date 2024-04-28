@@ -6,8 +6,8 @@ import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
 
-import { AuthShowcase, Button, Heading, Navigation, Loading, WorkoutCard } from "../../../src/components";
-import { api } from "../../../src/utils/api";
+import { AuthShowcase, Button, Heading, Navigation, Loading, WorkoutCard } from "../../../components";
+import { api } from "../../../utils/api";
 
 type Props = {
   note: string;

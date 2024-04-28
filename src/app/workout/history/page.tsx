@@ -3,9 +3,9 @@ import { type NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { api } from "../../../src/utils/api";
+import { api } from "../../../utils/api";
 
-import { Heading, Navigation, RecordCard, Loading, Paginator } from "../../../src/components";
+import { Heading, Navigation, RecordCard, Loading, Paginator } from "../../../components";
 
 const History: NextPage = () => {
   const [page, setPage] = useState<number>(0);

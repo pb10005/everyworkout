@@ -3,7 +3,7 @@
 import { type NextPage } from "next";
 import { useState } from "react";
 
-import { Heading, Navigation, Timer, Button } from "../../src/components";
+import { Heading, Navigation, Timer, Button } from "../../components";
 import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
 

@@ -1,6 +1,6 @@
-import { Heading, Navigation, ProfilePage, AuthShowcase } from "../../src/components";
+import { Heading, Navigation, ProfilePage, AuthShowcase } from "../../components";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../src/pages/api/auth/[...nextauth]";
+import { authOptions } from "../../pages/api/auth/[...nextauth]";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);

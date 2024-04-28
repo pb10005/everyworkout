@@ -12,8 +12,8 @@ import {
     ExerciseSelector,
     Loading,
     Timer,
-} from "../../../src/components";
-import { api } from "../../../src/utils/api";
+} from "../../../components";
+import { api } from "../../../utils/api";
 
 type WorkoutProp = {
     date: string;

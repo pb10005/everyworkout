@@ -4,11 +4,11 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { api } from "../../../src/utils/api";
+import { api } from "../../../utils/api";
 import { MinusCircleIcon } from "@heroicons/react/20/solid";
 
-import { Heading, Navigation, MaximumCard, Loading, Button, ExerciseChart } from "../../../src/components";
-import { type ChartProp } from "../../../src/components/types";
+import { Heading, Navigation, MaximumCard, Loading, Button, ExerciseChart } from "../../../components";
+import { type ChartProp } from "../../../components/types";
 
 const History: NextPage = () => {
   const params = useParams();

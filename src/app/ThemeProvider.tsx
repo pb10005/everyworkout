@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext } from "react";
-import { useDarkMode } from "../src/hooks/useDarkMode";
+import { useDarkMode } from "../hooks/useDarkMode";
 
 export interface ThemeProviderProps {
     children: React.ReactNode;

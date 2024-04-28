@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { api } from "../../src/utils/api";
+import { api } from "../utils/api";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
 import {
@@ -10,7 +10,7 @@ import {
     Loading,
     MaximumCard,
     RecordCard,
-} from "../../src/components";
+} from "../components";
 
 export const DashboardPage = () => {
     const {

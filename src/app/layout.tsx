@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import "../src/styles/globals.css";
+import "../styles/globals.css";
 import SessionProvider from "./SessionProvider";
 import { ClientProvider } from "./trpcClient";
 import { ThemeProvider } from "./ThemeProvider";

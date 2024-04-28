@@ -13,6 +13,7 @@ import { MaximumCard } from "./MaximumCard";
 import { Navigation } from "./Navigation";
 import { NotLoggedInCard } from "./NotLoggedInCard";
 import { Paginator } from "./Paginator";
+import { ProfilePage } from "./ProfilePage";
 import { RecordCard } from "./RecordCard";
 import { RMCalcualtor } from "./RMCalculator";
 import { SearchPage } from "./SearchPage";
@@ -36,6 +37,7 @@ export {
   Navigation,
   NotLoggedInCard,
   Paginator,
+  ProfilePage,
   RecordCard,
   RMCalcualtor,
   SearchPage,

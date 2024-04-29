@@ -10,18 +10,14 @@ export default {
 };
 
 export const Default = {
-    args: {
-        perPage: 5,
-        maxPage: 10,
-    },
-    render: function Comp({ ...args }){ 
+    render: function Comp(){ 
         const [page, setPage] = useState<number>(0);  
     
         return (
           <meta.component
             page={page}
-            perPage={args.perPage}
-            maxPage={args.maxPage}
+            perPage={5}
+            maxPage={10}
             setPage={(p: number) => setPage(p)}
           ></meta.component>
         );

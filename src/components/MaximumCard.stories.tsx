@@ -12,8 +12,5 @@ export const Default = {
         exerciseName: 'ベンチプレス',
         metrics_code: '01',
         value: 100
-    },
-    render: () => {
-
     }
 };

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import { prisma } from "../../../server/db";
 
 export const title = 'EVERYWORKOUT';

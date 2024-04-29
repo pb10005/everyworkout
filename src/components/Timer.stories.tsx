@@ -9,6 +9,6 @@ export default {
 export const Default = {
     args: {
         expiryTimeDelta: 120,
-        onExpire: () => {},
+        onExpire: () => { alert('expired'); },
     },
 };

@@ -12,8 +12,8 @@ export default {
 export const Default = {
     args: {
         note: '',
-        submit: () => { },
-        cancel: () => { },
+        submit: () => { alert('submit'); },
+        cancel: () => { alert('cancel'); },
     },
     render: function Comp(){ 
       const [value, setValue] = useState('');  

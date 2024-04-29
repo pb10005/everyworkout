@@ -14,7 +14,6 @@ import {
 import { type ChartProp } from "./types";
 
 type Props = {
-    children?: React.ReactNode;
     chartData: Partial<ChartProp>[];
 };
 

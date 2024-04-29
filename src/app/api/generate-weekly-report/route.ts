@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { addNewReport } from '../../utils/add-new-report';
+import { generateReport } from "../../../utils/generate-report";
 
 /**
  *  毎週月曜10時に動くCron Job
@@ -14,6 +14,6 @@ export default async function handler(
   if (process.env.CRON_SECRET && request.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
     return response.status(401).end('Unauthorized');
   }
-  const data = await addNewReport();
+  const data = await generateReport();
   response.status(200).json({ result: data });
 }

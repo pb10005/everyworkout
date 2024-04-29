@@ -11,7 +11,7 @@ export const Badge: React.FC<Props> = (props: Props) => {
   return (
     <>
       <span
-        className="mb-1 p-2 inline-block rounded cursor-pointer bg-gray-200 dark:bg-gray-700 dark:text-white"
+        className="px-3 py-2 inline-block rounded-full cursor-pointer bg-gray-200 dark:bg-gray-700 dark:text-white"
         onClick={onClick}
       >
         {label}

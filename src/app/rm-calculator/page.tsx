@@ -2,10 +2,9 @@
 
 import { type NextPage } from "next";
 
-import { Heading, Navigation } from "../../components";
 import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
-import { RMCalcualtor } from "../../components";
+import { Heading, Navigation, RMCalcualtor } from "../../components";
 
 const RMCalculator: NextPage = () => {
 
@@ -13,7 +12,7 @@ const RMCalculator: NextPage = () => {
 
   return (
     <>
-      <main className="">
+      <main>
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12">

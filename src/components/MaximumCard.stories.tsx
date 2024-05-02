@@ -14,3 +14,13 @@ export const Default = {
         value: 100
     }
 };
+
+export const Remove = {
+    args: {
+        date: new Date('2024-04-01'),
+        exerciseName: 'ベンチプレス',
+        metrics_code: '01',
+        value: 100,
+        removeMaximum: (e: MouseEvent | TouchEvent) => { return }
+    }
+};

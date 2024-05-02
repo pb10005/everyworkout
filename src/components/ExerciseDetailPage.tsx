@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { api } from "../utils/api";
-import { MinusCircleIcon } from "@heroicons/react/20/solid";
 
 import { MaximumCard, Loading, Button, ExerciseChart } from ".";
 import { type ChartProp } from "./types";
@@ -13,8 +12,6 @@ export const ExerciseDetailPage: React.FC = () => {
 
     const ids = params?.id || "";
     const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
-
-    const [isDeleteMode, setDeleteMode] = useState<boolean>(false);
 
     const { data, isLoading, isSuccess, isError, error } =
         api.maximum.getUserMaximumsByExerciseId.useQuery({
@@ -44,11 +41,13 @@ export const ExerciseDetailPage: React.FC = () => {
         ...test2,
     ];
 
-    const mutation = api.maximum.delete.useMutation();
-
-    const toggleDeleteMode = () => {
-        setDeleteMode(!isDeleteMode);
-    };
+    const mutation = api.maximum.delete.useMutation({
+        async onSuccess() {
+            await utils.maximum.getUserMaximumsByExerciseId.invalidate();
+            await utils.workout.getUserWorkoutVolumeByExerciseId.invalidate();
+        }
+    });
+    const utils = api.useContext();
 
     const deleteMaximum = async (id: string) => {
         await mutation.mutateAsync({
@@ -82,21 +81,18 @@ export const ExerciseDetailPage: React.FC = () => {
                     </div>
                     <div className="mb-2 md:grid-span-3">
                         <p className="text-sm text-gray-700 dark:text-gray-300 my-2">ベスト更新履歴</p>
-                        <Button onClick={toggleDeleteMode}>削除モード</Button>
                     </div>
-                    <section className="grid md:grid-cols-3 gap-1">
+                    <section className="flex flex-col divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
                         {data?.length && data?.length > 0
                             ? data?.map((d) => {
                                 return (
-                                    <div key={d.id} className="md:grid-span-1 flex items-center">
-                                        {isDeleteMode ?
-                                            <MinusCircleIcon className="w-6 h-6 text-red-600 cursor-pointer" onClick={() => void deleteMaximum(d.id)}></MinusCircleIcon>
-                                            : ""}
+                                    <div key={d.id} className="flex items-center">
                                         <MaximumCard
                                             date={d.date}
                                             exerciseName={d.exercise.name}
                                             metrics_code={d.metrics_code}
                                             value={d.value}
+                                            removeMaximum={() => void deleteMaximum(d.id)}
                                         />
                                     </div>
                                 );

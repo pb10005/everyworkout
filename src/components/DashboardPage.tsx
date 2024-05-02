@@ -42,7 +42,7 @@ export const DashboardPage = () => {
                 {loadingM && <Loading />}
                 {successM && (
                     <>
-                        <section className="grid md:grid-cols-3 gap-1">
+                        <section className="gap-1 divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
                             {maximum?.length && maximum?.length > 0
                                 ? maximum?.map((m) => {
                                     return (

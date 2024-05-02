@@ -37,7 +37,7 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     documentClickHandler.current = (e: MouseEvent | TouchEvent) => {
-      if (dropdownRef?.current?.contains(e.target)) return
+      if (dropdownRef?.current?.contains(e.target as Node)) return
 
       setDrowpdownVisible(false);
       document.removeEventListener('click', documentClickHandler.current)

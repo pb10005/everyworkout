@@ -1,8 +1,8 @@
 # EveryWorkout
+ワークアウトの成長を記録する
 
 ![logo](https://everyworkout.vercel.app/logo_h.png)
 
-ワークアウトの成長を記録する
 
 ## Storybook
 https://pb10005.github.io/everyworkout/

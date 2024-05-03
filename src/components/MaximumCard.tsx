@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
+import Image, { ImageLoader } from "next/image";
 
 type Props = {
   date?: Date | undefined;
@@ -47,6 +48,7 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
     <>
       <div className="w-full flex justify-between items-center p-2 bg-white dark:bg-gray-900 dark:text-white dark:outline outline-1 outline-gray-500">
         <section className="flex items-center gap-2">
+          <Image src="/7233.png" alt="月桂樹" width={30} height={30} />
           <section>
             <div className="text-lg font-bold flex items-center gap-1">
               <span>{exerciseName}</span>

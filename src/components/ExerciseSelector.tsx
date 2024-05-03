@@ -39,7 +39,7 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
           {muscles.map(d => (
             <div className="p-2 rounded-lg" key={d.id}>
               <p className="text-sm text-gray-500 dark:text-gray-300">{d.name}</p>
-              <ul className="gap-1 divide-y">
+              <ul className="divide-y dark:outline outline-1 outline-gray-500">
                 {d.exercises.map(e =>
                   <li key={e.exercise.id}
                     className={`p-2 cursor-pointer hover:bg-gray-200 ${e.exercise.id === selectedExerciseId ? 'bg-red-400' : ''} dark:text-white`}

@@ -6,6 +6,7 @@ import { maximumRouter } from "./routers/maximum";
 import { profileRouter } from "./routers/profile";
 import { bodyPartRouter } from "./routers/bodyPart";
 import { weeklyReportRouter } from "./routers/weeklyReport";
+import { goalRouter } from "./routers/goal";
 
 /**
  * This is the primary router for your server.
@@ -13,6 +14,7 @@ import { weeklyReportRouter } from "./routers/weeklyReport";
  * All routers added in /api/routers should be manually added here
  */
 export const appRouter = createTRPCRouter({
+  goal: goalRouter,
   muscle: muscleRouter,
   exercise: exerciseRouter,
   workout: workoutRouter,

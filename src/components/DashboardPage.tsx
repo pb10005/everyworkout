@@ -33,10 +33,26 @@ export const DashboardPage = () => {
         isError: errorR,
     } = api.weeklyReport.getUserReports.useQuery();
 
+    const {
+        data: goal,
+    } = api.goal.getCurrentUserGoal.useQuery();
 
     return (
         <>
             {(errorW && errorM && errorR) && <NotLoggedInCard />}
+            <section className="p-2">
+                <p className="text-sm text-gray-500 dark:text-gray-200">目標</p>
+                <Link className="dark:text-white" href={`/goal/add`}>新規作成</Link>
+                {goal && <>
+                    <section key={goal.id} className="bg-white dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
+                        <div className="px-4 py-2 whitespace-pre-wrap">{goal.content}</div>
+                    </section>
+                    <div className="flex items-center gap-1">
+                        <Link className="dark:text-white" href={`/goal/edit/${goal.id}`}>編集</Link>
+                        <Link className="dark:text-white" href="/goal/history">過去の目標</Link>
+                    </div>
+                </>}
+            </section>
             <section className="p-2">
                 <p className="text-sm text-gray-500 dark:text-gray-200">自己ベスト</p>
                 {loadingM && <Loading />}

@@ -90,6 +90,17 @@ model Maximum {
   @@index([exerciseId, metrics_code])
 }
 
+model Goal {
+  id        String   @id @default(cuid())
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([id, userId])
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -126,6 +137,7 @@ model User {
   maximums      Maximum[]
   sessions      Session[]
   workouts      Workout[]
+  goals         Goal[]
   weeklyReports WeeklyReport[]
 }
 

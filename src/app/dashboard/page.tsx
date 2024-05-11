@@ -10,7 +10,6 @@ export default async function Page() {
       <main>
         <Heading />
         <Navigation />
-
         <div className="grid md:grid-cols-12">
           <div className="mt-2 md:col-span-6 md:col-start-4 gap-2">
             <section className="p-2">

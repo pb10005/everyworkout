@@ -40,7 +40,6 @@ export const SearchResultPage: React.FC = () => {
                             <Paginator
                                 className="dark:text-gray-300"
                                 page={page}
-                                perPage={perPage}
                                 maxPage={maxPage}
                                 setPage={setPage}
                             />)}

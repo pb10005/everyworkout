@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import Image, { ImageLoader } from "next/image";
+import Image from "next/image";
 
 type Props = {
   date?: Date | undefined;
@@ -42,7 +42,7 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
       setDrowpdownVisible(false);
       document.removeEventListener('click', documentClickHandler.current)
     }
-  }, [])
+  }, []);
 
   return (
     <>

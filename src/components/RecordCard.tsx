@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "next/link";
 import { Badge } from "../components";
 
 type Muscle = {
@@ -20,7 +19,6 @@ type Props = {
 
 export const RecordCard: React.FC<Props> = (props: Props) => {
   const {
-    id,
     exerciseName,
     date,
     weight,

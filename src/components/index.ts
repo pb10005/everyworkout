@@ -5,6 +5,7 @@ import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { Credit } from "./Credit";
 import { DashboardPage } from "./DashboardPage";
+import { Dropdown } from "./Dropdown";
 import { EditGoalForm } from "./EditGoalForm";
 import { EditGoalPage } from "./EditGoalPage";
 import { EditNoteForm } from "./EditNoteForm";
@@ -28,6 +29,9 @@ import { Timer } from "./Timer";
 import { ToolList } from "./ToolList";
 import { WorkoutCard } from "./WorkoutCard";
 import { WorkoutDetailPage } from "./WorkoutDetailPage";
+import { WorkoutMenu } from "./WorkoutMenu";
+import { WorkoutMenuDetailPage } from "./WorkoutMenuDetailPage";
+import { WorkoutMenuEditor } from "./WorkoutMenuEditor";
 
 export {
   AddGoalPage,
@@ -36,6 +40,7 @@ export {
   Button,
   Credit,
   DashboardPage,
+  Dropdown,
   EditGoalForm,
   EditGoalPage,
   EditNoteForm,
@@ -59,4 +64,7 @@ export {
   ToolList,
   WorkoutCard,
   WorkoutDetailPage,
+  WorkoutMenu,
+  WorkoutMenuDetailPage,
+  WorkoutMenuEditor,
 };

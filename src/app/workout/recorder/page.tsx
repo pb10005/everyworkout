@@ -1,8 +1,7 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { type NextPage } from "next";
-import Head from "next/head";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 import {
@@ -14,6 +13,7 @@ import {
     Timer,
 } from "../../../components";
 import { api } from "../../../utils/api";
+import { useExerciseSelector } from "../../../hooks/useExerciseSelector";
 
 type WorkoutProp = {
     date: string;
@@ -25,16 +25,28 @@ type WorkoutProp = {
     expiryTimeDelta: number;
 };
 
-const WorkoutRecorder: NextPage = () => {
+function Page() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const exerciseId = searchParams?.get('exerciseId');
+    const bodyPartId = searchParams?.get('bodyPartId');
+    const {
+        selectBodyPartId,
+        selectedBodyPartId,
+        selectExerciseId,
+        selectedExerciseId,
+        selectedExerciseName,
+        bodyParts,
+        muscles,
+    } = useExerciseSelector(parseInt(exerciseId || "-1"), parseInt(bodyPartId || "-1"));
+
     const [date, setDate] = useState<string>(
         new Date().toISOString().split("T")[0] || ""
     );
     const [error, setError] = useState<string>("");
     const [isEnd, setEnd] = useState<boolean>(false);
 
-    const [selectedExerciseId, selectExerciseId] = useState(-1);
-    const [selectedExerciseName, setExerciseName] = useState("");
     const [weight, setWeight] = useState<string>("50");
     const [reps, setReps] = useState<string>("10");
     const [sets, setSets] = useState<string>("-1");
@@ -61,10 +73,13 @@ const WorkoutRecorder: NextPage = () => {
                 return;
             });
     };
-    const handleExerciseClick = useCallback((exerciseId: number, exerciseName: string) => {
+    const handleExerciseClick = (exerciseId: number) => {
         selectExerciseId(exerciseId);
-        setExerciseName(exerciseName);
-    }, []);
+    };
+    
+    const handleBodyPartClick = (id: number) => {
+      selectBodyPartId(id);
+    };
 
     const startSets = () => {
         if (selectedExerciseId < 0) {
@@ -122,13 +137,16 @@ const WorkoutRecorder: NextPage = () => {
         if (workout) {
             setDate(workout.date);
             selectExerciseId(workout.selectedExerciseId);
-            setExerciseName(workout.selectedExerciseName);
             setWeight(workout.weight);
             setReps(workout.reps);
             setExpiryTimeDelta(workout.expiryTimeDelta);
             setSets(workout.sets);
         }
-    }, []);
+    });
+
+    useEffect(() => {
+        selectExerciseId(parseInt(exerciseId || "-1"));
+    }, [exerciseId, selectExerciseId]);
 
     return (
         <>
@@ -172,10 +190,14 @@ const WorkoutRecorder: NextPage = () => {
                                     <label className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                                         種目
                                     </label>
-                                    <ExerciseSelector
+                                    {bodyParts && muscles && <ExerciseSelector
                                         selectedExerciseId={selectedExerciseId}
+                                        selectedBodyPartId={selectedBodyPartId}
+                                        bodyParts={bodyParts}
+                                        muscles={muscles}
                                         handleExerciseClick={handleExerciseClick}
-                                    />
+                                        handleBodyPartClick={handleBodyPartClick}
+                                    />}
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
@@ -351,6 +373,14 @@ const WorkoutRecorder: NextPage = () => {
             </main >
         </>
     );
+}
+
+const WorkoutRecorder: NextPage = () => {
+    return (<>
+        <Suspense>
+            <Page />
+        </Suspense>
+    </>)
 };
 
 export default WorkoutRecorder;

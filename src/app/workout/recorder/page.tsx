@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
@@ -27,6 +27,10 @@ type WorkoutProp = {
 
 const WorkoutRecorder: NextPage = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const exerciseId = searchParams?.get('exerciseId');
+
     const [date, setDate] = useState<string>(
         new Date().toISOString().split("T")[0] || ""
     );
@@ -40,6 +44,12 @@ const WorkoutRecorder: NextPage = () => {
     const [sets, setSets] = useState<string>("-1");
     const [note, setNote] = useState<string>("");
     const [expiryTimeDelta, setExpiryTimeDelta] = useState<number>(120);
+
+    const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
+
+    const { data: bodyParts, isLoading: isBodyPartLoading, isSuccess: bodyPartExists } = api.bodyPart.getAll.useQuery();
+    const { data: muscles, isLoading: isMuscleLoading, isSuccess: muscleExists } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
+
 
     const mutation = api.workout.add.useMutation();
 
@@ -65,6 +75,10 @@ const WorkoutRecorder: NextPage = () => {
         selectExerciseId(exerciseId);
         setExerciseName(exerciseName);
     }, []);
+    
+    const handleBodyPartClick = (id: number) => {
+      selectBodyPartId(id);
+    };
 
     const startSets = () => {
         if (selectedExerciseId < 0) {
@@ -130,6 +144,10 @@ const WorkoutRecorder: NextPage = () => {
         }
     }, []);
 
+    useEffect(() => {
+        selectExerciseId(parseInt(exerciseId || "-1"));
+    }, [exerciseId]);
+
     return (
         <>
             <main>
@@ -172,10 +190,14 @@ const WorkoutRecorder: NextPage = () => {
                                     <label className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                                         種目
                                     </label>
-                                    <ExerciseSelector
+                                    {bodyParts && muscles && <ExerciseSelector
                                         selectedExerciseId={selectedExerciseId}
+                                        selectedBodyPartId={selectedBodyPartId}
+                                        bodyParts={bodyParts}
+                                        muscles={muscles}
                                         handleExerciseClick={handleExerciseClick}
-                                    />
+                                        handleBodyPartClick={handleBodyPartClick}
+                                    />}
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label

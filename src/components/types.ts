@@ -3,3 +3,9 @@ export type ChartProp = {
     maximum: number;
     volume: number;
 };
+
+export type WorkoutMenuSubmitProps = {
+    title: string;
+    exercises: number[];
+};
+

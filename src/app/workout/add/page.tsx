@@ -23,6 +23,11 @@ const AddWorkout: NextPage = () => {
   const [reps, setReps] = useState<string>("10");
   const [sets, setSets] = useState<string>("3");
   const [note, setNote] = useState<string>("");
+  const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
+
+  const { data: bodyParts, isLoading: isBodyPartLoading, isSuccess: bodyPartExists } = api.bodyPart.getAll.useQuery();
+  const { data: muscles, isLoading: isMuscleLoading, isSuccess: muscleExists } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
+
   const mutation = api.workout.add.useMutation();
   const send = async () => {
     await mutation
@@ -44,6 +49,11 @@ const AddWorkout: NextPage = () => {
   const handleExerciseClick = useCallback((exerciseId: number) => {
     selectExerciseId(exerciseId);
   }, []);
+
+  const handleBodyPartClick = (id: number) => {
+    selectBodyPartId(id);
+  };
+
   return (
     <>
       <main>
@@ -79,10 +89,14 @@ const AddWorkout: NextPage = () => {
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                 種目
               </label>
-              <ExerciseSelector
+              {bodyParts && muscles && <ExerciseSelector
                 selectedExerciseId={selectedExerciseId}
+                selectedBodyPartId={selectedBodyPartId}
+                bodyParts={bodyParts}
+                muscles={muscles}
                 handleExerciseClick={handleExerciseClick}
-              />
+                handleBodyPartClick={handleBodyPartClick}
+              />}
             </div>
             <div className="">
               <label

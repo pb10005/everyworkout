@@ -28,6 +28,8 @@ import { Timer } from "./Timer";
 import { ToolList } from "./ToolList";
 import { WorkoutCard } from "./WorkoutCard";
 import { WorkoutDetailPage } from "./WorkoutDetailPage";
+import { WorkoutMenu } from "./WorkoutMenu";
+import { WorkoutMenuEditor } from "./WorkoutMenuEditor";
 
 export {
   AddGoalPage,
@@ -59,4 +61,6 @@ export {
   ToolList,
   WorkoutCard,
   WorkoutDetailPage,
+  WorkoutMenu,
+  WorkoutMenuEditor,
 };

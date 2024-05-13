@@ -4,8 +4,19 @@ export type ChartProp = {
     volume: number;
 };
 
-export type WorkoutMenuSubmitProps = {
-    title: string;
-    exercises: number[];
+export type WorkoutMenuItemProps = {
+    exerciseId: number;
+    bodyPartId: number;
 };
 
+export type WorkoutMenuSubmitProps = {
+    title: string;
+    exercises: WorkoutMenuItemProps[];
+};
+
+export type ExerciseProps = {
+    id: number;
+    bodyPartId: number;
+    name: string;
+    isSelected: boolean;
+};

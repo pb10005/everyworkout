@@ -1,10 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { api } from "../utils/api";
 
-import { MaximumCard, Loading, Button, ExerciseChart } from ".";
+import { MaximumCard, Loading, ExerciseChart } from ".";
 import { type ChartProp } from "./types";
 
 export const ExerciseDetailPage: React.FC = () => {

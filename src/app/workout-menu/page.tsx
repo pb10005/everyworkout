@@ -2,11 +2,11 @@
 
 import { PlusIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { Heading, Navigation, Loading, WorkoutMenuEditor, FloatingButton } from "../../components";
+import { Heading, Navigation, Loading, FloatingButton } from "../../components";
 import { api } from "../../utils/api";
 
 export default function Page() {
-    const { data: workoutMenus, isLoading, isError } = api.workoutMenu.getUserWorkoutMenus.useQuery();
+    const { data: workoutMenus, isLoading } = api.workoutMenu.getUserWorkoutMenus.useQuery();
 
     return (<>
         <main className="mt-4">

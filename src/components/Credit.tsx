@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-type Credit = {
+type CreditProps = {
     id: number;
     name: string;
     url: string;
@@ -9,7 +9,7 @@ type Credit = {
 };
 
 export const Credit: React.FC = () => {
-    const credits: Credit[] = [
+    const credits: CreditProps[] = [
         { id: 1, name: 'Frameillust 無料イラスト素材集', url: 'https://frame-illust.com/' },
     ];
     return (

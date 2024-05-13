@@ -5,7 +5,7 @@ import { z, ZodError } from "zod";
 import { useExerciseSelector } from "../hooks/useExerciseSelector";
 import { Button } from "./Button";
 import { ExerciseSelector } from "./ExerciseSelector";
-import { WorkoutMenuSubmitProps } from "./types";
+import type { WorkoutMenuItemProps, WorkoutMenuSubmitProps } from "./types";
 
 type ExerciseProps = {
     id: number;
@@ -14,13 +14,21 @@ type ExerciseProps = {
 
 type Props = {
     exercises: ExerciseProps[];
-    workoutMenu: number[];
-    setWorkoutMenu: (menu: number[]) => void;
+    workoutMenu: WorkoutMenuItemProps[];
+    setWorkoutMenu: (menu: WorkoutMenuItemProps[]) => void;
     submit: (data: WorkoutMenuSubmitProps) => void;
 };
 
 const schema = z.object({
     title: z.string().nonempty('タイトルは必須項目です'),
+    exercises: z
+        .array(
+            z.object({
+                exerciseId: z.number(),
+                bodyPartId: z.number()
+            })
+        )
+        .min(1, '少なくとも1件の種目を選んでください'),
 });
 export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
     const { exercises, workoutMenu, setWorkoutMenu, submit } = props;
@@ -45,12 +53,12 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
     };
 
     const handleAddButtonClick = () => {
-        setWorkoutMenu([...workoutMenu, selectedExerciseId]);
+        setWorkoutMenu([...workoutMenu, { exerciseId: selectedExerciseId, bodyPartId: selectedBodyPartId }]);
         selectExerciseId(-1);
     };
 
     const displayMenu = workoutMenu.map(wm => {
-        const e = exercises.find(e => e.id === wm);
+        const e = exercises.find(e => e.id === wm.exerciseId);
         if (e) return e;
         else return;
     }).filter(x => !!x);
@@ -69,9 +77,10 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
         try {
             schema.parse(data);
             submit(data);
-        } catch(e: unknown) {
-            if(e && e instanceof ZodError)
+        } catch (e: unknown) {
+            if (e && e instanceof ZodError) {
                 setError(e?.issues[0]?.message || "");
+            }
         }
     };
 

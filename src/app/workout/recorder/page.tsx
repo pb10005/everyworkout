@@ -1,8 +1,7 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { type NextPage } from "next";
-import Head from "next/head";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 import {
@@ -14,6 +13,7 @@ import {
     Timer,
 } from "../../../components";
 import { api } from "../../../utils/api";
+import { useExerciseSelector } from "../../../hooks/useExerciseSelector";
 
 type WorkoutProp = {
     date: string;
@@ -30,6 +30,16 @@ const WorkoutRecorder: NextPage = () => {
     const searchParams = useSearchParams();
 
     const exerciseId = searchParams?.get('exerciseId');
+    const bodyPartId = searchParams?.get('bodyPartId');
+    const {
+        selectBodyPartId,
+        selectedBodyPartId,
+        selectExerciseId,
+        selectedExerciseId,
+        selectedExerciseName,
+        bodyParts,
+        muscles,
+    } = useExerciseSelector(parseInt(exerciseId || "-1"), parseInt(bodyPartId || "-1"));
 
     const [date, setDate] = useState<string>(
         new Date().toISOString().split("T")[0] || ""
@@ -37,19 +47,11 @@ const WorkoutRecorder: NextPage = () => {
     const [error, setError] = useState<string>("");
     const [isEnd, setEnd] = useState<boolean>(false);
 
-    const [selectedExerciseId, selectExerciseId] = useState(-1);
-    const [selectedExerciseName, setExerciseName] = useState("");
     const [weight, setWeight] = useState<string>("50");
     const [reps, setReps] = useState<string>("10");
     const [sets, setSets] = useState<string>("-1");
     const [note, setNote] = useState<string>("");
     const [expiryTimeDelta, setExpiryTimeDelta] = useState<number>(120);
-
-    const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
-
-    const { data: bodyParts, isLoading: isBodyPartLoading, isSuccess: bodyPartExists } = api.bodyPart.getAll.useQuery();
-    const { data: muscles, isLoading: isMuscleLoading, isSuccess: muscleExists } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
-
 
     const mutation = api.workout.add.useMutation();
 
@@ -71,10 +73,9 @@ const WorkoutRecorder: NextPage = () => {
                 return;
             });
     };
-    const handleExerciseClick = useCallback((exerciseId: number, exerciseName: string) => {
+    const handleExerciseClick = (exerciseId: number) => {
         selectExerciseId(exerciseId);
-        setExerciseName(exerciseName);
-    }, []);
+    };
     
     const handleBodyPartClick = (id: number) => {
       selectBodyPartId(id);
@@ -136,17 +137,16 @@ const WorkoutRecorder: NextPage = () => {
         if (workout) {
             setDate(workout.date);
             selectExerciseId(workout.selectedExerciseId);
-            setExerciseName(workout.selectedExerciseName);
             setWeight(workout.weight);
             setReps(workout.reps);
             setExpiryTimeDelta(workout.expiryTimeDelta);
             setSets(workout.sets);
         }
-    }, []);
+    });
 
     useEffect(() => {
         selectExerciseId(parseInt(exerciseId || "-1"));
-    }, [exerciseId]);
+    }, [exerciseId, selectExerciseId]);
 
     return (
         <>

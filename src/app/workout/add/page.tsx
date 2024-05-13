@@ -1,7 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
 import { type NextPage } from "next";
-import Head from "next/head";
 import { useRouter } from "next/navigation";
 
 import {
@@ -25,8 +24,8 @@ const AddWorkout: NextPage = () => {
   const [note, setNote] = useState<string>("");
   const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
 
-  const { data: bodyParts, isLoading: isBodyPartLoading, isSuccess: bodyPartExists } = api.bodyPart.getAll.useQuery();
-  const { data: muscles, isLoading: isMuscleLoading, isSuccess: muscleExists } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
+  const { data: bodyParts } = api.bodyPart.getAll.useQuery();
+  const { data: muscles } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
 
   const mutation = api.workout.add.useMutation();
   const send = async () => {

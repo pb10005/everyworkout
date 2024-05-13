@@ -4,13 +4,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 type Props = {
     className?: string;
     page: number;
-    perPage: number;
     maxPage: number;
     setPage: (page: number) => void;
 };
 
 export const Paginator: React.FC<Props> = (props: Props) => {
-    const { className, page, perPage, maxPage, setPage } = props;
+    const { className, page, maxPage, setPage } = props;
 
     const viewPrev = () => {
         const currentPage = Math.max(0, page - 1);

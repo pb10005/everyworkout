@@ -12,8 +12,8 @@ export const SearchPage: React.FC = () => {
   const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
   const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
 
-  const { data: bodyParts, isLoading: isBodyPartLoading, isSuccess: bodyPartExists } = api.bodyPart.getAll.useQuery();
-  const { data: muscles, isLoading: isMuscleLoading, isSuccess: muscleExists } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
+  const { data: bodyParts } = api.bodyPart.getAll.useQuery();
+  const { data: muscles } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
 
 
   const handleExerciseClick = (id: number) => {

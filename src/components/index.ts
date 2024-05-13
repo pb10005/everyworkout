@@ -5,6 +5,7 @@ import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { Credit } from "./Credit";
 import { DashboardPage } from "./DashboardPage";
+import { Dropdown } from "./Dropdown";
 import { EditGoalForm } from "./EditGoalForm";
 import { EditGoalPage } from "./EditGoalPage";
 import { EditNoteForm } from "./EditNoteForm";
@@ -38,6 +39,7 @@ export {
   Button,
   Credit,
   DashboardPage,
+  Dropdown,
   EditGoalForm,
   EditGoalPage,
   EditNoteForm,

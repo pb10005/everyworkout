@@ -87,7 +87,6 @@ const History: NextPage = () => {
                 {count > 0 && <Paginator
                   className="dark:text-gray-300"
                   page={page}
-                  perPage={perPage}
                   maxPage={maxPage}
                   setPage={setPage}
                 />}

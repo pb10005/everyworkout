@@ -1,6 +1,5 @@
 "use client";
-import type { ChangeEventHandler } from "react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
@@ -8,19 +7,10 @@ import Script from 'next/script';
 import { AuthShowcase, Button, Loading, WorkoutCard } from ".";
 import { api } from "../utils/api";
 
-type Props = {
-    note: string;
-    setNote: ChangeEventHandler<HTMLInputElement>;
-    submit: () => void;
-    cancel: () => void;
-};
-
 export const WorkoutDetailPage: React.FC = () => {
     const params = useParams();
     const pathname = usePathname();
     const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-
-    const ref = useRef<HTMLDivElement>(null);
 
     const ids = params?.id || "";
     const id = Array.isArray(ids) ? ids[0] : ids;

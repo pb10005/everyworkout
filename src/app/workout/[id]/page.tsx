@@ -1,12 +1,4 @@
-import type { ChangeEventHandler } from "react";
 import { Heading, Navigation, WorkoutDetailPage } from "../../../components";
-
-type Props = {
-  note: string;
-  setNote: ChangeEventHandler<HTMLInputElement>;
-  submit: () => void;
-  cancel: () => void;
-};
 
 export default function Page() {
 

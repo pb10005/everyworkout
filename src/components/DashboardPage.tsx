@@ -76,7 +76,7 @@ export const DashboardPage = () => {
                                         </div>
                                     );
                                 })
-                                : "No data"}
+                                : <div className="px-4 py-2 dark:text-white">No data</div>}
                         </section>
                     </>
                 )}
@@ -94,7 +94,7 @@ export const DashboardPage = () => {
                                         <span className="dark:text-white">{r.content}</span>
                                     </li>)
                                 )
-                                : "No data"}
+                                : <div className="px-4 py-2 dark:text-white">No data</div>}
                         </ul>
                     </>
                 )}
@@ -104,25 +104,21 @@ export const DashboardPage = () => {
                 {loadingW && <Loading />}
                 {successW && (
                     <div>
-                        <div className="grid gap-2">
-                            {data?.length && data?.length > 0 ? (<>
-                                <div className="grid divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
-                                    {data?.map((d) => {
-                                        return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
-                                            id={d.id}
-                                            exerciseName={d.exercise.name}
-                                            date={d.date}
-                                            weight={d.weight}
-                                            reps={d.reps}
-                                            sets={d.sets}
-                                            note={d.note}
-                                            muscles={d.exercise.muscles.map(m => m.muscle)}
-                                        /></Link>;
-                                    })}
-                                </div>
-                                <Link className="dark:text-white" href="/workout/history">View More</Link>
-                            </>) : "No data"}
+                        <div className="flex flex-col divide-y dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
+                            {data?.length && data?.length > 0 ? data?.map((d) => {
+                                    return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
+                                        id={d.id}
+                                        exerciseName={d.exercise.name}
+                                        date={d.date}
+                                        weight={d.weight}
+                                        reps={d.reps}
+                                        sets={d.sets}
+                                        note={d.note}
+                                        muscles={d.exercise.muscles.map(m => m.muscle)}
+                                    /></Link>;
+                                }): <div className="px-4 py-2 dark:text-white">No data</div>}
                         </div>
+                        <Link className="dark:text-white" href="/workout/history">View More</Link>
                     </div>
                 )}
             </section>

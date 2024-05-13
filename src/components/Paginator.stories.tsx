@@ -16,7 +16,6 @@ export const Default = {
         return (
           <meta.component
             page={page}
-            perPage={5}
             maxPage={10}
             setPage={(p: number) => setPage(p)}
           ></meta.component>

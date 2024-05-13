@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { type NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
@@ -25,7 +25,7 @@ type WorkoutProp = {
     expiryTimeDelta: number;
 };
 
-const WorkoutRecorder: NextPage = () => {
+function Page() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -373,6 +373,14 @@ const WorkoutRecorder: NextPage = () => {
             </main >
         </>
     );
+}
+
+const WorkoutRecorder: NextPage = () => {
+    return (<>
+        <Suspense>
+            <Page />
+        </Suspense>
+    </>)
 };
 
 export default WorkoutRecorder;

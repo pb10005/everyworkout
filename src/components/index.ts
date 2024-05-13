@@ -30,6 +30,7 @@ import { ToolList } from "./ToolList";
 import { WorkoutCard } from "./WorkoutCard";
 import { WorkoutDetailPage } from "./WorkoutDetailPage";
 import { WorkoutMenu } from "./WorkoutMenu";
+import { WorkoutMenuDetailPage } from "./WorkoutMenuDetailPage";
 import { WorkoutMenuEditor } from "./WorkoutMenuEditor";
 
 export {
@@ -64,5 +65,6 @@ export {
   WorkoutCard,
   WorkoutDetailPage,
   WorkoutMenu,
+  WorkoutMenuDetailPage,
   WorkoutMenuEditor,
 };

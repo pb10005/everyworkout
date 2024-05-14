@@ -22,24 +22,17 @@ function Page() {
     const exerciseId = searchParams?.get('exerciseId') || "-1";
     const bodyPartId = searchParams?.get('bodyPartId') || "-1";
 
-    const [date, setDate] = useState<string>(
-        new Date().toISOString().split("T")[0] || ""
-    );
     const [error, setError] = useState<string>("");
     const [isEnd, setEnd] = useState<boolean>(false);
-
-    const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
-    const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
-    const [selectedExerciseName, selectExerciseName] = useState<string>("");
-    const [weight, setWeight] = useState<string>("50");
-    const [reps, setReps] = useState<string>("10");
     const [sets, setSets] = useState<string>("-1");
-    const [expiryTimeDelta, setExpiryTimeDelta] = useState<number>(120);
 
     const mutation = api.workout.add.useMutation();
 
-
     const startSets = (
+        date: string,
+        weight: string,
+        reps: string,
+        expiryTimeDelta: number,
         bodyPartId: number,
         exerciseId: number,
         exerciseName: string
@@ -48,24 +41,22 @@ function Page() {
             setError("種目を選んでください");
             return;
         }
-        selectBodyPartId(bodyPartId);
-        selectExerciseId(exerciseId);
-        selectExerciseName(exerciseName);
-
-        saveSession(bodyPartId, exerciseId, exerciseName, "0");
+        saveSession(date, weight, reps, expiryTimeDelta, bodyPartId, exerciseId, exerciseName, "0");
         setSets("0");
         setError("");
     };
 
-    const endSets = (weight: string, reps: string, sets: string) => {
+    const endSets = (sets: string) => {
         const tmp = parseInt(sets) + 1;
         setSets(tmp.toString());
         setEnd(true);
-        setWeight(weight);
-        setReps(reps);
     };
 
     const saveSession = (
+        date: string,
+        weight: string,
+        reps: string,
+        expiryTimeDelta: number,
         bodyPartId: number,
         exerciseId: number,
         exerciseName: string,
@@ -88,19 +79,9 @@ function Page() {
         const item = window.sessionStorage.getItem('workout');
         const workout = item && JSON.parse(item) as WorkoutProp;
         if (workout) {
-            setDate(workout.date);
-            selectExerciseId(workout.selectedExerciseId);
-            selectBodyPartId(workout.selectedBodyPartId);
-            setWeight(workout.weight);
-            setReps(workout.reps);
-            setExpiryTimeDelta(workout.expiryTimeDelta);
             setSets(workout.sets);
         }
     }, []);
-
-    useEffect(() => {
-        if (exerciseId) selectExerciseId(parseInt(exerciseId || "-1"));
-    }, [exerciseId]);
 
     return (
         <>
@@ -119,22 +100,14 @@ function Page() {
                             {error}
                         </p>
                     )}
-                    {!isEnd && sets === "-1" && <>
+                    {!isEnd && (sets === "-1" ? <>
                         <SetConfigForm
                             exerciseId={exerciseId}
                             bodyPartId={bodyPartId}
                             startSets={startSets} />
-                    </>}
-                    {!isEnd && sets !== "-1" && <>
-                        <SetRecorder endSets={endSets} />
-                    </>}
+                    </> : <SetRecorder endSets={endSets} />)}
                     {isEnd && <>
                         <ConfirmSubmit
-                            date={date}
-                            selectedExerciseId={selectedExerciseId}
-                            selectedExerciseName={selectedExerciseName}
-                            weight={weight}
-                            reps={reps}
                             sets={sets} />
                     </>}
                 </Container>

@@ -7,15 +7,13 @@ import type { WorkoutProp } from "../../../components/types";
 import { Button, Timer } from "../../../components";
 
 type Props = {
-    endSets: (weight: string, reps: string, sets: string) => void;
+    endSets: (sets: string) => void;
 };
 
 export function SetRecorder(props: Props) {
     const { endSets } = props;
     const router = useRouter();
-    const [date, setDate] = useState<string>(
-        new Date().toISOString().split("T")[0] || ""
-    );
+    const [date, setDate] = useState<string>("");
 
     const [weight, setWeight] = useState<string>("50");
     const [reps, setReps] = useState<string>("10");
@@ -54,7 +52,7 @@ export function SetRecorder(props: Props) {
     };
 
     const handleEndButtonClick = () => {
-        endSets(weight, reps, sets);
+        endSets(sets);
     };
 
     const clear = () => {

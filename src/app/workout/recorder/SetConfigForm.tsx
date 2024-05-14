@@ -12,6 +12,10 @@ type Props = {
     exerciseId?: string;
     bodyPartId?: string;
     startSets: (
+        date: string,
+        weight: string,
+        reps: string,
+        expiryTimeDelta: number,
         selectedBodyPartId: number,
         selectedExerciseId: number,
         selectedExerciseName: string
@@ -134,6 +138,10 @@ export function SetConfigForm(props: Props) {
                 />
             </div>
             <Button onClick={() => startSets(
+                date,
+                weight,
+                reps,
+                expiryTimeDelta,
                 selectedBodyPartId,
                 selectedExerciseId,
                 selectedExerciseName)}>セットを始める</Button>

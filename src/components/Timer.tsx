@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { ArrowPathIcon, PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
 
@@ -10,6 +10,7 @@ type Props = {
 
 export const Timer: React.FC<Props> = (props: Props) => {
     const { expiryTimeDelta, onExpire } = props;
+
     const [isExpired, setExpired] = useState<boolean>(false);
     const tmp = new Date().getSeconds() + expiryTimeDelta;
     const expiryTimestamp = new Date();
@@ -41,6 +42,10 @@ export const Timer: React.FC<Props> = (props: Props) => {
         time.setSeconds(time.getSeconds() + expiryTimeDelta);
         restart(time, false);
     };
+
+    useEffect(() => {
+        resetInterval();
+    }, [expiryTimeDelta])
 
     return (
         <>

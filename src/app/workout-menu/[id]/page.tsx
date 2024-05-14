@@ -1,15 +1,14 @@
-import { Heading, Navigation, WorkoutMenuDetailPage } from "../../../components";
+import { WorkoutMenuDetailPage } from "../../../components";
+import { Heading, Navigation, Container } from "../../../components/server";
 
 export default function Page() {
     return (<>
         <main className="mt-4">
             <Heading />
             <Navigation />
-            <div className="grid md:grid-cols-12">
-                <div className="md:col-span-6 md:col-start-4 p-2 flex flex-col gap-2">
-                    <WorkoutMenuDetailPage />
-                </div>
-            </div>
+            <Container>
+                <WorkoutMenuDetailPage />
+            </Container>
         </main>
     </>);
 }

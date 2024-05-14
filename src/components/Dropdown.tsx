@@ -10,7 +10,7 @@ export const Dropdown: React.FC<Props> = (props: Props) => {
     const [isDropdownVisible, setDrowpdownVisible] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const documentClickHandler = useRef((e: MouseEvent | TouchEvent) => { return });
+    const documentClickHandler = useRef((_: MouseEvent | TouchEvent) => { return });
     const handleDropdownIconClicked = () => {
         if (isDropdownVisible) {
             document.removeEventListener('click', documentClickHandler.current)

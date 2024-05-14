@@ -5,11 +5,10 @@ import { useRouter } from "next/navigation";
 
 import {
   Button,
-  Heading,
-  Navigation,
   ExerciseSelector,
   Loading,
 } from "../../../components";
+import { Heading, Navigation, Container } from "../../../components/server";
 import { api } from "../../../utils/api";
 
 const AddWorkout: NextPage = () => {
@@ -55,11 +54,10 @@ const AddWorkout: NextPage = () => {
 
   return (
     <>
-      <main>
+      <main className="mt-4">
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12 mt-4">
-          <div className="md:col-span-6 md:col-start-4 bg-white rounded-lg p-2 grid gap-2 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
+        <Container>
             {mutation.isLoading && <Loading />}
             {mutation.isError && (
               <p className="rounded-lg bg-red-100 p-4 text-red-900">
@@ -173,8 +171,7 @@ const AddWorkout: NextPage = () => {
             {!mutation.isLoading && (
               <Button onClick={() => void send()}>登録</Button>
             )}
-          </div>
-        </div>
+          </Container>
       </main>
     </>
   );

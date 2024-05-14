@@ -2,8 +2,9 @@
 
 import type { Exercise } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { type ChangeEventHandler, useState } from "react";
-import { Heading, Navigation, WorkoutMenuEditor } from "../../../components";
+import { useState } from "react";
+import { WorkoutMenuEditor } from "../../../components";
+import { Heading, Navigation, Container } from "../../../components/server";
 import type { WorkoutMenuItemProps, WorkoutMenuSubmitProps } from "../../../components/types";
 import { api } from "../../../utils/api";
 
@@ -36,11 +37,9 @@ export default function Page() {
       <main className="mt-4">
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4 p-2 flex flex-col gap-2">
-            <WorkoutMenuEditor exercises={exercises} workoutMenu={workoutMenu} setWorkoutMenu={handleSetWorkoutMenu} submit={(data: WorkoutMenuSubmitProps) => void handleSubmit(data)} />
-          </div>
-        </div>
+        <Container>
+          <WorkoutMenuEditor exercises={exercises} workoutMenu={workoutMenu} setWorkoutMenu={handleSetWorkoutMenu} submit={(data: WorkoutMenuSubmitProps) => void handleSubmit(data)} />
+        </Container>
       </main>
     </>
   );

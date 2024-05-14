@@ -21,6 +21,6 @@ export const Remove = {
         exerciseName: 'ベンチプレス',
         metrics_code: '01',
         value: 100,
-        removeMaximum: (e: MouseEvent | TouchEvent) => { return }
+        removeMaximum: (_: MouseEvent | TouchEvent) => { return }
     }
 };

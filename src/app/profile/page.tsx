@@ -1,4 +1,5 @@
-import { Heading, Navigation, ProfilePage, AuthShowcase } from "../../components";
+import { ProfilePage, AuthShowcase } from "../../components";
+import { Container, Heading, Navigation } from "../../components/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 
@@ -9,11 +10,9 @@ export default async function Page() {
       <main className="mt-4">
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4 rounded-lg dark:outline outline-1 outline-gray-500 p-2 flex flex-col gap-2">
-            { session?.user ? <ProfilePage /> : <AuthShowcase /> }
-          </div>
-        </div>
+        <Container>
+          {session?.user ? <ProfilePage /> : <AuthShowcase />}
+        </Container>
       </main>
     </>
   );

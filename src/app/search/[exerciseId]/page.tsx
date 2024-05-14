@@ -1,13 +1,16 @@
 import { type NextPage } from "next";
-import { Heading, Navigation, SearchResultPage } from "../../../components";
+import {  Heading, Navigation, Container } from "../../../components/server";
+import { SearchResultPage } from "./SearchResultPage";
 
 const SearchByExerciseId: NextPage = () => {
   return (
     <>
-      <main>
+      <main className="mt-4">
         <Heading />
         <Navigation />
-        <SearchResultPage></SearchResultPage>
+        <Container>
+          <SearchResultPage />
+        </Container>
       </main>
     </>
   );

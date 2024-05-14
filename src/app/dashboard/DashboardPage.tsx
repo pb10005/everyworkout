@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { api } from "../utils/api";
+import { api } from "../../utils/api";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
 import {
@@ -10,7 +10,8 @@ import {
     Loading,
     MaximumCard,
     RecordCard,
-} from "../components";
+    NoDataCard,
+} from "../../components";
 
 export const DashboardPage = () => {
     const {
@@ -76,7 +77,7 @@ export const DashboardPage = () => {
                                         </div>
                                     );
                                 })
-                                : <div className="px-4 py-2 dark:text-white">No data</div>}
+                                : <NoDataCard />}
                         </section>
                     </>
                 )}
@@ -94,7 +95,7 @@ export const DashboardPage = () => {
                                         <span className="dark:text-white">{r.content}</span>
                                     </li>)
                                 )
-                                : <div className="px-4 py-2 dark:text-white">No data</div>}
+                                : <NoDataCard />}
                         </ul>
                     </>
                 )}
@@ -116,7 +117,7 @@ export const DashboardPage = () => {
                                         note={d.note}
                                         muscles={d.exercise.muscles.map(m => m.muscle)}
                                     /></Link>;
-                                }): <div className="px-4 py-2 dark:text-white">No data</div>}
+                                }): <NoDataCard />}
                         </div>
                         <Link className="dark:text-white" href="/workout/history">View More</Link>
                     </div>

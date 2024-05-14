@@ -1,9 +1,10 @@
-import { Heading, Navigation, ExerciseDetailPage } from "../../../components";
+import { Heading, Navigation } from "../../../components/server";
+import { ExerciseDetailPage } from "./ExerciseDetailPage";
 
 export default function Page() {
   return (
     <>
-      <main>
+      <main className="mt-4">
         <Heading />
         <Navigation />
         <div className="grid md:grid-cols-12 dark:bg-gray-900">

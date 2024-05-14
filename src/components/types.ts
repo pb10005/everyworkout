@@ -20,3 +20,15 @@ export type ExerciseProps = {
     name: string;
     isSelected: boolean;
 };
+
+
+export type WorkoutProp = {
+    date: string;
+    selectedExerciseId: number;
+    selectedBodyPartId: number;
+    selectedExerciseName: string;
+    weight: string;
+    reps: string;
+    sets: string;
+    expiryTimeDelta: number;
+};

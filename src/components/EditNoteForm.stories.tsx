@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { EditNoteForm } from "./EditNoteForm";
 
 import meta from "./EditNoteForm.stories";

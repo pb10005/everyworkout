@@ -2,10 +2,10 @@
 
 import { useParams } from "next/navigation";
 import React from "react";
-import { api } from "../utils/api";
+import { api } from "../../../utils/api";
 
-import { MaximumCard, Loading, ExerciseChart } from ".";
-import { type ChartProp } from "./types";
+import { MaximumCard, Loading, ExerciseChart, NoDataCard } from "../../../components";
+import { type ChartProp } from "../../../components/types";
 
 export const ExerciseDetailPage: React.FC = () => {
     const params = useParams();
@@ -57,7 +57,7 @@ export const ExerciseDetailPage: React.FC = () => {
 
     return (
         <>
-            <section className="mb-2 p-2">
+            <section className="p-2">
                 {mutation.isLoading && <Loading />}
                 {mutation.isSuccess && (
                     <>
@@ -97,7 +97,7 @@ export const ExerciseDetailPage: React.FC = () => {
                                     </div>
                                 );
                             })
-                            : "No data"}
+                            : <NoDataCard />}
                     </section></>
                 )}
             </section>

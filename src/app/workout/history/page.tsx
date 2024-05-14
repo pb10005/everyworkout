@@ -5,7 +5,8 @@ import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { api } from "../../../utils/api";
 
-import { Heading, Navigation, RecordCard, Loading, Paginator } from "../../../components";
+import { RecordCard, Loading, Paginator, NoDataCard } from "../../../components";
+import { Heading, Navigation, Container } from "../../../components/server";
 
 const History: NextPage = () => {
   const [page, setPage] = useState<number>(0);
@@ -49,10 +50,10 @@ const History: NextPage = () => {
 
   return (
     <>
-      <Heading />
-      <Navigation />
-      <div className="grid md:grid-cols-12">
-        <div className="md:col-span-6 md:col-start-4">
+      <main className="mt-4">
+        <Heading />
+        <Navigation />
+        <Container>
           <section className="p-2">
             <p className="text-sm text-gray-500 dark:text-gray-300">トレーニング履歴</p>
             <div className="">
@@ -104,13 +105,13 @@ const History: NextPage = () => {
                         muscles={d.exercise.muscles.map(m => m.muscle)}
                       /></Link>;
                     })
-                    : <span className="p-2 dark:text-white">No data</span>}
+                    : <NoDataCard />}
                 </div>
               </>
             )}
           </section>
-        </div>
-      </div>
+        </Container>
+      </main>
     </>
   );
 };

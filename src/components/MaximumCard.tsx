@@ -24,7 +24,7 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
   };
   const unit = metrics_map[metrics_code];
 
-  const documentClickHandler = useRef((e: MouseEvent | TouchEvent) => { return });
+  const documentClickHandler = useRef((_: MouseEvent | TouchEvent) => { return });
   const handleDropdownIconClicked = () => {
     if (isDropdownVisible) {
       document.removeEventListener('click', documentClickHandler.current)

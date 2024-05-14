@@ -1,8 +1,8 @@
 "use client";
 
-import { api } from "../utils/api";
+import { api } from "../../../../utils/api";
 
-import { EditGoalForm } from "../components";
+import { EditGoalForm } from "../../../../components";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 

@@ -4,7 +4,8 @@ import { type NextPage } from "next";
 
 import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
-import { Heading, Navigation, RMCalcualtor } from "../../components";
+import { RMCalcualtor } from "../../components";
+import { Container, Heading, Navigation } from "../../components/server";
 
 const RMCalculator: NextPage = () => {
 
@@ -12,17 +13,15 @@ const RMCalculator: NextPage = () => {
 
   return (
     <>
-      <main>
+      <main className="mt-4">
         <Heading />
         <Navigation />
-        <div className="grid md:grid-cols-12">
-          <div className="md:col-span-6 md:col-start-4">
-            <section className="p-2">
-              <ChevronLeftIcon className="w-8 h-8 cursor-pointer dark:text-white" onClick={() => router.back()}></ChevronLeftIcon>
-              <RMCalcualtor />
-            </section>
-          </div>
-        </div>
+        <Container>
+          <section className="p-2">
+            <ChevronLeftIcon className="w-8 h-8 cursor-pointer dark:text-white" onClick={() => router.back()}></ChevronLeftIcon>
+            <RMCalcualtor />
+          </section>
+        </Container>
       </main>
     </>
   );

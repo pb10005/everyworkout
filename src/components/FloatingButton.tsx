@@ -9,10 +9,6 @@ type Props = {
 export const FloatingButton: React.FC<Props> = (props: Props) => {
   const { children, href } = props;
 
-  const style: { [key: string]: string } = {
-    "normal": "bg-[#42bfec] hover:bg-white",
-    "danger": "bg-red-200 hover:bg-white"
-  }
   return (
     <>
       <Link

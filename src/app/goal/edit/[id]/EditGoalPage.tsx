@@ -15,7 +15,11 @@ export const EditGoalPage: React.FC = () => {
 
     const { data: initialValue } = api.goal.getGoalById.useQuery({ id: goalId });
     const util = api.useContext();
-    const [goal, setGoal] = useState<string>('');
+    const [goal, setGoal] = useState<string>();
+
+    useEffect(() => {
+        setGoal(initialValue?.content || '');
+    }, [initialValue]);
 
     const mutation = api.goal.update.useMutation({
         onSuccess() {
@@ -26,7 +30,7 @@ export const EditGoalPage: React.FC = () => {
     const handleSubmit = async () => {
         await mutation.mutateAsync({
             id: goalId,
-            content: goal
+            content: goal || ''
         });
     };
 
@@ -34,9 +38,6 @@ export const EditGoalPage: React.FC = () => {
         await util.goal.invalidate();
     };
 
-    useEffect(() => {
-        setGoal(initialValue?.content || '');
-    }, [initialValue]);
     return (
         <>
             <EditGoalForm goal={goal || ""} setGoal={(e) => setGoal(e.target.value)} submit={() => void handleSubmit()} cancel={() => void handleCancel()} />

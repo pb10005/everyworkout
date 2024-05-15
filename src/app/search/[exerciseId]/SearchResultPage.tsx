@@ -32,7 +32,7 @@ export const SearchResultPage: React.FC = () => {
 
     return (
         <>
-            <section className="p-2">
+            <section>
                 <p className="text-sm text-gray-500 dark:text-gray-300">種目別トレーニング履歴</p>
                 {count > 0 && (
                     <Paginator

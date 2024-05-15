@@ -144,7 +144,7 @@ export function SetConfigForm(props: Props) {
                 expiryTimeDelta,
                 selectedBodyPartId,
                 selectedExerciseId,
-                selectedExerciseName)}>セットを始める</Button>
+                selectedExerciseName || '')}>セットを始める</Button>
         </div>
     </>);
 }

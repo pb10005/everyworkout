@@ -1,4 +1,4 @@
-import { WorkoutDetailPage } from "../../../components";
+import { WorkoutDetailPage } from "./WorkoutDetailPage";
 import { Heading, Navigation, Container } from "../../../components/server";
 
 export default function Page() {

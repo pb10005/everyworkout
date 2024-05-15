@@ -42,7 +42,7 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
       setDrowpdownVisible(false);
       document.removeEventListener('click', documentClickHandler.current)
     }
-  }, []);
+  }, [dropdownRef]);
 
   return (
     <>

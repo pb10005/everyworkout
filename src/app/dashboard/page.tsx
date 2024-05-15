@@ -14,7 +14,7 @@ export default async function Page() {
         <Heading />
         <Navigation />
         <Container>
-            <section className="p-2">
+            <section>
               <p className="text-sm text-gray-500 dark:text-gray-200">便利ツール</p>
               <ToolList />
             </section>

@@ -35,7 +35,7 @@ export function ConfirmSubmit(props: Props) {
             setExerciseId(workout.selectedExerciseId);
             setExerciseName(workout.selectedExerciseName);
         }
-    }, []);
+    }, [setDate, setWeight, setReps, setExerciseId, setExerciseName]);
 
 
     const send = async () => {

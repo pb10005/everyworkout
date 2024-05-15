@@ -57,7 +57,7 @@ export const ExerciseDetailPage: React.FC = () => {
 
     return (
         <>
-            <section className="p-2">
+            <section>
                 {mutation.isLoading && <Loading />}
                 {mutation.isSuccess && (
                     <>

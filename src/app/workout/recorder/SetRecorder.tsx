@@ -73,7 +73,7 @@ export function SetRecorder(props: Props) {
             setExpiryTimeDelta(workout.expiryTimeDelta);
             setSets(workout.sets);
         }
-    }, []);
+    }, [setDate, selectExerciseId, selectExerciseName, selectBodyPartId, setWeight, setReps, setExpiryTimeDelta, setSets]);
 
     return (<>
         <div className="dark:text-white">

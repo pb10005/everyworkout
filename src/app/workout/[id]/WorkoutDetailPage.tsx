@@ -4,8 +4,8 @@ import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
 
-import { AuthShowcase, Button, Loading, WorkoutCard } from ".";
-import { api } from "../utils/api";
+import { AuthShowcase, Button, Loading, WorkoutCard } from "../../../components";
+import { api } from "../../../utils/api";
 
 export const WorkoutDetailPage: React.FC = () => {
     const params = useParams();

@@ -1,5 +1,6 @@
-import { ProfilePage, AuthShowcase } from "../../components";
+import { AuthShowcase } from "../../components";
 import { Container, Heading, Navigation } from "../../components/server";
+import { ProfilePage } from "./ProfilePage";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 

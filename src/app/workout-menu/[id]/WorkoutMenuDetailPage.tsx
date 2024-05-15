@@ -2,9 +2,9 @@
 
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { Dropdown, WorkoutMenu } from ".";
-import { WorkoutMenuItemProps } from "./types";
-import { api } from "../utils/api";
+import { Dropdown, WorkoutMenu } from "../../../components";
+import type { WorkoutMenuItemProps } from "../../../components/types";
+import { api } from "../../../utils/api";
 
 export const WorkoutMenuDetailPage: React.FC = () => {
     const router = useRouter();

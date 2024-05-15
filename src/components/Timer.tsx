@@ -45,7 +45,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
 
     useEffect(() => {
         resetInterval();
-    }, [expiryTimeDelta])
+    }, [expiryTimeDelta]);
 
     return (
         <>

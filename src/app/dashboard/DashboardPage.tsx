@@ -41,7 +41,7 @@ export const DashboardPage = () => {
     return (
         <>
             {(errorW && errorM && errorR) && <NotLoggedInCard />}
-            <section className="p-2">
+            <section>
                 <p className="text-sm text-gray-500 dark:text-gray-200">目標</p>
                 <Link className="dark:text-white" href={`/goal/add`}>新規作成</Link>
                 {goal && <>
@@ -54,7 +54,7 @@ export const DashboardPage = () => {
                     </div>
                 </>}
             </section>
-            <section className="p-2">
+            <section>
                 <p className="text-sm text-gray-500 dark:text-gray-200">自己ベスト</p>
                 {loadingM && <Loading />}
                 {successM && (
@@ -82,7 +82,7 @@ export const DashboardPage = () => {
                     </>
                 )}
             </section>
-            <section className="p-2">
+            <section>
                 <p className="text-sm text-gray-500 dark:text-gray-200">週次レポート</p>
                 {loadingM && <Loading />}
                 {successM && (
@@ -100,7 +100,7 @@ export const DashboardPage = () => {
                     </>
                 )}
             </section>
-            <section className="p-2">
+            <section>
                 <p className="text-sm text-gray-500 dark:text-gray-200">トレーニング履歴</p>
                 {loadingW && <Loading />}
                 {successW && (

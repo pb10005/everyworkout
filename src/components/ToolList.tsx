@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { ListContainer } from "./ListConteiner";
 
 export const ToolList: React.FC = () => {
     const router = useRouter();
@@ -13,9 +14,9 @@ export const ToolList: React.FC = () => {
 
     return (
         <>
-            <ul className="gap-1 divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline dark:outline-1 dark:outline-gray-500">
+            <ListContainer>
                 {links.map(d => <li key={d.id} className="py-2 px-4 cursor-pointer dark:text-white" onClick={() => void handleLinkClick(d.href)}>{d.label}</li>)}
-            </ul>
+            </ListContainer>
         </>
     );
 };

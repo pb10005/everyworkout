@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { api } from "../../../utils/api";
 
-import { MaximumCard, Loading, ExerciseChart, NoDataCard } from "../../../components";
+import { MaximumCard, Loading, ExerciseChart, NoDataCard, ListContainer, Subheader } from "../../../components";
 import { type ChartProp } from "../../../components/types";
 
 export const ExerciseDetailPage: React.FC = () => {
@@ -66,7 +66,7 @@ export const ExerciseDetailPage: React.FC = () => {
                         </p>
                     </>
                 )}
-                <p className="text-sm text-gray-700 dark:text-gray-300">種目別グラフ</p>
+                <Subheader content="種目別グラフ" />
                 {isLoading && <Loading />}
                 {isError && (
                     <>
@@ -80,9 +80,9 @@ export const ExerciseDetailPage: React.FC = () => {
                         <ExerciseChart chartData={chartData} />
                     </div>
                     <div className="mb-2 md:grid-span-3">
-                        <p className="text-sm text-gray-700 dark:text-gray-300 my-2">ベスト更新履歴</p>
+                        <Subheader content="ベスト更新履歴" />
                     </div>
-                    <section className="flex flex-col divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
+                    <ListContainer>
                         {data?.length && data?.length > 0
                             ? data?.map((d) => {
                                 return (
@@ -98,7 +98,8 @@ export const ExerciseDetailPage: React.FC = () => {
                                 );
                             })
                             : <NoDataCard />}
-                    </section></>
+                    </ListContainer>
+                </>
                 )}
             </section>
         </>

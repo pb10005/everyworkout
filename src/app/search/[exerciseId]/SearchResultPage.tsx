@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { api } from "../../../utils/api";
 
-import { RecordCard, Loading, Paginator, NoDataCard } from "../../../components";
+import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader } from "../../../components";
 import Link from "next/link";
 
 export const SearchResultPage: React.FC = () => {
@@ -33,7 +33,7 @@ export const SearchResultPage: React.FC = () => {
     return (
         <>
             <section>
-                <p className="text-sm text-gray-500 dark:text-gray-300">種目別トレーニング履歴</p>
+                <Subheader content="種目別トレーニング履歴" />
                 {count > 0 && (
                     <Paginator
                         className="dark:text-gray-300"
@@ -44,7 +44,7 @@ export const SearchResultPage: React.FC = () => {
                 {isLoading && <Loading />}
                 {isSuccess && (
                     <>
-                        <div className="flex flex-col divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
+                        <ListContainer>
                             {data?.length && data?.length > 0
                                 ? data?.map((d) => {
                                     return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
@@ -58,7 +58,7 @@ export const SearchResultPage: React.FC = () => {
                                         muscles={d.exercise.muscles.map(m => m.muscle)} /></Link>;
                                 })
                                 : <NoDataCard />}
-                        </div>
+                        </ListContainer>
                     </>
                 )}
             </section>

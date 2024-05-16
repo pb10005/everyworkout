@@ -4,7 +4,7 @@ import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
 
-import { AuthShowcase, Button, Loading, WorkoutCard } from "../../../components";
+import { AuthShowcase, Button, Loading, Subheader, WorkoutCard } from "../../../components";
 import { api } from "../../../utils/api";
 
 export const WorkoutDetailPage: React.FC = () => {
@@ -124,7 +124,7 @@ export const WorkoutDetailPage: React.FC = () => {
                                     Max記録登録
                                 </Button>
                             )}
-                            <label className="text-sm text-gray-700 dark:text-gray-300">削除</label>
+                            <Subheader content="削除" />
                             {!deleteMutation.isLoading &&
                                 <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
                                     削除

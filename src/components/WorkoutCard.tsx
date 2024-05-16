@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 
 import { api } from "../utils/api";
-import { Badge, EditNoteForm } from "../components";
+import { Badge, EditNoteForm, Subheader } from "../components";
 
 type Muscle = {
     id: number;
@@ -61,7 +61,7 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
                         <span>{exerciseName}</span>
                     </p>
                     {dateDisplay && (
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{dateDisplay}</p>
+                        <Subheader content={dateDisplay} />
                     )}
                     {muscles.map(m => {
                         return (

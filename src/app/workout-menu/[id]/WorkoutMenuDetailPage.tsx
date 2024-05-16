@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Dropdown, WorkoutMenu } from "../../../components";
+import { DropdownItem } from "../../../components/DropdownItem";
 import type { WorkoutMenuItemProps } from "../../../components/types";
 import { api } from "../../../utils/api";
 
@@ -52,9 +53,9 @@ export const WorkoutMenuDetailPage: React.FC = () => {
                 <span className="text-lg">{data?.title}</span>
                 <Dropdown>
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                        <li onClick={() => void removeMenu()} className="block px-6 py-2 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-500 dark:hover:text-white">
-                            削除
-                        </li>
+                        <DropdownItem onClick={() => void removeMenu()}>
+                            <span className="text-red-600">削除</span>
+                        </DropdownItem>
                     </ul>
                 </Dropdown>
             </div>

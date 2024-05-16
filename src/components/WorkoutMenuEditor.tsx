@@ -5,6 +5,7 @@ import { z, ZodError } from "zod";
 import { useExerciseSelector } from "../hooks/useExerciseSelector";
 import { Button } from "./Button";
 import { ExerciseSelector } from "./ExerciseSelector";
+import { ListContainer } from "./ListConteiner";
 import type { WorkoutMenuItemProps, WorkoutMenuSubmitProps } from "./types";
 
 type ExerciseProps = {
@@ -125,17 +126,17 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
             {selectedExerciseId > 0 && <Button onClick={handleAddButtonClick}>追加</Button>}
         </div>
         {displayMenu.length > 0 &&
-            <ul className="divide-y shadow-xl dark:outline outline-1 outline-gray-500 dark:divide-gray-500 dark:bg-gray-900 dark:text-white">
+            <ListContainer>
                 {displayMenu.map((e, index) => (<>
                     {
                         e &&
                         <li key={e.id} className="px-4 py-2 flex gap-2 items-center">
                             <MinusCircleIcon onClick={() => handleDeleteButtonClick(index)} className="text-red-600 cursor-pointer" width={25} height={25} />
-                            <span>{e.name}</span>
+                            <span className="dark:text-white">{e.name}</span>
                         </li>
                     }
                 </>))}
-            </ul>
+            </ListContainer>
         }
         <Button onClick={() => void handleSubmit()}>メニューを登録</Button>
     </>);

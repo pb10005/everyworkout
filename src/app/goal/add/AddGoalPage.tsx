@@ -2,7 +2,7 @@
 
 import { api } from "../../../utils/api";
 
-import { EditGoalForm } from "../../../components";
+import { EditGoalForm, Subheader } from "../../../components";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -28,7 +28,7 @@ export const AddGoalPage: React.FC = () => {
         <>
             <EditGoalForm goal={goal || ""} setGoal={(e) => setGoal(e.target.value)} submit={() => void handleSubmit()} cancel={() => void handleCancel()} />
             <div>
-                <p className="text-sm text-gray-700 dark:text-gray-300">目標設定のヒント</p>
+                <Subheader content="目標設定のヒント" />
                 <p className="dark:text-white">一度に設定する目標は一つにしよう！</p>
             </div>
         </>

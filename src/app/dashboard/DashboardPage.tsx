@@ -7,13 +7,19 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import {
     FloatingButton,
     NotLoggedInCard,
+    ListContainer,
     Loading,
     MaximumCard,
     RecordCard,
     NoDataCard,
+    Subheader,
+    Dropdown,
 } from "../../components";
+import { DropdownItem } from "../../components/DropdownItem";
+import { useRouter } from "next/navigation";
 
 export const DashboardPage = () => {
+    const router = useRouter();
     const {
         isLoading: loadingW,
         isSuccess: successW,
@@ -42,24 +48,32 @@ export const DashboardPage = () => {
         <>
             {(errorW && errorM && errorR) && <NotLoggedInCard />}
             <section>
-                <p className="text-sm text-gray-500 dark:text-gray-200">目標</p>
-                <Link className="dark:text-white" href={`/goal/add`}>新規作成</Link>
+                <section className="flex justify-between">
+                <Subheader content="目標" />
+                </section>
                 {goal && <>
-                    <section key={goal.id} className="bg-white dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
-                        <div className="px-4 py-2 whitespace-pre-wrap">{goal.content}</div>
+                    <section key={goal.id} className="flex justify-between px-2 py-4 bg-white dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
+                        <div className="text-xl p-2 whitespace-pre-wrap">{goal.content}</div>
+                        <Dropdown>
+                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                                <DropdownItem onClick={() => router.push(`/goal/edit/${goal.id}`)}>
+                                    編集
+                                </DropdownItem>
+                                <DropdownItem onClick={() => router.push("/goal/history")}>
+                                    過去の目標
+                                </DropdownItem>
+                            </ul>
+                        </Dropdown>
                     </section>
-                    <div className="flex items-center gap-1">
-                        <Link className="dark:text-white" href={`/goal/edit/${goal.id}`}>編集</Link>
-                        <Link className="dark:text-white" href="/goal/history">過去の目標</Link>
-                    </div>
                 </>}
+                <Link className="dark:text-white" href={`/goal/add`}>新規作成</Link>
             </section>
             <section>
-                <p className="text-sm text-gray-500 dark:text-gray-200">自己ベスト</p>
+                <Subheader content="自己ベスト" />
                 {loadingM && <Loading />}
                 {successM && (
                     <>
-                        <section className="gap-1 divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
+                        <ListContainer>
                             {maximum?.length && maximum?.length > 0
                                 ? maximum?.map((m) => {
                                     return (
@@ -78,47 +92,47 @@ export const DashboardPage = () => {
                                     );
                                 })
                                 : <NoDataCard />}
-                        </section>
+                        </ListContainer>
                     </>
                 )}
             </section>
             <section>
-                <p className="text-sm text-gray-500 dark:text-gray-200">週次レポート</p>
+                <Subheader content="週次レポート" />
                 {loadingM && <Loading />}
                 {successM && (
                     <>
-                        <ul className="gap-1 divide-y bg-white dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
+                        <ListContainer>
                             {reports?.length && reports.length > 0
                                 ? reports?.map(r => (
-                                    <li key={r.id} className="py-2 px-4 flex items-center gap-2">
-                                        <span className="text-sm text-gray-500 dark:text-gray-300">{r.executeDate || ''}</span>
+                                    <li key={r.id} className="py-2 px-4">
+                                        <Subheader content={r.executeDate || ''} />
                                         <span className="dark:text-white">{r.content}</span>
                                     </li>)
                                 )
                                 : <NoDataCard />}
-                        </ul>
+                        </ListContainer>
                     </>
                 )}
             </section>
             <section>
-                <p className="text-sm text-gray-500 dark:text-gray-200">トレーニング履歴</p>
+                <Subheader content="トレーニング履歴" />
                 {loadingW && <Loading />}
                 {successW && (
                     <div>
-                        <div className="flex flex-col divide-y dark:divide-gray-500 dark:bg-gray-900 dark:outline outline-1 outline-gray-500">
+                        <ListContainer>
                             {data?.length && data?.length > 0 ? data?.map((d) => {
-                                    return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
-                                        id={d.id}
-                                        exerciseName={d.exercise.name}
-                                        date={d.date}
-                                        weight={d.weight}
-                                        reps={d.reps}
-                                        sets={d.sets}
-                                        note={d.note}
-                                        muscles={d.exercise.muscles.map(m => m.muscle)}
-                                    /></Link>;
-                                }): <NoDataCard />}
-                        </div>
+                                return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
+                                    id={d.id}
+                                    exerciseName={d.exercise.name}
+                                    date={d.date}
+                                    weight={d.weight}
+                                    reps={d.reps}
+                                    sets={d.sets}
+                                    note={d.note}
+                                    muscles={d.exercise.muscles.map(m => m.muscle)}
+                                /></Link>;
+                            }) : <NoDataCard />}
+                        </ListContainer>
                         <Link className="dark:text-white" href="/workout/history">View More</Link>
                     </div>
                 )}

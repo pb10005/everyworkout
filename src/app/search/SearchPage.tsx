@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, ExerciseSelector } from "../../components";
+import { Button, ExerciseSelector, Subheader } from "../../components";
 import { api } from "../../utils/api";
 
 export const SearchPage: React.FC = () => {
@@ -26,7 +26,7 @@ export const SearchPage: React.FC = () => {
 
   return (<>
     <section className="p-2">
-      <p className="text-sm text-gray-500 dark:text-gray-300">種目別トレーニング履歴</p>
+      <Subheader content="種目別トレーニング履歴" />
       {bodyParts && muscles && <ExerciseSelector
         selectedExerciseId={selectedExerciseId}
         selectedBodyPartId={selectedBodyPartId}

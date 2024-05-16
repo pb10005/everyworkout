@@ -1,4 +1,4 @@
-import { AuthShowcase, ToolList, Credit } from "../../components";
+import { AuthShowcase, ToolList, Credit, Subheader } from "../../components";
 import { Heading, Navigation } from "../../components/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
@@ -15,7 +15,7 @@ export default async function Page() {
         <Navigation />
         <Container>
             <section>
-              <p className="text-sm text-gray-500 dark:text-gray-200">便利ツール</p>
+              <Subheader content="便利ツール" />
               <ToolList />
             </section>
             {

@@ -1,5 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import React from "react";
+import { ListContainer } from "./ListConteiner";
 import type { ExerciseProps } from "./types";
 
 type Props = {
@@ -11,13 +12,13 @@ export const WorkoutMenu: React.FC<Props> = (props: Props) => {
     const { exercises, handleExerciseClick } = props;
 
     return (<>
-        <ul className="divide-y shadow-xl dark:outline outline-1 outline-gray-500 dark:divide-gray-500 dark:bg-gray-900 dark:text-white">
+        <ListContainer>
             {exercises.map(e => (<>
                 <li key={e.id} className="px-4 py-2 flex justify-between cursor-pointer" onClick={() => handleExerciseClick(e.id, e.bodyPartId)}>
-                    <span>{e.name}</span>
+                    <span className="dark:text-white">{e.name}</span>
                     <span><CheckCircleIcon className={`${e.isSelected ? 'text-green-500' : 'text-gray-300'}`} width={25} height={25} /></span>
                 </li>
             </>))}
-        </ul>
+        </ListContainer>
     </>);
 };

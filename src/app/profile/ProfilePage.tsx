@@ -2,7 +2,7 @@
 
 import { api } from "../../utils/api";
 
-import { Button, Loading } from "../../components";
+import { Button, Loading, Subheader } from "../../components";
 import { useDarkMode } from "../../hooks/useDarkMode";
 
 export const ProfilePage: React.FC = () => {
@@ -12,10 +12,10 @@ export const ProfilePage: React.FC = () => {
 
     return (
         <>
-            <section className="p-2">
+            <section>
                 {isLoading && <Loading />}
                 {isSuccess && <>
-                    <p className="text-sm text-gray-700 dark:text-gray-300">ログインユーザー(公開されません)</p>
+                    <Subheader content="ログインユーザー(公開されません)" />
                     <div className="flex items-center gap-2">
                         {data?.image && <img src={data.image} width={60}></img>}
                         <div className="flex flex-col gap-1">

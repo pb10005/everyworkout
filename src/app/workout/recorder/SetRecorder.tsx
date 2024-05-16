@@ -80,12 +80,12 @@ export function SetRecorder(props: Props) {
             <p className="text-xl font-bold">{selectedExerciseName}</p>
             <div className="flex flex-col justify-center gap-2">
                 <div className="flex justify-center gap-2">
-                    <div><span className="text-3xl font-extrabold">{weight}</span>kg</div>
-                    <div><span className="text-3xl font-extrabold">{reps}</span>reps</div>
+                    <div><span className="text-3xl font-extrabold text-[#42bfec]">{weight}</span>kg</div>
+                    <div><span className="text-3xl font-extrabold text-[#42bfec]">{reps}</span>reps</div>
                 </div>
                 <div className="flex justify-center items-center">
                     <ChevronLeftIcon onClick={onPrevSet} className="w-10 h-10 cursor-pointer"></ChevronLeftIcon>
-                    <span className="text-3xl font-extrabold">{parseInt(sets) + 1}</span>セット目
+                    <span className="text-3xl font-extrabold text-[#42bfec]">{parseInt(sets) + 1}</span>セット目
                     <ChevronRightIcon onClick={onNextSet} className="w-10 h-10 cursor-pointer"></ChevronRightIcon>
                 </div>
             </div>

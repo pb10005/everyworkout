@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { api } from "../../../utils/api";
 
-import { RecordCard, Loading, Paginator, NoDataCard } from "../../../components";
+import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader } from "../../../components";
 import { Heading, Navigation, Container } from "../../../components/server";
 
 const History: NextPage = () => {
@@ -55,7 +55,7 @@ const History: NextPage = () => {
         <Navigation />
         <Container>
           <section className="p-2">
-            <p className="text-sm text-gray-500 dark:text-gray-300">トレーニング履歴</p>
+            <Subheader content="トレーニング履歴" />
             <div className="">
               <label
                 className="block text-sm font-bold text-gray-700 dark:text-gray-300"
@@ -82,7 +82,7 @@ const History: NextPage = () => {
             {isSuccess && (
               <>
                 <div className="flex flex-col text-center py-2">
-                  <span className="text-3xl font-extrabold dark:text-white">{totalVolume}</span>
+                  <span className="text-3xl font-extrabold text-[#42bfec]">{totalVolume}</span>
                   <span className="text-sm dark:text-gray-300">合計ボリューム</span>
                 </div>
                 {count > 0 && <Paginator
@@ -91,7 +91,7 @@ const History: NextPage = () => {
                   maxPage={maxPage}
                   setPage={setPage}
                 />}
-                <div className="flex flex-col divide-y dark:divide-gray-500 dark:outline outline-1 outline-gray-500">
+                <ListContainer>
                   {data?.length && data?.length > 0
                     ? data?.map((d) => {
                       return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
@@ -106,7 +106,7 @@ const History: NextPage = () => {
                       /></Link>;
                     })
                     : <NoDataCard />}
-                </div>
+                </ListContainer>
               </>
             )}
           </section>

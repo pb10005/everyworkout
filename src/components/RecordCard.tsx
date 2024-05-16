@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Badge } from "../components";
+import { Badge, Subheader } from "../components";
 
 type Muscle = {
   id: number;
@@ -34,7 +34,7 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
           <p className="font-bold">
             {exerciseName}
           </p>
-          <div className="text-sm text-gray-500">{dateDisplay}</div>
+          <Subheader content={dateDisplay || ''} />
           {muscles.map(m => {
             return (
               <div key={m.id} className="flex gap-1">

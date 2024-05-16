@@ -86,58 +86,60 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
     };
 
     return (<>
-        {error && <p className="rounded-lg bg-red-100 p-4 text-red-900">
-            エラーが発生しました: {error}
-        </p>}
-        <div className="grid gap-2">
-            <label
-                className="block text-sm font-bold text-gray-700 dark:text-gray-300"
-                htmlFor="note"
-            >
-                タイトル
-            </label>
-            <input
-                className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
+        <div className="m-2 flex flex-col gap-2">
+            {error && <p className="rounded-lg bg-red-100 p-4 text-red-900">
+                エラーが発生しました: {error}
+            </p>}
+            <div className="grid gap-2">
+                <label
+                    className="block text-sm font-bold text-gray-700 dark:text-gray-300"
+                    htmlFor="note"
+                >
+                    タイトル
+                </label>
+                <input
+                    className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
               text-gray-700 shadow focus:outline-none
               dark:bg-gray-700 dark:text-white dark:border-gray-500"
-                id="note"
-                type="text"
-                placeholder="タイトル"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-            />
-        </div>
+                    id="note"
+                    type="text"
+                    placeholder="タイトル"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                />
+            </div>
 
-        <label
-            className="block text-sm font-bold text-gray-700 dark:text-gray-300"
-        >
-            種目を追加
-        </label>
-        <div className="rounded-lg dark:outline outline-1 outline-gray-500 p-2 flex flex-col gap-2">
-            {bodyParts && muscles && <ExerciseSelector
-                selectedExerciseId={selectedExerciseId}
-                selectedBodyPartId={selectedBodyPartId}
-                bodyParts={bodyParts}
-                muscles={muscles}
-                handleExerciseClick={handleExerciseClick}
-                handleBodyPartClick={handleBodyPartClick}
-            />}
-            {selectedExerciseId > 0 && <Button onClick={handleAddButtonClick}>追加</Button>}
+            <label
+                className="block text-sm font-bold text-gray-700 dark:text-gray-300"
+            >
+                種目を追加
+            </label>
+            <div className="rounded-lg dark:outline outline-1 outline-gray-500 p-2 flex flex-col gap-2">
+                {bodyParts && muscles && <ExerciseSelector
+                    selectedExerciseId={selectedExerciseId}
+                    selectedBodyPartId={selectedBodyPartId}
+                    bodyParts={bodyParts}
+                    muscles={muscles}
+                    handleExerciseClick={handleExerciseClick}
+                    handleBodyPartClick={handleBodyPartClick}
+                />}
+                {selectedExerciseId > 0 && <Button onClick={handleAddButtonClick}>追加</Button>}
+            </div>
+            {displayMenu.length > 0 &&
+                <ListContainer>
+                    {displayMenu.map((e, index) => (<>
+                        {
+                            e &&
+                            <li key={e.id} className="px-4 py-2 flex gap-2 items-center">
+                                <MinusCircleIcon onClick={() => handleDeleteButtonClick(index)} className="text-red-600 cursor-pointer" width={25} height={25} />
+                                <span className="dark:text-white">{e.name}</span>
+                            </li>
+                        }
+                    </>))}
+                </ListContainer>
+            }
+            <Button onClick={() => void handleSubmit()}>メニューを登録</Button>
         </div>
-        {displayMenu.length > 0 &&
-            <ListContainer>
-                {displayMenu.map((e, index) => (<>
-                    {
-                        e &&
-                        <li key={e.id} className="px-4 py-2 flex gap-2 items-center">
-                            <MinusCircleIcon onClick={() => handleDeleteButtonClick(index)} className="text-red-600 cursor-pointer" width={25} height={25} />
-                            <span className="dark:text-white">{e.name}</span>
-                        </li>
-                    }
-                </>))}
-            </ListContainer>
-        }
-        <Button onClick={() => void handleSubmit()}>メニューを登録</Button>
     </>);
 };

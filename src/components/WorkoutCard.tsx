@@ -88,14 +88,14 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
                     </div>
 
                     <section className="my-2">
-                        <p className="flex items-center py-2">
+                        <section className="flex items-center gap-2 py-2">
                             <span>メモ</span>
                             {!isEditMode && <PencilSquareIcon onClick={enablEeditMode} className="w-6 h-6 inline cursor-pointer"></PencilSquareIcon>}
-                        </p>
+                        </section>
                         {isEditMode && <EditNoteForm note={newNote || ""} setNote={(e) => setNewNote(e.target.value)} submit={() => void onSubmit()} cancel={() => onCancel()}></EditNoteForm>}
                         {!isEditMode && note && (
                             <>
-                                <p className="rounded bg-gray-200 p-4">{note}</p>
+                                <p className="rounded bg-gray-200 dark:bg-gray-700 dark:text-white p-4">{note}</p>
                             </>
                         )}
                     </section>

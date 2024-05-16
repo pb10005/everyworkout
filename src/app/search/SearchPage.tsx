@@ -5,16 +5,19 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, ExerciseSelector, Subheader } from "../../components";
-import { api } from "../../utils/api";
+import { BodyPart, Exercise, Muscle } from "@prisma/client";
 
-export const SearchPage: React.FC = () => {
+type Props = {
+  bodyParts: BodyPart[];
+  muscles: (Muscle & { exercises: { exercise: Exercise }[] })[];
+};
+
+export const SearchPage: React.FC<Props> = (props: Props) => {
+  const { bodyParts, muscles } = props;
+
   const router = useRouter();
   const [selectedExerciseId, selectExerciseId] = useState<number>(-1);
   const [selectedBodyPartId, selectBodyPartId] = useState<number>(-1);
-
-  const { data: bodyParts } = api.bodyPart.getAll.useQuery();
-  const { data: muscles } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
-
 
   const handleExerciseClick = (id: number) => {
     selectExerciseId(id);

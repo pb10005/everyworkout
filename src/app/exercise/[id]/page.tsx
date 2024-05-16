@@ -4,7 +4,7 @@ import { ExerciseDetailPage } from "./ExerciseDetailPage";
 export default function Page() {
   return (
     <>
-      <main className="mt-4">
+      <main className="md:mt-4">
         <Heading />
         <Navigation />
         <Container>

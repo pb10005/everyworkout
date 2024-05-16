@@ -8,9 +8,9 @@ export default async function Page() {
   const session = await getServerSession(authOptions);
   return (
     <>
-      <main className="mt-4">
+      <main className="md:mt-4">
         <Heading />
-        <Navigation />
+        <Navigation currentPage="profile"/>
         <Container>
           {session?.user ? <ProfilePage /> : <AuthShowcase />}
         </Container>

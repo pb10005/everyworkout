@@ -85,9 +85,9 @@ function Page() {
 
     return (
         <>
-            <main className="mt-4">
+            <main className="md:mt-4">
                 <Heading />
-                <Navigation />
+                <Navigation currentPage="workout-recorder"/>
                 <Container>
                     {mutation.isLoading && <Loading />}
                     {mutation.isError && (

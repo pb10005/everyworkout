@@ -51,9 +51,9 @@ export const DashboardPage = () => {
                 <section className="flex justify-between">
                 <Subheader content="目標" />
                 </section>
-                {goal && <>
-                    <section key={goal.id} className="flex justify-between px-2 py-4 bg-white dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
-                        <div className="text-xl p-2 whitespace-pre-wrap">{goal.content}</div>
+                {goal ? <>
+                    <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
+                        <div className="text-xl whitespace-pre-wrap">{goal.content}</div>
                         <Dropdown>
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                                 <DropdownItem onClick={() => router.push(`/goal/edit/${goal.id}`)}>
@@ -65,8 +65,8 @@ export const DashboardPage = () => {
                             </ul>
                         </Dropdown>
                     </section>
-                </>}
-                <Link className="dark:text-white" href={`/goal/add`}>新規作成</Link>
+                </>: <NoDataCard />}
+                <Link className="p-1 dark:text-white" href={`/goal/add`}>新規作成</Link>
             </section>
             <section>
                 <Subheader content="自己ベスト" />
@@ -133,7 +133,7 @@ export const DashboardPage = () => {
                                 /></Link>;
                             }) : <NoDataCard />}
                         </ListContainer>
-                        <Link className="dark:text-white" href="/workout/history">View More</Link>
+                        <Link className="p-1 dark:text-white" href="/workout/history">View More</Link>
                     </div>
                 )}
             </section>

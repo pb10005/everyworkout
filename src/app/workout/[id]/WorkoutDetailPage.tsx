@@ -79,7 +79,7 @@ export const WorkoutDetailPage: React.FC = () => {
             {successGet && (
                 <>
                     <section className="flex flex-col gap-4">
-                        <div>
+                        <div className="px-2">
                             {data &&
                                 <WorkoutCard
                                     id={data?.id}
@@ -104,7 +104,7 @@ export const WorkoutDetailPage: React.FC = () => {
                                 <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
                             </span>
                         </section>
-                        <section className="flex flex-col gap-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">
+                        <section className="flex flex-col gap-2 mx-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">
                             <div className="flex gap-2 items-center">
                                 <label className="dark:text-gray-300" htmlFor="metrics">
                                     指標

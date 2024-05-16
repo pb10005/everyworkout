@@ -50,13 +50,13 @@ const History: NextPage = () => {
 
   return (
     <>
-      <main className="mt-4">
+      <main className="md:mt-4">
         <Heading />
         <Navigation />
         <Container>
-          <section className="p-2">
+          <section>
             <Subheader content="トレーニング履歴" />
-            <div className="">
+            <div className="px-2">
               <label
                 className="block text-sm font-bold text-gray-700 dark:text-gray-300"
                 htmlFor="date"

@@ -10,9 +10,9 @@ export default async function Page() {
     const session = await getServerSession(authOptions);
 
     return (<>
-        <main className="mt-4">
+        <main className="md:mt-4">
             <Heading />
-            <Navigation />
+            <Navigation currentPage="workout-menu"/>
             <FloatingButton href="/workout-menu/add">
                 <PlusIcon className="w-10 h-10 text-white dark:text-gray-900"></PlusIcon>
             </FloatingButton>

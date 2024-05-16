@@ -1,4 +1,4 @@
-import { AuthShowcase, ToolList, Credit, Subheader } from "../../components";
+import { AuthShowcase, Credit } from "../../components";
 import { Heading, Navigation } from "../../components/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
@@ -10,14 +10,10 @@ export default async function Page() {
 
   return (
     <>
-      <main className="mt-4">
+      <main className="md:mt-4">
         <Heading />
-        <Navigation />
+        <Navigation currentPage="dashboard" />
         <Container>
-            <section>
-              <Subheader content="便利ツール" />
-              <ToolList />
-            </section>
             {
               session?.user ? <DashboardPage /> : <AuthShowcase />
             }

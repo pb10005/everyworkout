@@ -50,7 +50,7 @@ export function SetConfigForm(props: Props) {
         selectBodyPartId(id);
     };
     return (<>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 m-2">
             <div className="flex flex-col gap-2">
                 <label
                     className=" block text-sm font-bold text-gray-700 dark:text-gray-300"

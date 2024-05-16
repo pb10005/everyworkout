@@ -54,10 +54,11 @@ const AddWorkout: NextPage = () => {
 
   return (
     <>
-      <main className="mt-4">
+      <main className="md:mt-4">
         <Heading />
         <Navigation />
         <Container>
+          <div className="m-2 flex flex-col gap-2">
             {mutation.isLoading && <Loading />}
             {mutation.isError && (
               <p className="rounded-lg bg-red-100 p-4 text-red-900">
@@ -171,7 +172,8 @@ const AddWorkout: NextPage = () => {
             {!mutation.isLoading && (
               <Button onClick={() => void send()}>登録</Button>
             )}
-          </Container>
+          </div>
+        </Container>
       </main>
     </>
   );

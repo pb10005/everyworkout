@@ -4,10 +4,11 @@ import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { SearchPage } from "./SearchPage";
 import { Container, Heading, Navigation } from "../../components/server";
 import { Suspense } from "react";
+import { prisma } from "../../server/db";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  const muslces = await prisma?.muscle.findMany({
+  const muslces = await prisma.muscle.findMany({
     include: {
       exercises: {
         select: {
@@ -17,7 +18,7 @@ export default async function Page() {
     }
   }) || [];
 
-  const bodyParts = await prisma?.bodyPart.findMany() || [];
+  const bodyParts = await prisma.bodyPart.findMany() || [];
 
   return (
     <>

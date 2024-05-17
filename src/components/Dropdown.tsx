@@ -31,6 +31,7 @@ export const Dropdown: React.FC<Props> = (props: Props) => {
     }, [dropdownRef]);
 
     return (<>
+    <div>
         <section className="relative">
             <button onClick={() => void handleDropdownIconClicked()} id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                 <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
@@ -40,7 +41,7 @@ export const Dropdown: React.FC<Props> = (props: Props) => {
             <div ref={dropdownRef} id="dropdownDots" className={`z-10 absolute right-0 w-40 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-500 cursor-pointer ${isDropdownVisible ? '' : 'hidden'}`}>
                 {children}
             </div>
-        </section>
+        </section></div>
     </>);
 
 };

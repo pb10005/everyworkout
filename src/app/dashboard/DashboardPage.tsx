@@ -53,7 +53,7 @@ export const DashboardPage = () => {
                 </section>
                 {goal ? <>
                     <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
-                        <div className="text-xl whitespace-pre-wrap">{goal.content}</div>
+                        <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>
                         <Dropdown>
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                                 <DropdownItem onClick={() => router.push(`/goal/edit/${goal.id}`)}>

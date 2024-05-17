@@ -21,8 +21,7 @@ type Props = {
 export const ExerciseSelector: React.FC<Props> = (props: Props) => {
   const { selectedExerciseId, selectedBodyPartId, bodyParts, muscles, handleExerciseClick, handleBodyPartClick } = props;
 
-  const muscle = muscles.find(m => m.bodyPartId === selectedBodyPartId);
-  const selectedExercise = muscles.find(m => m.exercises.some(e => e.exercise.id === selectedExerciseId));
+  const selectedExercise = muscles.flatMap(m => m.exercises).find(e => e.exercise.id === selectedExerciseId)?.exercise.name || '';
 
   const displayMuscles = muscles.filter(m => m.bodyPartId === selectedBodyPartId);
 
@@ -51,7 +50,7 @@ export const ExerciseSelector: React.FC<Props> = (props: Props) => {
                 <ChevronLeftIcon className="w-8 h-8 dark:text-white" />
                 <span className="text-sm dark:text-white">種目選択へ</span>
               </section>
-              <div className="text-lg dark:text-white">{ selectedExercise?.name || '' }</div>
+              <div className="text-lg dark:text-white">{ selectedExercise || '' }</div>
             </>) : (<>
               <section className="flex items-center gap-0 cursor-pointer" onClick={() => void handleBodyPartClick(-1)}>
                 <ChevronLeftIcon className="w-8 h-8 dark:text-white" />

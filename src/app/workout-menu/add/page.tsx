@@ -11,8 +11,9 @@ import { api } from "../../../utils/api";
 export default function Page() {
   const router = useRouter();
 
-  const { data } = api.exercise.getAll.useQuery();
-  const exercises = data?.map((d: Exercise) => { return { id: d.id, name: d.name }; }) || [];
+  const { data: bodyParts } = api.bodyPart.getAll.useQuery();
+  const { data: muscles } = api.muscle.getAllExercises.useQuery();
+  const { data: exercises } = api.exercise.getAll.useQuery();
   const [workoutMenu, setWorkoutMenu] = useState<WorkoutMenuItemProps[]>([]);
 
   const mutation = api.workoutMenu.add.useMutation({
@@ -38,7 +39,7 @@ export default function Page() {
         <Heading />
         <Navigation />
         <Container>
-          <WorkoutMenuEditor exercises={exercises} workoutMenu={workoutMenu} setWorkoutMenu={handleSetWorkoutMenu} submit={(data: WorkoutMenuSubmitProps) => void handleSubmit(data)} />
+          <WorkoutMenuEditor bodyParts={bodyParts || []} muscles={muscles || []} exercises={exercises || []} workoutMenu={workoutMenu} setWorkoutMenu={handleSetWorkoutMenu} submit={(data: WorkoutMenuSubmitProps) => void handleSubmit(data)} />
         </Container>
       </main>
     </>

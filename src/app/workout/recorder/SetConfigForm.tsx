@@ -1,16 +1,17 @@
 "use client";
 
+import { BodyPart, Exercise, Muscle } from "@prisma/client";
 import { useState } from "react";
 import {
     Button,
     ExerciseSelector,
 } from "../../../components";
-
 import { useExerciseSelector } from "../../../hooks/useExerciseSelector";
 
 type Props = {
-    exerciseId?: string;
-    bodyPartId?: string;
+    exercises: Exercise[];
+    bodyParts: BodyPart[];
+    muscles: (Muscle & { exercises: { exercise: Exercise }[] })[];
     startSets: (
         date: string,
         weight: string,
@@ -23,7 +24,7 @@ type Props = {
 };
 
 export function SetConfigForm(props: Props) {
-    const { exerciseId, bodyPartId, startSets } = props;
+    const { exercises, bodyParts, muscles, startSets } = props;
 
     const [date, setDate] = useState<string>(
         new Date().toISOString().split("T")[0] || ""
@@ -38,9 +39,7 @@ export function SetConfigForm(props: Props) {
         selectExerciseId,
         selectedExerciseId,
         selectedExerciseName,
-        bodyParts,
-        muscles,
-    } = useExerciseSelector(parseInt(exerciseId || "-1"), parseInt(bodyPartId || "-1"));
+    } = useExerciseSelector(bodyParts, muscles, exercises);
 
     const handleExerciseClick = (exerciseId: number) => {
         selectExerciseId(exerciseId);

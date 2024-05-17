@@ -1,5 +1,6 @@
 "use client";
 import { MinusCircleIcon } from "@heroicons/react/20/solid";
+import { BodyPart, Exercise, Muscle } from "@prisma/client";
 import React, { useState } from "react";
 import { z, ZodError } from "zod";
 import { useExerciseSelector } from "../hooks/useExerciseSelector";
@@ -8,13 +9,10 @@ import { ExerciseSelector } from "./ExerciseSelector";
 import { ListContainer } from "./ListConteiner";
 import type { WorkoutMenuItemProps, WorkoutMenuSubmitProps } from "./types";
 
-type ExerciseProps = {
-    id: number;
-    name: string;
-};
-
 type Props = {
-    exercises: ExerciseProps[];
+    bodyParts: BodyPart[];
+    muscles: (Muscle & { exercises: { exercise: Exercise }[] })[]
+    exercises: Exercise[];
     workoutMenu: WorkoutMenuItemProps[];
     setWorkoutMenu: (menu: WorkoutMenuItemProps[]) => void;
     submit: (data: WorkoutMenuSubmitProps) => void;
@@ -32,7 +30,7 @@ const schema = z.object({
         .min(1, '少なくとも1件の種目を選んでください'),
 });
 export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
-    const { exercises, workoutMenu, setWorkoutMenu, submit } = props;
+    const { bodyParts, muscles, exercises, workoutMenu, setWorkoutMenu, submit } = props;
     const [error, setError] = useState<string>("");
     const [title, setTitle] = useState<string>("");
 
@@ -41,9 +39,7 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
         selectedBodyPartId,
         selectExerciseId,
         selectedExerciseId,
-        bodyParts,
-        muscles,
-    } = useExerciseSelector();
+    } = useExerciseSelector(bodyParts, muscles, exercises);
 
     const handleExerciseClick = (id: number) => {
         selectExerciseId(id);

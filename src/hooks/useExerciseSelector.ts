@@ -1,16 +1,11 @@
 "use client";
 
-import type { Exercise } from "@prisma/client";
+import type { BodyPart, Exercise, Muscle } from "@prisma/client";
 import { useMemo, useState } from "react";
-import { api } from "../utils/api";
 
-export const useExerciseSelector = (initialExerciseId?: number, initialBodyPartId?: number) => {
+export const useExerciseSelector = (bodyParts: BodyPart[], muscles: (Muscle & { exercises: { exercise: Exercise }[] })[], exercises: Exercise[], initialExerciseId?: number, initialBodyPartId?: number) => {
     const [selectedExerciseId, selectExerciseId] = useState(initialExerciseId || -1);
     const [selectedBodyPartId, selectBodyPartId] = useState<number>(initialBodyPartId || -1);
-
-    const { data: bodyParts } = api.bodyPart.getAll.useQuery();
-    const { data: muscles } = api.muscle.getExercisesByBodyPartId.useQuery({ bodyPartId: selectedBodyPartId });
-    const { data: exercises } = api.exercise.getAll.useQuery();
 
     const selectedExerciseName = useMemo(() => {
         return exercises?.find((e: Exercise) => e.id === selectedExerciseId)?.name;
@@ -22,7 +17,5 @@ export const useExerciseSelector = (initialExerciseId?: number, initialBodyPartI
         selectExerciseId,
         selectedExerciseId,
         selectedExerciseName,
-        bodyParts,
-        muscles,
     }
 };

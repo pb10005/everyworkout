@@ -5,9 +5,7 @@ import { type NextPage } from "next";
 
 import { api } from "../../../utils/api";
 
-import {
-    Loading,
-} from "../../../components";
+import { Loading } from "../../../components";
 import { Heading, Navigation, Container } from "../../../components/server";
 
 import type { WorkoutProp } from "../../../components/types";
@@ -26,6 +24,9 @@ function Page() {
     const [isEnd, setEnd] = useState<boolean>(false);
     const [sets, setSets] = useState<string>("-1");
 
+    const { data: exercises } = api.exercise.getAll.useQuery();
+    const { data: bodyParts } = api.bodyPart.getAll.useQuery();
+    const { data: muscles } = api.muscle.getAllExercises.useQuery();
     const mutation = api.workout.add.useMutation();
 
     const startSets = (
@@ -87,7 +88,7 @@ function Page() {
         <>
             <main className="md:mt-4">
                 <Heading />
-                <Navigation currentPage="workout-recorder"/>
+                <Navigation currentPage="workout-recorder" />
                 <Container>
                     {mutation.isLoading && <Loading />}
                     {mutation.isError && (
@@ -102,8 +103,9 @@ function Page() {
                     )}
                     {!isEnd && (sets === "-1" ? <>
                         <SetConfigForm
-                            exerciseId={exerciseId}
-                            bodyPartId={bodyPartId}
+                            bodyParts={ bodyParts || []}
+                            muscles={ muscles || []}
+                            exercises={ exercises || []}
                             startSets={startSets} />
                     </> : <SetRecorder endSets={endSets} />)}
                     {isEnd && <>

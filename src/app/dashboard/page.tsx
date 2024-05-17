@@ -4,9 +4,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { Container } from "../../components/server";
 import { DashboardPage } from "./DashboardPage";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
+  if (!session?.user) redirect('/login');
 
   return (
     <>
@@ -14,11 +16,9 @@ export default async function Page() {
         <Heading />
         <Navigation currentPage="dashboard" />
         <Container>
-            {
-              session?.user ? <DashboardPage /> : <AuthShowcase />
-            }
-            <Credit />
-          </Container>
+          <DashboardPage />
+          <Credit />
+        </Container>
       </main>
     </>
   );

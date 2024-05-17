@@ -5,9 +5,12 @@ import { SearchPage } from "./SearchPage";
 import { Container, Heading, Navigation } from "../../components/server";
 import { Suspense } from "react";
 import { prisma } from "../../server/db";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
+  if(!session?.user) redirect('/login');
+
   const muslces = await prisma.muscle.findMany({
     include: {
       exercises: {
@@ -27,9 +30,7 @@ export default async function Page() {
         <Navigation currentPage="search" />
         <Suspense fallback={<Loading />}>
           <Container>
-            {
-              session?.user ? <SearchPage muscles={muslces} bodyParts={bodyParts} /> : <AuthShowcase />
-            }
+            <SearchPage muscles={muslces} bodyParts={bodyParts} />
           </Container>
         </Suspense>
       </main>

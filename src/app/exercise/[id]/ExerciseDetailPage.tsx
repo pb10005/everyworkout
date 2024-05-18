@@ -18,9 +18,15 @@ export const ExerciseDetailPage: React.FC = () => {
             exerciseId: parseInt(exerciseId),
         });
 
-    const daily = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({
+    const { data: daily } = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({
         exerciseId: parseInt(exerciseId),
     });
+
+    const { data: workoutsInWeek } = api.workout.getUserWorkouts.useQuery({
+        date: {
+            gt: new Date('2024-05-14').toISOString()
+        }
+    })
 
     const test: Partial<ChartProp>[] = data?.map(x => {
         return {
@@ -29,16 +35,25 @@ export const ExerciseDetailPage: React.FC = () => {
         }
     }) || [];
 
-    const test2: Partial<ChartProp>[] = daily.data?.map(x => {
+    const dailyVolumes: Partial<ChartProp>[] = daily?.map(x => {
         return {
             date: x.date.getTime(),
             volume: x.totalVolume
         }
     }) || [];
 
+    function* cumulativeDaily() {
+        let cumulative = 0;
+        for (const v of dailyVolumes) {
+            cumulative += v.volume || 0;
+            yield { date: v.date, cumulativeVolume: cumulative };
+        }
+    }
+
     const chartData: Partial<ChartProp>[] = [
         ...test,
-        ...test2,
+        ...dailyVolumes,
+        ...Array.from(cumulativeDaily())
     ];
 
     const mutation = api.maximum.delete.useMutation({
@@ -76,7 +91,7 @@ export const ExerciseDetailPage: React.FC = () => {
                     </>
                 )}
                 {isSuccess && (<>
-                    <div className="w-full bg-white">
+                    <div className="w-full">
                         <ExerciseChart chartData={chartData} />
                     </div>
                     <div className="mb-2 md:grid-span-3">

@@ -96,7 +96,15 @@ export const workoutRouter = createTRPCRouter({
   getUserWorkouts: protectedProcedure.input(
     z.object({
       exerciseId: z.number().optional(),
-      date: z.string().datetime().optional(),
+      date: z.union([
+        z.string().datetime().optional(),
+        z.object({
+          lt: z.string().datetime().optional(), 
+          lte: z.string().datetime().optional(), 
+          gt: z.string().datetime().optional(), 
+          gte: z.string().datetime().optional(), 
+        })
+      ]),
       skip: z.number().optional(),
       take: z.number().optional()
     })

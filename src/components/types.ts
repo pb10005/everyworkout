@@ -2,6 +2,7 @@ export type ChartProp = {
     date: number;
     maximum: number;
     volume: number;
+    cumulativeVolume: number;
 };
 
 export type WorkoutMenuItemProps = {

@@ -54,7 +54,7 @@ const History: NextPage = () => {
         <Heading />
         <Navigation />
         <Container>
-          <section>
+          <section className="flex flex-col gap-2">
             <Subheader content="トレーニング履歴" />
             <div className="px-2">
               <label

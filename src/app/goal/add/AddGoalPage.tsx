@@ -23,6 +23,7 @@ export const AddGoalPage: React.FC = () => {
 
     const handleCancel = () => {
         setGoal('');
+        router.back();
     };
     return (
         <>

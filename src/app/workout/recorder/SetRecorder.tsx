@@ -57,7 +57,7 @@ export function SetRecorder(props: Props) {
 
     const clear = () => {
         window.sessionStorage.removeItem("workout");
-        router.push('/dashboard');
+        router.push('/workout-menu');
     };
 
     useEffect(() => {

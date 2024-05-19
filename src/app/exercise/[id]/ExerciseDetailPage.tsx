@@ -18,6 +18,7 @@ export const ExerciseDetailPage: React.FC = () => {
     const { data, isLoading, isSuccess, isError, error } =
         api.maximum.getUserMaximumsByExerciseId.useQuery({
             exerciseId: parseInt(exerciseId),
+            inThisWeek: displayPeriod === '01'
         });
 
     const { data: daily } = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({

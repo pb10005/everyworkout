@@ -61,10 +61,25 @@ export const maximumRouter = createTRPCRouter({
     }),
 
   getUserMaximumsByExerciseId: protectedProcedure
-    .input(z.object({ exerciseId: z.number() }))
+    .input(z.object({
+      exerciseId: z.number(),
+      inThisWeek: z.boolean()
+    }))
     .query(async ({ ctx, input }) => {
+      type MaxProps = {
+        max: string;
+      };
+      const maxDate = await ctx.prisma.$queryRaw<MaxProps[]>`select max("executeDate") from "WeeklyReportMaster"`;
+      const dateQuery = new Date(maxDate[0]?.max || '1975-01-01').toISOString().split('T')[0] || '';
+
       const maximums = await ctx.prisma.maximum.findMany({
-        where: { userId: ctx.session.user.id, exerciseId: input.exerciseId },
+        where: {
+          userId: ctx.session.user.id,
+          exerciseId: input.exerciseId,
+          date: {
+            gte: input.inThisWeek ? new Date(dateQuery) : undefined
+          }
+        },
         orderBy: {
           date: "desc",
         },

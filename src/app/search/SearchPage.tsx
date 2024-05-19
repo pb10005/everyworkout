@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, ExerciseSelector, Subheader } from "../../components";
-import { BodyPart, Exercise, Muscle } from "@prisma/client";
+import type { BodyPart, Exercise, Muscle } from "@prisma/client";
 
 type Props = {
   bodyParts: BodyPart[];

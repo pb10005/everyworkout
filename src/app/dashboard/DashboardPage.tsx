@@ -10,24 +10,30 @@ import {
     ListContainer,
     Loading,
     MaximumCard,
-    RecordCard,
     NoDataCard,
     Subheader,
     Dropdown,
+    DropdownItem,
+    ExerciseChart
 } from "../../components";
-import { DropdownItem } from "../../components/DropdownItem";
 import { useRouter } from "next/navigation";
+import type { ChartProp } from "../../components/types";
 
-export const DashboardPage = () => {
+type Props = {
+    userWorkoutVolumesInThisWeek: Partial<ChartProp>[];
+};
+
+export const DashboardPage = (props: Props) => {
+    const { userWorkoutVolumesInThisWeek } = props;
     const router = useRouter();
-    const {
-        isLoading: loadingW,
-        isSuccess: successW,
-        isError: errorW,
-        data,
-    } = api.workout.getUserWorkouts.useQuery({
-        take: 3,
+
+    const chartData = userWorkoutVolumesInThisWeek.map(x => {
+        return {
+            date: x.date,
+            cumulativeVolume: x.cumulativeVolume
+        };
     });
+
     const {
         isLoading: loadingM,
         isSuccess: successM,
@@ -46,10 +52,19 @@ export const DashboardPage = () => {
 
     return (
         <>
-            {(errorW && errorM && errorR) && <NotLoggedInCard />}
+            {(errorM && errorR) && <NotLoggedInCard />}
+            <Subheader content="今週のトレーニング履歴" />
+            <section className="flex flex-col gap-2">
+                <div className="dark:bg-black">
+                    <ExerciseChart chartData={chartData} />
+                </div>
+                <div>
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href="/workout/history">詳細を見る</Link>
+                </div>
+            </section>
             <section>
                 <section className="flex justify-between">
-                <Subheader content="目標" />
+                    <Subheader content="目標" />
                 </section>
                 {goal ? <>
                     <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
@@ -65,7 +80,7 @@ export const DashboardPage = () => {
                             </ul>
                         </Dropdown>
                     </section>
-                </>: <NoDataCard />}
+                </> : <NoDataCard />}
                 <Link className="p-1 dark:text-white" href={`/goal/add`}>新規作成</Link>
             </section>
             <section>
@@ -112,29 +127,6 @@ export const DashboardPage = () => {
                                 : <NoDataCard />}
                         </ListContainer>
                     </>
-                )}
-            </section>
-            <section>
-                <Subheader content="トレーニング履歴" />
-                {loadingW && <Loading />}
-                {successW && (
-                    <div>
-                        <ListContainer>
-                            {data?.length && data?.length > 0 ? data?.map((d) => {
-                                return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
-                                    id={d.id}
-                                    exerciseName={d.exercise.name}
-                                    date={d.date}
-                                    weight={d.weight}
-                                    reps={d.reps}
-                                    sets={d.sets}
-                                    note={d.note}
-                                    muscles={d.exercise.muscles.map(m => m.muscle)}
-                                /></Link>;
-                            }) : <NoDataCard />}
-                        </ListContainer>
-                        <Link className="p-1 dark:text-white" href="/workout/history">View More</Link>
-                    </div>
                 )}
             </section>
             <FloatingButton href="/workout/add">

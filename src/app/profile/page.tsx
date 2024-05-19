@@ -1,4 +1,3 @@
-import { AuthShowcase } from "../../components";
 import { Container, Heading, Navigation } from "../../components/server";
 import { ProfilePage } from "./ProfilePage";
 import { getServerSession } from "next-auth";

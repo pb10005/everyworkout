@@ -1,14 +1,10 @@
 import { z } from "zod";
+import { DailyVolumeProp } from "../../../components/types";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 type VolumeProp = {
   totalVolume: number
-};
-
-type DailyVolumeProp = {
-  date: Date;
-  totalVolume: number;
 };
 
 export const workoutRouter = createTRPCRouter({

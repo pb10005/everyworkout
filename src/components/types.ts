@@ -33,3 +33,8 @@ export type WorkoutProp = {
     sets: string;
     expiryTimeDelta: number;
 };
+
+export type DailyVolumeProp = {
+    date: Date;
+    totalVolume: number;
+};

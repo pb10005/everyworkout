@@ -9,19 +9,21 @@ import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  if(!session?.user) redirect('/login');
+  if (!session?.user) redirect('/login');
 
-  const muslces = await prisma.muscle.findMany({
-    include: {
-      exercises: {
-        select: {
-          exercise: true
+  const muslces = async () => {
+    return await prisma.muscle.findMany({
+      include: {
+        exercises: {
+          select: {
+            exercise: true
+          }
         }
       }
-    }
-  }) || [];
+    }) || [];
+  }
 
-  const bodyParts = await prisma.bodyPart.findMany() || [];
+  const bodyParts = async () => await prisma.bodyPart.findMany() || [];
 
   return (
     <>
@@ -30,7 +32,7 @@ export default async function Page() {
         <Navigation currentPage="search" />
         <Suspense fallback={<Loading />}>
           <Container>
-            <SearchPage muscles={muslces} bodyParts={bodyParts} />
+            <SearchPage muscles={await muslces()} bodyParts={await bodyParts()} />
           </Container>
         </Suspense>
       </main>

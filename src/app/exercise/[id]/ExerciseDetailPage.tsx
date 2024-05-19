@@ -66,7 +66,7 @@ export const ExerciseDetailPage: React.FC = () => {
         });
     };
 
-    const handleChangeDisplayPeriod = async (value: string) => {
+    const handleChangeDisplayPeriod = (value: string) => {
         setDisplayPeriod(value);
     };
 

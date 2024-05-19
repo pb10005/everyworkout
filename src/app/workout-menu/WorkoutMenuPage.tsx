@@ -16,13 +16,13 @@ export function WorkoutMenuPage() {
             </section>
             <Subheader content="あなたのトレーニングメニュー" />
             <section className="flex flex-col gap-2">
-                {isLoading && <Loading />}
                 <div className="flex justify-left">
                     <Link href="/workout-menu/add" className="flex items-center gap-1 text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full">
                         <PlusIcon width={20} height={20} />
                         <span>新規作成</span>
                     </Link>
                 </div>
+                {isLoading && <Loading />}
                 {!isLoading && <>
                     {workoutMenus && workoutMenus?.length > 0 ? <>
                         <ListContainer>

@@ -9,7 +9,7 @@ import {
     Line,
     CartesianGrid,
     Tooltip
-  } from "recharts";
+} from "recharts";
 
 import { type ChartProp } from "./types";
 
@@ -28,24 +28,32 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
             <ComposedChart
                 data={chartData}
                 margin={{ top: 5, right: 15, left: -5, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
                     dataKey="date"
-                    domain={['auto', 'auto']}
+                    domain={['dataMin - 86400000', 'dataMax + 86400000']}
                     tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
                     type="number" />
-                <YAxis
-                    yAxisId={1}
-                    type="number"
-                    dataKey="maximum"
-                    domain={['dataMin - 5', 'dataMax + 5']} />
-                <YAxis
+                {/* <YAxis
                     yAxisId={2}
                     orientation="right"
                     type="number"
                     dataKey="volume"
+                    domain={[0, 'auto']} /> */}
+                <YAxis
+                    yAxisId={3}
+                    type="number"
+                    orientation="right"
+                    dataKey="cumulativeVolume"
                     domain={[0, 'auto']} />
-                <Bar yAxisId={2} dataKey="volume" barSize={20} fill="#413ea0" />
+                <YAxis
+                    yAxisId={1}
+                    orientation="left"
+                    type="number"
+                    dataKey="maximum"
+                    domain={['dataMin - 5', 'dataMax + 5']} />
+                {/* <Bar yAxisId={2} dataKey="volume" barSize={20} fill="#413ea0" /> */}
+                <CartesianGrid strokeDasharray="3 3" />
+                <Bar yAxisId={3} type="monotone" dataKey="cumulativeVolume" barSize={20} fill="#413ea0" />
                 <Line yAxisId={1} type="monotone" dataKey="maximum" />
                 <Legend align="center" verticalAlign="top" />
                 <Tooltip

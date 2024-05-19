@@ -106,7 +106,9 @@ function Page() {
                             bodyParts={ bodyParts || []}
                             muscles={ muscles || []}
                             exercises={ exercises || []}
-                            startSets={startSets} />
+                            startSets={startSets}
+                            initialExerciseId={parseInt(exerciseId) || -1}
+                            initialBodyPartId={parseInt(bodyPartId) || -1} />
                     </> : <SetRecorder endSets={endSets} />)}
                     {isEnd && <>
                         <ConfirmSubmit

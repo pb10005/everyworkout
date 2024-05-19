@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { api } from "../../../utils/api";
 
 import { MaximumCard, Loading, ExerciseChart, NoDataCard, ListContainer, Subheader } from "../../../components";
@@ -13,13 +13,16 @@ export const ExerciseDetailPage: React.FC = () => {
     const ids = params?.id || "";
     const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
 
+    const [displayPeriod, setDisplayPeriod] = useState<string>('01');
+
     const { data, isLoading, isSuccess, isError, error } =
         api.maximum.getUserMaximumsByExerciseId.useQuery({
             exerciseId: parseInt(exerciseId),
         });
 
-    const daily = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({
+    const { data: daily } = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({
         exerciseId: parseInt(exerciseId),
+        inThisWeek: displayPeriod === '01'
     });
 
     const test: Partial<ChartProp>[] = data?.map(x => {
@@ -29,16 +32,24 @@ export const ExerciseDetailPage: React.FC = () => {
         }
     }) || [];
 
-    const test2: Partial<ChartProp>[] = daily.data?.map(x => {
+    const dailyVolumes: Partial<ChartProp>[] = daily?.map(x => {
         return {
             date: x.date.getTime(),
             volume: x.totalVolume
         }
     }) || [];
 
+    function* cumulativeDaily() {
+        let cumulative = 0;
+        for (const v of dailyVolumes) {
+            cumulative += v.volume || 0;
+            yield { date: v.date, cumulativeVolume: cumulative };
+        }
+    }
+
     const chartData: Partial<ChartProp>[] = [
         ...test,
-        ...test2,
+        ...Array.from(cumulativeDaily())
     ];
 
     const mutation = api.maximum.delete.useMutation({
@@ -53,6 +64,10 @@ export const ExerciseDetailPage: React.FC = () => {
         await mutation.mutateAsync({
             id
         });
+    };
+
+    const handleChangeDisplayPeriod = (value: string) => {
+        setDisplayPeriod(value);
     };
 
     return (
@@ -76,7 +91,16 @@ export const ExerciseDetailPage: React.FC = () => {
                     </>
                 )}
                 {isSuccess && (<>
-                    <div className="w-full bg-white">
+                    <div className="w-full">
+                        <select
+                            name="metrics"
+                            className="p-2 dark:bg-gray-700 dark:text-white dark:border-gray-500"
+                            value={displayPeriod}
+                            onChange={(e) => void handleChangeDisplayPeriod(e.target.value)}
+                        >
+                            <option value="01">今週</option>
+                            <option value="02">全期間</option>
+                        </select>
                         <ExerciseChart chartData={chartData} />
                     </div>
                     <div className="mb-2 md:grid-span-3">

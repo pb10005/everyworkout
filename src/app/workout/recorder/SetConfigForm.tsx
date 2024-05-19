@@ -21,10 +21,12 @@ type Props = {
         selectedExerciseId: number,
         selectedExerciseName: string
     ) => void;
+    initialExerciseId?: number;
+    initialBodyPartId?: number;
 };
 
 export function SetConfigForm(props: Props) {
-    const { exercises, bodyParts, muscles, startSets } = props;
+    const { exercises, bodyParts, muscles, startSets, initialExerciseId, initialBodyPartId } = props;
 
     const [date, setDate] = useState<string>(
         new Date().toISOString().split("T")[0] || ""
@@ -39,7 +41,7 @@ export function SetConfigForm(props: Props) {
         selectExerciseId,
         selectedExerciseId,
         selectedExerciseName,
-    } = useExerciseSelector(bodyParts, muscles, exercises);
+    } = useExerciseSelector(bodyParts, muscles, exercises, initialExerciseId, initialBodyPartId);
 
     const handleExerciseClick = (exerciseId: number) => {
         selectExerciseId(exerciseId);

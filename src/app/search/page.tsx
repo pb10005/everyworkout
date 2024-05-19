@@ -1,11 +1,12 @@
-import { AuthShowcase, Loading } from "../../components";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
+
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { SearchPage } from "./SearchPage";
+import { Loading } from "../../components";
 import { Container, Heading, Navigation } from "../../components/server";
-import { Suspense } from "react";
 import { prisma } from "../../server/db";
-import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);

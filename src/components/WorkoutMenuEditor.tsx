@@ -1,6 +1,6 @@
 "use client";
 import { MinusCircleIcon } from "@heroicons/react/20/solid";
-import { BodyPart, Exercise, Muscle } from "@prisma/client";
+import type { BodyPart, Exercise, Muscle } from "@prisma/client";
 import React, { useState } from "react";
 import { z, ZodError } from "zod";
 import { useExerciseSelector } from "../hooks/useExerciseSelector";

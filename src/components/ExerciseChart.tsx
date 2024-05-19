@@ -27,13 +27,17 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
             height={300}>
             <ComposedChart
                 data={chartData}
-                margin={{ top: 5, right: 15, left: -5, bottom: 0 }}>
+                margin={{ top: 5, right: 15, left: -5, bottom: 40 }}>
                 <XAxis
                     dataKey="date"
                     domain={['dataMin - 86400000', 'dataMax + 86400000']}
                     interval={0}
                     tickFormatter={(unixTime: Date) => new Date(unixTime).toISOString().split('T')[0] || ''}
-                    type="number" />
+                    type="number"
+                    fontSize={12}
+                    angle={-45}
+                    textAnchor="end" 
+                     />
                 {/* <YAxis
                     yAxisId={2}
                     orientation="right"
@@ -45,6 +49,7 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
                     type="number"
                     orientation="right"
                     dataKey="cumulativeVolume"
+                    fontSize={12}
                     domain={[0, 'auto']} />
                 <YAxis
                     yAxisId={1}
@@ -52,12 +57,13 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
                     orientation="left"
                     type="number"
                     dataKey="maximum"
+                    fontSize={12}
                     domain={['dataMin - 5', 'dataMax + 5']} />
                 {/* <Bar yAxisId={2} dataKey="volume" barSize={20} fill="#413ea0" /> */}
                 <CartesianGrid strokeDasharray="3 3" />
                 <Bar yAxisId={3} type="monotone" dataKey="cumulativeVolume" barSize={20} fill="#413ea0" />
                 <Line yAxisId={1} type="monotone" dataKey="maximum" />
-                <Legend align="center" verticalAlign="top" />
+                <Legend align="center" verticalAlign="top" fontSize={12} />
                 <Tooltip
                     labelFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()} />
             </ComposedChart>

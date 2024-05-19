@@ -10,7 +10,7 @@ import { Heading, Navigation, Container } from "../../../components/server";
 
 const History: NextPage = () => {
   const [page, setPage] = useState<number>(0);
-  const [perPage, _] = useState<number>(10);
+  const perPage = 10;
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0] || ""
   );

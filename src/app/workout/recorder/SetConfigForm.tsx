@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyPart, Exercise, Muscle } from "@prisma/client";
+import type { BodyPart, Exercise, Muscle } from "@prisma/client";
 import { useState } from "react";
 import {
     Button,

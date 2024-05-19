@@ -53,8 +53,8 @@ export const DashboardPage = (props: Props) => {
     return (
         <>
             {(errorM && errorR) && <NotLoggedInCard />}
-            <Subheader content="今週のトレーニング履歴" />
             <section className="flex flex-col gap-2">
+                <Subheader content="今週のトレーニング履歴" />
                 <div className="dark:bg-black">
                     <ExerciseChart chartData={chartData} />
                 </div>
@@ -62,7 +62,7 @@ export const DashboardPage = (props: Props) => {
                     <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href="/workout/history">詳細を見る</Link>
                 </div>
             </section>
-            <section>
+            <section className="flex flex-col gap-2">
                 <section className="flex justify-between">
                     <Subheader content="目標" />
                 </section>
@@ -81,7 +81,9 @@ export const DashboardPage = (props: Props) => {
                         </Dropdown>
                     </section>
                 </> : <NoDataCard />}
-                <Link className="p-1 dark:text-white" href={`/goal/add`}>新規作成</Link>
+                <div>
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/goal/add`}>新規作成</Link>
+                </div>
             </section>
             <section>
                 <Subheader content="自己ベスト" />

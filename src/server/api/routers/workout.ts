@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DailyVolumeProp } from "../../../components/types";
+import type { DailyVolumeProp } from "../../../components/types";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

@@ -25,7 +25,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
     } = useTimer({
         expiryTimestamp: expiryTimestamp,
         autoStart: false,
-        onExpire: () => { setExpired(true); resetInterval(); if (onExpire) onExpire(); }
+        onExpire: () => { setExpired(true); resetInterval(new Date(), expiryTimeDelta); if (onExpire) onExpire(); }
     });
 
     const zeroPadding = (val: number) => {
@@ -37,14 +37,14 @@ export const Timer: React.FC<Props> = (props: Props) => {
         resume();
     };
 
-    const resetInterval = () => {
-        const time = new Date();
-        time.setSeconds(time.getSeconds() + expiryTimeDelta);
-        restart(time, false);
+    const resetInterval = (now: Date, expiryTimeDelta: number) => {
+        now.setSeconds(now.getSeconds() + expiryTimeDelta);
+        restart(now, false);
     };
 
     useEffect(() => {
-        resetInterval();
+        const now = new Date();
+        resetInterval(now, expiryTimeDelta);
     }, [expiryTimeDelta]);
 
     return (
@@ -64,7 +64,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
                             <PauseIcon className="w-10 h-10 cursor-pointer">一時停止</PauseIcon>
                         </span>
                     </button>
-                    <button className="w-full flex justify-center" onClick={resetInterval}>
+                    <button className="w-full flex justify-center" onClick={() => resetInterval(new Date(), expiryTimeDelta)}>
                         <span>
                             <ArrowPathIcon className="w-10 h-10 cursor-pointer">開始</ArrowPathIcon>
                         </span>

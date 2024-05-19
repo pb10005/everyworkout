@@ -1,6 +1,5 @@
 "use client";
 
-import type { Exercise } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { WorkoutMenuEditor } from "../../../components";

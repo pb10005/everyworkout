@@ -1,7 +1,7 @@
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { FloatingButton, AuthShowcase } from "../../components";
+import { FloatingButton } from "../../components";
 import { Heading, Navigation, Container } from "../../components/server";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { WorkoutMenuPage } from "./WorkoutMenuPage";

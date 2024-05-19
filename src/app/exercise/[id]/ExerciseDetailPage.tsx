@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { api } from "../../../utils/api";
 
 import { MaximumCard, Loading, ExerciseChart, NoDataCard, ListContainer, Subheader } from "../../../components";
@@ -13,6 +13,8 @@ export const ExerciseDetailPage: React.FC = () => {
     const ids = params?.id || "";
     const exerciseId = (Array.isArray(ids) ? ids[0] : ids) || "-1";
 
+    const [displayPeriod, setDisplayPeriod] = useState<string>('01');
+
     const { data, isLoading, isSuccess, isError, error } =
         api.maximum.getUserMaximumsByExerciseId.useQuery({
             exerciseId: parseInt(exerciseId),
@@ -20,13 +22,8 @@ export const ExerciseDetailPage: React.FC = () => {
 
     const { data: daily } = api.workout.getUserWorkoutVolumeByExerciseId.useQuery({
         exerciseId: parseInt(exerciseId),
+        inThisWeek: displayPeriod === '01'
     });
-
-    const { data: workoutsInWeek } = api.workout.getUserWorkouts.useQuery({
-        date: {
-            gt: new Date('2024-05-14').toISOString()
-        }
-    })
 
     const test: Partial<ChartProp>[] = data?.map(x => {
         return {
@@ -52,7 +49,6 @@ export const ExerciseDetailPage: React.FC = () => {
 
     const chartData: Partial<ChartProp>[] = [
         ...test,
-        ...dailyVolumes,
         ...Array.from(cumulativeDaily())
     ];
 
@@ -68,6 +64,10 @@ export const ExerciseDetailPage: React.FC = () => {
         await mutation.mutateAsync({
             id
         });
+    };
+
+    const handleChangeDisplayPeriod = async (value: string) => {
+        setDisplayPeriod(value);
     };
 
     return (
@@ -92,6 +92,15 @@ export const ExerciseDetailPage: React.FC = () => {
                 )}
                 {isSuccess && (<>
                     <div className="w-full">
+                        <select
+                            name="metrics"
+                            className="p-2 dark:bg-gray-700 dark:text-white dark:border-gray-500"
+                            value={displayPeriod}
+                            onChange={(e) => void handleChangeDisplayPeriod(e.target.value)}
+                        >
+                            <option value="01">今週</option>
+                            <option value="02">全期間</option>
+                        </select>
                         <ExerciseChart chartData={chartData} />
                     </div>
                     <div className="mb-2 md:grid-span-3">

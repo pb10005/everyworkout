@@ -28,10 +28,9 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
             <ComposedChart
                 data={chartData}
                 margin={{ top: 5, right: 15, left: -5, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
                     dataKey="date"
-                    domain={['auto', 'auto']}
+                    domain={['dataMin - 86400000', 'dataMax + 86400000']}
                     tickFormatter={(unixTime: Date) => new Date(unixTime).toLocaleDateString()}
                     type="number" />
                 {/* <YAxis
@@ -53,6 +52,7 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
                     dataKey="maximum"
                     domain={['dataMin - 5', 'dataMax + 5']} />
                 {/* <Bar yAxisId={2} dataKey="volume" barSize={20} fill="#413ea0" /> */}
+                <CartesianGrid strokeDasharray="3 3" />
                 <Bar yAxisId={3} type="monotone" dataKey="cumulativeVolume" barSize={20} fill="#413ea0" />
                 <Line yAxisId={1} type="monotone" dataKey="maximum" />
                 <Legend align="center" verticalAlign="top" />

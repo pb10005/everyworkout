@@ -99,10 +99,10 @@ export const workoutRouter = createTRPCRouter({
       date: z.union([
         z.string().datetime().optional(),
         z.object({
-          lt: z.string().datetime().optional(), 
-          lte: z.string().datetime().optional(), 
-          gt: z.string().datetime().optional(), 
-          gte: z.string().datetime().optional(), 
+          lt: z.string().datetime().optional(),
+          lte: z.string().datetime().optional(),
+          gt: z.string().datetime().optional(),
+          gte: z.string().datetime().optional(),
         })
       ]),
       skip: z.number().optional(),
@@ -165,9 +165,17 @@ export const workoutRouter = createTRPCRouter({
 
   getUserWorkoutVolumeByExerciseId: protectedProcedure.input(
     z.object({
-      exerciseId: z.number()
-    })).query(({ ctx, input }) => {
-      const volume = ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
-      return volume;
+      exerciseId: z.number(),
+      inThisWeek: z.boolean().optional()
+    })).query(async ({ ctx, input }) => {
+      type MaxProps = {
+        max: string;
+      };
+      const maxDate = await ctx.prisma.$queryRaw<MaxProps[]>`select max("executeDate") from "WeeklyReportMaster"`;
+      const dateQuery = new Date(maxDate[0]?.max || '1975-01-01').toISOString().split('T')[0] || '';
+      const volume = input.inThisWeek
+       ? ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and date >= ${new Date(dateQuery)} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
+       : ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
+       return volume;
     })
 });

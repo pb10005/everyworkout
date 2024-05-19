@@ -92,7 +92,7 @@ export const ExerciseDetailPage: React.FC = () => {
                     </>
                 )}
                 {isSuccess && (<>
-                    <div className="w-full">
+                    <div className="flex flex-col gap-2">
                         <select
                             name="metrics"
                             className="p-2 dark:bg-gray-700 dark:text-white dark:border-gray-500"
@@ -102,7 +102,9 @@ export const ExerciseDetailPage: React.FC = () => {
                             <option value="01">今週</option>
                             <option value="02">全期間</option>
                         </select>
-                        <ExerciseChart chartData={chartData} />
+                        <div className="dark:bg-black">
+                            <ExerciseChart chartData={chartData} />
+                        </div>
                     </div>
                     <div className="mb-2 md:grid-span-3">
                         <Subheader content="ベスト更新履歴" />

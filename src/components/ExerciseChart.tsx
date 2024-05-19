@@ -31,6 +31,7 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
                 <XAxis
                     dataKey="date"
                     domain={['dataMin - 86400000', 'dataMax + 86400000']}
+                    interval={0}
                     tickFormatter={(unixTime: Date) => new Date(unixTime).toISOString().split('T')[0] || ''}
                     type="number" />
                 {/* <YAxis
@@ -47,6 +48,7 @@ export const ExerciseChart: React.FC<Props> = (props: Props) => {
                     domain={[0, 'auto']} />
                 <YAxis
                     yAxisId={1}
+                    interval={0}
                     orientation="left"
                     type="number"
                     dataKey="maximum"

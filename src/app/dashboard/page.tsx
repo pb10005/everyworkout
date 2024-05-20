@@ -26,7 +26,6 @@ export default async function Page() {
   const fetchCumulativeChartData = async () => {
     const data = await prisma.$queryRaw<{ max: string }[]>`select max("executeDate") from "WeeklyReportMaster";`;
     const dateQuery = new Date(data[0]?.max || '1975-01-01');
-    dateQuery.setDate(dateQuery.getDate() + 1);
 
     const daily = await prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${session.user?.id} and date >= ${new Date(dateQuery)} and weight > 0 group by date order by date;`
 

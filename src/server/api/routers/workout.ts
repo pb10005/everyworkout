@@ -170,8 +170,8 @@ export const workoutRouter = createTRPCRouter({
       const maxDate = await ctx.prisma.$queryRaw<MaxProps[]>`select max("executeDate") from "WeeklyReportMaster"`;
       const dateQuery = new Date(maxDate[0]?.max || '1975-01-01').toISOString().split('T')[0] || '';
       const volume = input.inThisWeek
-       ? ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and date >= ${new Date(dateQuery)} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
-       : ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date;`
+       ? ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and date >= ${new Date(dateQuery)} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date order by date;`
+       : ctx.prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and "exerciseId" = ${input.exerciseId} and weight > 0 group by date order by date;`
        return volume;
     })
 });

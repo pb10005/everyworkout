@@ -1,11 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Script from 'next/script';
 
 import { AuthShowcase, Button, Loading, Subheader, WorkoutCard } from "../../../components";
 import { api } from "../../../utils/api";
+
+type Props = {
+    url: string;
+    text: string;
+    title: string;
+};
+
+const ShareButton: React.FC<Props> = (props: Props) => {
+    const { url, text, title } = props;
+    const handleClick = useCallback(() => {
+
+        void (async () => {
+            if (navigator.share) {
+                // Web share API
+                await navigator.share({
+                    url,
+                    text,
+                    title,
+                });
+            } else {
+                // Web Share APIが使えないブラウザの処理
+                await navigator.clipboard.writeText(url);
+                alert("URLをコピーしました");
+            }
+        })();
+    }, []);
+
+    return <button className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" onClick={handleClick}>共有</button>;
+};
 
 export const WorkoutDetailPage: React.FC = () => {
     const params = useParams();
@@ -93,13 +122,11 @@ export const WorkoutDetailPage: React.FC = () => {
                                 />}
                         </div>
                         <section className="flex gap-1 items-center">
-                            <a href="https://twitter.com/intent/tweet?hashtags=everyworkout"
-                                className="twitter-hashtag-button p-4"
-                                data-url={`${origin || ''}${pathname || ''}`}
-                                data-show-count="false">
-                                Tweet
-                            </a>
-                            <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload"></Script>
+                            <ShareButton
+                                url={`${origin || ''}${pathname || ''}`}
+                                text="#everyworkout"
+                                title="EVERYWORKOUT"
+                            />
                             <span>
                                 <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
                             </span>

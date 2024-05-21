@@ -22,11 +22,15 @@ export default async function Page() {
     for (let i = 0; i < 7; i++) {
       const tmpDate = new Date(startDate);
       tmpDate.setDate(tmpDate.getDate() + i);
+      const today = new Date().toISOString().split('T')[0] || '1975-01-01';
 
-      const daily = data.find(x => x.date.getDate() === tmpDate.getDate());
-      cumulative += daily?.totalVolume || 0;
-      console.log(daily, cumulative)
-      yield { date: tmpDate.getTime(), cumulativeVolume: cumulative };
+      if (tmpDate <= new Date(today)) {
+        const daily = data.find(x => x.date.getDate() === tmpDate.getDate());
+        cumulative += daily?.totalVolume || 0;
+        yield { date: tmpDate.getTime(), cumulativeVolume: cumulative };
+      } else {
+        yield { date: tmpDate.getTime(), cumulativeVolume: 0 };
+      }
 
     }
   }

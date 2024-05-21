@@ -30,7 +30,7 @@ const ShareButton: React.FC<Props> = (props: Props) => {
                 alert("URLをコピーしました");
             }
         })();
-    }, []);
+    }, [url, text, title]);
 
     return <button className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" onClick={handleClick}>共有</button>;
 };

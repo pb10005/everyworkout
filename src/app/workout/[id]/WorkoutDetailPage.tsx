@@ -2,7 +2,6 @@
 import React, { useCallback, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
-import Script from 'next/script';
 
 import { AuthShowcase, Button, Loading, Subheader, WorkoutCard } from "../../../components";
 import { api } from "../../../utils/api";
@@ -31,7 +30,7 @@ const ShareButton: React.FC<Props> = (props: Props) => {
                 alert("URLをコピーしました");
             }
         })();
-    }, []);
+    }, [url, text, title]);
 
     return <button className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" onClick={handleClick}>共有</button>;
 };
@@ -128,7 +127,7 @@ export const WorkoutDetailPage: React.FC = () => {
                                 title="EVERYWORKOUT"
                             />
                             <span>
-                                <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
+                                <Link className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
                             </span>
                         </section>
                         <section className="flex flex-col gap-2 mx-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">

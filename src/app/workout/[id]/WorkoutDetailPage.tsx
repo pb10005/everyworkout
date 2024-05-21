@@ -127,7 +127,7 @@ export const WorkoutDetailPage: React.FC = () => {
                                 title="EVERYWORKOUT"
                             />
                             <span>
-                                <Link className="dark:bg-gray-700 dark:text-white p-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
+                                <Link className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>この種目のトレーニング履歴へ</Link>
                             </span>
                         </section>
                         <section className="flex flex-col gap-2 mx-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">

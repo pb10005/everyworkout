@@ -93,15 +93,17 @@ export const ExerciseDetailPage: React.FC = () => {
                 )}
                 {isSuccess && (<>
                     <div className="flex flex-col gap-2">
-                        <select
-                            name="metrics"
-                            className="p-2 dark:bg-gray-700 dark:text-white dark:border-gray-500"
-                            value={displayPeriod}
-                            onChange={(e) => void handleChangeDisplayPeriod(e.target.value)}
-                        >
-                            <option value="01">今週</option>
-                            <option value="02">全期間</option>
-                        </select>
+                        <div className="px-2 md:px-0">
+                            <select
+                                name="metrics"
+                                className="w-full p-2 dark:bg-gray-700 dark:text-white dark:border-gray-500"
+                                value={displayPeriod}
+                                onChange={(e) => void handleChangeDisplayPeriod(e.target.value)}
+                            >
+                                <option value="01">今週</option>
+                                <option value="02">全期間</option>
+                            </select>
+                        </div>
                         <div className="dark:bg-black">
                             <ExerciseChart chartData={chartData} />
                         </div>

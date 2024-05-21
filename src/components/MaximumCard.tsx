@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Dropdown } from "./Dropdown";
 import { DropdownItem } from "./DropdownItem";
@@ -14,8 +13,6 @@ type Props = {
 
 export const MaximumCard: React.FC<Props> = (props: Props) => {
   const { date, exerciseName, metrics_code, value, removeMaximum } = props;
-  const [isDropdownVisible, setDrowpdownVisible] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dateDisplay = date
     ? new Date(date).toISOString().split("T")[0] || ""
@@ -25,17 +22,6 @@ export const MaximumCard: React.FC<Props> = (props: Props) => {
     "02": "reps",
   };
   const unit = metrics_map[metrics_code];
-
-  const documentClickHandler = useRef((_: MouseEvent | TouchEvent) => { return });
-
-  useEffect(() => {
-    documentClickHandler.current = (e: MouseEvent | TouchEvent) => {
-      if (dropdownRef?.current?.contains(e.target as Node)) return
-
-      setDrowpdownVisible(false);
-      document.removeEventListener('click', documentClickHandler.current)
-    }
-  }, [dropdownRef]);
 
   return (
     <>

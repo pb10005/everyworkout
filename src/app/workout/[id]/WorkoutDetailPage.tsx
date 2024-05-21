@@ -2,7 +2,6 @@
 import React, { useCallback, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
-import Script from 'next/script';
 
 import { AuthShowcase, Button, Loading, Subheader, WorkoutCard } from "../../../components";
 import { api } from "../../../utils/api";

@@ -18,6 +18,7 @@ import {
 } from "../../components";
 import { useRouter } from "next/navigation";
 import type { ChartProp } from "../../components/types";
+import { Suspense } from "react";
 
 type Props = {
     userWorkoutVolumesInThisWeek: Partial<ChartProp>[];
@@ -42,11 +43,15 @@ export const DashboardPage = (props: Props) => {
     } = api.maximum.getUserMaximums.useQuery();
 
     const {
+        isLoading: loadingR,
+        isSuccess: successR,
         data: reports,
         isError: errorR,
     } = api.weeklyReport.getUserReports.useQuery();
 
     const {
+        isLoading: loadingG,
+        isSuccess: successG,
         data: goal,
     } = api.goal.getCurrentUserGoal.useQuery();
 
@@ -55,9 +60,11 @@ export const DashboardPage = (props: Props) => {
             {(errorM && errorR) && <NotLoggedInCard />}
             <section className="flex flex-col gap-2">
                 <Subheader content="今週のトレーニング履歴" />
-                <div className="dark:bg-black">
-                    <ExerciseChart chartData={chartData} />
-                </div>
+                <Suspense fallback={<Loading />}>
+                    <div className="dark:bg-black">
+                        <ExerciseChart chartData={chartData} />
+                    </div>
+                </Suspense>
                 <div>
                     <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href="/workout/history">詳細を見る</Link>
                 </div>
@@ -66,7 +73,8 @@ export const DashboardPage = (props: Props) => {
                 <section className="flex justify-between">
                     <Subheader content="目標" />
                 </section>
-                {goal ? <>
+                {loadingG && <Loading />}
+                {successG && (goal ? <>
                     <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
                         <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>
                         <Dropdown>
@@ -80,7 +88,7 @@ export const DashboardPage = (props: Props) => {
                             </ul>
                         </Dropdown>
                     </section>
-                </> : <NoDataCard />}
+                </> : <NoDataCard />)}
                 <div>
                     <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/goal/add`}>新規作成</Link>
                 </div>
@@ -115,8 +123,8 @@ export const DashboardPage = (props: Props) => {
             </section>
             <section>
                 <Subheader content="週次レポート" />
-                {loadingM && <Loading />}
-                {successM && (
+                {loadingR && <Loading />}
+                {successR && (
                     <>
                         <ListContainer>
                             {reports?.length && reports.length > 0

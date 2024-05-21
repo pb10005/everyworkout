@@ -14,7 +14,7 @@ export const Navigation: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900">
+      <div className="z-30 fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center items-center dark:divide-x divide-gray-500">
             <Link className={generateClassName('dashboard')} href="/dashboard">

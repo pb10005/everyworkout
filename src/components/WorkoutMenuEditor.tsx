@@ -39,7 +39,7 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
         selectedBodyPartId,
         selectExerciseId,
         selectedExerciseId,
-    } = useExerciseSelector(bodyParts, muscles, exercises);
+    } = useExerciseSelector(exercises);
 
     const handleExerciseClick = (id: number) => {
         selectExerciseId(id);

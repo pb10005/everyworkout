@@ -41,7 +41,7 @@ export function SetConfigForm(props: Props) {
         selectExerciseId,
         selectedExerciseId,
         selectedExerciseName,
-    } = useExerciseSelector(bodyParts, muscles, exercises, initialExerciseId, initialBodyPartId);
+    } = useExerciseSelector(exercises, initialExerciseId, initialBodyPartId);
 
     const handleExerciseClick = (exerciseId: number) => {
         selectExerciseId(exerciseId);

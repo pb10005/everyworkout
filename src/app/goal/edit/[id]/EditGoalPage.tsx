@@ -23,8 +23,8 @@ export const EditGoalPage: React.FC = () => {
     }, [initialValue]);
 
     const mutation = api.goal.update.useMutation({
-        onSuccess() {
-            revalidate('/dashboard');
+        async onSuccess() {
+            await revalidate('/dashboard');
             router.push("/dashboard");
         }
     })

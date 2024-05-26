@@ -12,8 +12,8 @@ export const AddGoalPage: React.FC = () => {
     const [goal, setGoal] = useState<string>('');
     const router = useRouter();
     const mutation = api.goal.add.useMutation({
-        onSuccess() {
-            revalidate('/dashboard');
+        async onSuccess() {
+            await revalidate('/dashboard');
             router.push('/dashboard');
         }
     });

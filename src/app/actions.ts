@@ -1,7 +1,7 @@
 'use server';
 import { revalidatePath } from "next/cache";
 
-export function revalidate(path: string) {
+export async function revalidate(path: string) {
     revalidatePath(path);
     return Promise.resolve();
 };

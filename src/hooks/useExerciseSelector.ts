@@ -9,7 +9,7 @@ export const useExerciseSelector = (exercises?: Exercise[], initialExerciseId?: 
 
     const selectedExerciseName = useMemo(() => {
         return exercises?.find((e: Exercise) => e.id === selectedExerciseId)?.name;
-    }, [exercises, selectedExerciseId])
+    }, [exercises, selectedExerciseId]);
 
     return {
         selectBodyPartId,

@@ -24,10 +24,15 @@ function Page() {
     const [isEnd, setEnd] = useState<boolean>(false);
     const [sets, setSets] = useState<string>("-1");
 
-    const { data: exercises } = api.exercise.getAll.useQuery();
-    const { data: bodyParts } = api.bodyPart.getAll.useQuery();
-    const { data: muscles } = api.muscle.getAllExercises.useQuery();
-    const mutation = api.workout.add.useMutation();
+    const { data: exercises, isLoading: loadingE } = api.exercise.getAll.useQuery();
+    const { data: bodyParts, isLoading: loadingB } = api.bodyPart.getAll.useQuery();
+    const { data: muscles, isLoading: loadingM } = api.muscle.getAllExercises.useQuery();
+
+    const isLoading = [
+        loadingE,
+        loadingB,
+        loadingM,
+    ].some(b => b);
 
     const startSets = (
         date: string,
@@ -90,12 +95,7 @@ function Page() {
                 <Heading />
                 <Navigation currentPage="workout-recorder" />
                 <Container>
-                    {mutation.isLoading && <Loading />}
-                    {mutation.isError && (
-                        <p className=" rounded-lg bg-red-100 p-4 text-red-900">
-                            エラーが発生しました: {mutation.error.data?.path}
-                        </p>
-                    )}
+                    {isLoading && <Loading />}
                     {error && (
                         <p className=" rounded-lg bg-red-100 p-4 text-red-900">
                             {error}
@@ -103,9 +103,9 @@ function Page() {
                     )}
                     {!isEnd && (sets === "-1" ? <>
                         <SetConfigForm
-                            bodyParts={ bodyParts || []}
-                            muscles={ muscles || []}
-                            exercises={ exercises || []}
+                            bodyParts={bodyParts || []}
+                            muscles={muscles || []}
+                            exercises={exercises || []}
                             startSets={startSets}
                             initialExerciseId={parseInt(exerciseId) || -1}
                             initialBodyPartId={parseInt(bodyPartId) || -1} />

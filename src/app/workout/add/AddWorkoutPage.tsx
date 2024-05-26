@@ -10,6 +10,7 @@ import {
 import { api } from "../../../utils/api";
 import { useExerciseSelector } from "../../../hooks/useExerciseSelector";
 import type { BodyPart, Exercise, Muscle } from "@prisma/client";
+import { revalidate } from "../../actions";
 
 type Props = {
   bodyParts: BodyPart[];
@@ -37,7 +38,8 @@ export const AddWorkoutPage: React.FC<Props> = (props: Props) => {
   } = useExerciseSelector();
 
   const mutation = api.workout.add.useMutation({
-    onSuccess({ id }) {
+    async onSuccess({ id }) {
+      await revalidate('/dashboard');
       return router.push(`/workout/${id}`);
     }
   });

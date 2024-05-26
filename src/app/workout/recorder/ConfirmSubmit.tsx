@@ -6,6 +6,7 @@ import {
 } from "../../../components";
 import { useRouter } from "next/navigation";
 import type { WorkoutProp } from "../../../components/types";
+import { revalidate } from "../../actions";
 
 type Props = {
     sets: string;
@@ -23,7 +24,13 @@ export function ConfirmSubmit(props: Props) {
     const [exerciseId, setExerciseId] = useState<number>(-1);
     const [exerciseName, setExerciseName] = useState<string>("");
 
-    const mutation = api.workout.add.useMutation();
+    const mutation = api.workout.add.useMutation({
+        async onSuccess({ id }) {
+            await revalidate('/dashboard');
+            window.sessionStorage.removeItem('workout');
+            return router.push(`/workout/${id}`);
+        }
+    });
 
     useEffect(() => {
         const item = window.sessionStorage.getItem('workout');
@@ -47,10 +54,6 @@ export function ConfirmSubmit(props: Props) {
                 sets: parseInt(sets),
                 note: note,
                 exerciseId: exerciseId,
-            })
-            .then(({ id }) => {
-                window.sessionStorage.removeItem('workout');
-                return router.push(`/workout/${id}`);
             })
             .catch(() => {
                 return;

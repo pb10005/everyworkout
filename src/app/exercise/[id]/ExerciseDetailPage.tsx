@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { api } from "../../../utils/api";
 
-import { MaximumCard, Loading, ExerciseChart, NoDataCard, ListContainer, Subheader } from "../../../components";
+import { MaximumCard, Loading, ExerciseChart, NoDataCard, ListContainer, Subheader, BackButton } from "../../../components";
 import { type ChartProp } from "../../../components/types";
 
 export const ExerciseDetailPage: React.FC = () => {
@@ -73,6 +73,7 @@ export const ExerciseDetailPage: React.FC = () => {
 
     return (
         <>
+            <BackButton>戻る</BackButton>
             <section>
                 {mutation.isLoading && <Loading />}
                 {mutation.isSuccess && (

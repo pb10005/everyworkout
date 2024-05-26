@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { Dropdown, Loading, WorkoutMenu } from "../../../components";
+import { BackButton, Dropdown, Loading, WorkoutMenu } from "../../../components";
 import { DropdownItem } from "../../../components/DropdownItem";
 import type { WorkoutMenuItemProps } from "../../../components/types";
 import { api } from "../../../utils/api";
@@ -49,6 +49,7 @@ export const WorkoutMenuDetailPage: React.FC = () => {
 
     return (<>
         <div className="flex flex-col gap-2">
+            <BackButton>戻る</BackButton>
             {isLoading && <Loading />}
             {isSuccess && <>
                 <div className="dark:text-white flex items-center justify-between">

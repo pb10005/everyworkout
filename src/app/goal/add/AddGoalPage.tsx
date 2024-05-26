@@ -3,14 +3,17 @@
 import { api } from "../../../utils/api";
 
 import { EditGoalForm, Subheader } from "../../../components";
+import { revalidate } from "../../actions";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export const AddGoalPage: React.FC = () => {
+
     const [goal, setGoal] = useState<string>('');
     const router = useRouter();
     const mutation = api.goal.add.useMutation({
         onSuccess() {
+            revalidate('/dashboard');
             router.push('/dashboard');
         }
     });

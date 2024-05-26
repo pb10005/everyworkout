@@ -3,10 +3,9 @@
 import { type NextPage } from "next";
 import { useState } from "react";
 
-import { Timer, Button } from "../../components";
+import { Timer, Button, BackButton } from "../../components";
 import { Container, Heading, Navigation } from "../../components/server";
 import { useRouter } from 'next/navigation'
-import { ChevronLeftIcon } from '@heroicons/react/20/solid';
 
 const TimerPage: NextPage = () => {
   const [expiryTD, setExpiryTD] = useState<number>(120);
@@ -25,7 +24,7 @@ const TimerPage: NextPage = () => {
         <Navigation />
         <Container>
           <div className="flex flex-col gap-2 p-2">
-            <ChevronLeftIcon className="w-8 h-8 cursor-pointer dark:text-white" onClick={() => router.back()}></ChevronLeftIcon>
+            <BackButton>戻る</BackButton>
             {
               !isStarted &&
               <>

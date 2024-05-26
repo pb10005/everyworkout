@@ -5,6 +5,7 @@ import { api } from "../../../../utils/api";
 import { EditGoalForm, Subheader } from "../../../../components";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { revalidate } from "../../../actions";
 
 export const EditGoalPage: React.FC = () => {
     const params = useParams();
@@ -23,6 +24,7 @@ export const EditGoalPage: React.FC = () => {
 
     const mutation = api.goal.update.useMutation({
         onSuccess() {
+            revalidate('/dashboard');
             router.push("/dashboard");
         }
     })

@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { api } from "../../../utils/api";
 
-import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader } from "../../../components";
+import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader, BackButton } from "../../../components";
 import Link from "next/link";
 
 export const SearchResultPage: React.FC = () => {
@@ -32,6 +32,7 @@ export const SearchResultPage: React.FC = () => {
 
     return (
         <>
+            <BackButton>戻る</BackButton>
             <section>
                 <Subheader content="種目別トレーニング履歴" />
                 {count > 0 && (

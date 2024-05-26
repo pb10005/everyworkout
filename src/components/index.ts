@@ -1,5 +1,6 @@
 "use client";
 import { AuthShowcase } from "./AuthShowcase";
+import { BackButton } from "./BackButton";
 import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { Credit } from "./Credit";
@@ -27,6 +28,7 @@ import { WorkoutMenuEditor } from "./WorkoutMenuEditor";
 
 export {
   AuthShowcase,
+  BackButton,
   Badge,
   Button,
   Credit,

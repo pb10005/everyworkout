@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AuthShowcase, Button, Loading, Subheader, WorkoutCard } from "../../../components";
 import { api } from "../../../utils/api";
 import { revalidate } from "../../actions";
+import { ChartBarIcon, ListBulletIcon, ShareIcon } from "@heroicons/react/20/solid";
 
 type Props = {
     url: string;
@@ -33,7 +34,10 @@ const ShareButton: React.FC<Props> = (props: Props) => {
         })();
     }, [url, text, title]);
 
-    return <button className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" onClick={handleClick}>共有</button>;
+    return <button className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" onClick={handleClick}>
+        <ShareIcon className="w-5 h-5"></ShareIcon>
+        <span>共有</span>
+    </button>;
 };
 
 export const WorkoutDetailPage: React.FC = () => {
@@ -131,8 +135,14 @@ export const WorkoutDetailPage: React.FC = () => {
                                 text="#everyworkout"
                                 title="EVERYWORKOUT"
                             />
-                            <Link className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/exercise/${data?.exerciseId}`}>グラフへ</Link>
-                            <Link className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/search/${data?.exerciseId}`}>履歴へ</Link>
+                            <Link className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href={`/exercise/${data?.exerciseId}`}>
+                                <ChartBarIcon className="w-5 h-5"></ChartBarIcon>
+                                <span>グラフへ</span>
+                            </Link>
+                            <Link className="dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href={`/search/${data?.exerciseId}`}>
+                                <ListBulletIcon className="w-5 h-5"></ListBulletIcon>
+                                <span>履歴へ</span>
+                            </Link>
                         </section>
                         <section className="flex flex-col gap-2 mx-2 p-2 rounded-lg dark:outline outline-1 outline-gray-500">
                             <div className="flex gap-2 items-center">
@@ -149,14 +159,17 @@ export const WorkoutDetailPage: React.FC = () => {
                                     <option value="02">reps</option>
                                 </select>
                             </div>
-                            {!mutation.isLoading && (
-                                <Button onClick={() => void registerMaximum()} className="w-full">
-                                    Max記録登録
-                                </Button>
-                            )}
+                            {mutation.isLoading ?
+                                <Loading />
+                                : (
+                                    <Button onClick={() => void registerMaximum()} className="w-full">
+                                        Max記録登録
+                                    </Button>
+                                )}
                             <Subheader content="削除" />
-                            {!deleteMutation.isLoading &&
-                                <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
+                            {deleteMutation.isLoading ?
+                                <Loading />
+                                : <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
                                     削除
                                 </Button>
                             }

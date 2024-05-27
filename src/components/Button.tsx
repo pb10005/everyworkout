@@ -13,14 +13,14 @@ export const Button: React.FC<Props> = (props: Props) => {
 
   const styleType = layout || "normal";
   const style: { [key: string]: string } = {
-    "normal": "bg-[#42bfec] text-white tracking-wide",
-    "danger": "bg-red-600 text-white tracking-wide"
+    "normal": "rounded-lg outline outline-1 outline-[#42bfec] text-[#42bfec] hover:bg-[#42bfec] hover:text-white tracking-wide",
+    "danger": "rounded-lg outline outline-1 outline-red-600 text-red-600 hover:bg-red-600 hover:text-white tracking-wide"
   }
   return (
     <>
       <button
         type={type}
-        className={`${style[styleType] || ""} px-6 py-2 ${className || ''}`}
+        className={`${style[styleType] || ""} px-4 py-2 ${className || ''}`}
         onClick={onClick}
       >
         {children}

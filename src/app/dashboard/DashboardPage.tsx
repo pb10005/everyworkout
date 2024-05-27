@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { api } from "../../utils/api";
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { ListBulletIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 import {
     FloatingButton,
@@ -18,7 +18,7 @@ import {
 } from "../../components";
 import { useRouter } from "next/navigation";
 import type { ChartProp } from "../../components/types";
-import { Goal } from "@prisma/client";
+import type { Goal } from "@prisma/client";
 
 type Props = {
     userWorkoutVolumesInThisWeek: Partial<ChartProp>[];
@@ -59,8 +59,11 @@ export const DashboardPage = (props: Props) => {
                 <div className="dark:bg-black">
                     <ExerciseChart chartData={chartData} />
                 </div>
-                <div>
-                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href="/workout/history">詳細を見る</Link>
+                <div className="flex">
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/workout/history">
+                        <ListBulletIcon className="w-4 h-4"></ListBulletIcon>
+                        <span>詳細を見る</span>
+                    </Link>
                 </div>
             </section>
             <section className="flex flex-col gap-2">
@@ -82,8 +85,11 @@ export const DashboardPage = (props: Props) => {
                         </Dropdown>
                     </section>
                 </> : <NoDataCard />}
-                <div>
-                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" href={`/goal/add`}>新規作成</Link>
+                <div className="flex">
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href={`/goal/add`}>
+                        <PlusIcon className="w-4 h-4"></PlusIcon>
+                        <span>新規作成</span>
+                    </Link>
                 </div>
             </section>
             <section>

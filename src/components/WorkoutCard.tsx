@@ -71,7 +71,7 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
                         )
                     })}
                     <div className="flex justify-center items-center w-full">
-                        <div className="flex justify-center items-center gap-2 divide-x">
+                        <div className="flex justify-between items-center divide-x dark:divide-gray-500">
                             <span className="w-20 flex flex-col items-center">
                                 <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
                                 <span className="text-gray-700 text-xs dark:text-gray-300">kg</span>

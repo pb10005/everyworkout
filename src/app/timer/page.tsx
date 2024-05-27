@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation'
 const TimerPage: NextPage = () => {
   const [expiryTD, setExpiryTD] = useState<number>(120);
   const [isStarted, setStarted] = useState<boolean>(false);
-  const router = useRouter();
 
   const modifyExpiryTD = (delta: number) => {
     const newVal = Math.max(0, expiryTD + delta);

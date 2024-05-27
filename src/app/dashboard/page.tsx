@@ -1,5 +1,5 @@
 
-import { getServerSession, Session } from "next-auth";
+import { getServerSession, type Session } from "next-auth";
 import { redirect } from "next/navigation";
 
 import { prisma } from "../../server/db";

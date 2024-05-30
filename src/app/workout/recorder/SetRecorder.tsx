@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import type { WorkoutProp } from "../../../components/types";
-import { Button, Timer } from "../../../components";
+import { Button, Subheader, Timer } from "../../../components";
 
 type Props = {
     endSets: (sets: string) => void;
@@ -89,11 +89,7 @@ export function SetRecorder(props: Props) {
                     <ChevronRightIcon onClick={onNextSet} className="w-10 h-10 cursor-pointer"></ChevronRightIcon>
                 </div>
             </div>
-            <label
-                className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
-            >
-                インターバル
-            </label>
+            <Subheader content="インターバル" />
             <div>
                 <Timer expiryTimeDelta={expiryTimeDelta} onExpire={onNextSet}></Timer>
             </div>

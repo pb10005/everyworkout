@@ -76,7 +76,7 @@ export function SetRecorder(props: Props) {
     }, [setDate, selectExerciseId, selectExerciseName, selectBodyPartId, setWeight, setReps, setExpiryTimeDelta, setSets]);
 
     return (<>
-        <div className="dark:text-white">
+        <div className="dark:text-white p-2 md:p-0">
             <p className="text-xl font-bold">{selectedExerciseName}</p>
             <div className="flex flex-col justify-center gap-2">
                 <div className="flex justify-center gap-2">
@@ -89,18 +89,18 @@ export function SetRecorder(props: Props) {
                     <ChevronRightIcon onClick={onNextSet} className="w-10 h-10 cursor-pointer"></ChevronRightIcon>
                 </div>
             </div>
-        </div>
-        <label
-            className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
-        >
-            インターバル
-        </label>
-        <div>
-            <Timer expiryTimeDelta={expiryTimeDelta} onExpire={onNextSet}></Timer>
-        </div>
-        <div className="flex flex-col justify-center gap-2 mt-2">
-            <Button onClick={handleEndButtonClick}>セットを終了して記録</Button>
-            <Button onClick={() => void clear()}>記録しないで終了</Button>
+            <label
+                className=" block text-sm font-bold text-gray-700 dark:text-gray-300"
+            >
+                インターバル
+            </label>
+            <div>
+                <Timer expiryTimeDelta={expiryTimeDelta} onExpire={onNextSet}></Timer>
+            </div>
+            <div className="flex flex-col justify-center gap-2 mt-2">
+                <Button onClick={handleEndButtonClick}>セットを終了して記録</Button>
+                <Button onClick={() => void clear()}>記録しないで終了</Button>
+            </div>
         </div>
     </>);
 }

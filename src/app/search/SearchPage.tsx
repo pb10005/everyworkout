@@ -40,7 +40,7 @@ export const SearchPage: React.FC<Props> = (props: Props) => {
       />}
     </section>
     {selectedExerciseId > 0 && (
-      <Button onClick={() => router.push(`/search/${selectedExerciseId}`)} layout="normal">
+      <Button className="mx-2" onClick={() => router.push(`/search/${selectedExerciseId}`)} layout="normal">
         検索
       </Button>
     )

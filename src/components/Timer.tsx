@@ -49,7 +49,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
 
     return (
         <>
-            <div className="flex flex-col divide-y bg-white dark:bg-gray-900 dark:divide-gray-500 dark:text-white rounded-lg shadow-xl dark:shadow-none dark:outline outline-1 outline-gray-500">
+            <div className="flex flex-col divide-y bg-white dark:bg-gray-900 dark:divide-gray-500 dark:text-white rounded-lg shadow-xl dark:shadow-none dark:outline outline-1 outline-gray-500 mx-2 md:mx-0">
                 <div className="text-6xl font-extrabold p-4 text-center">
                     <span>{zeroPadding(minutes)}</span>:<span>{zeroPadding(seconds)}</span>
                 </div>

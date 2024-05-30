@@ -16,7 +16,7 @@ export function EditGoalForm(props: Props) {
     submit();
   }
   return (<>
-    <form onSubmit={onSubmit} className="flex flex-col gap-2">
+    <form onSubmit={onSubmit} className="flex flex-col gap-2 p-2 md:p-0">
       <textarea
         className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
           text-gray-700 shadow focus:outline-none

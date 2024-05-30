@@ -166,7 +166,6 @@ export const WorkoutDetailPage: React.FC = () => {
                                         Max記録登録
                                     </Button>
                                 )}
-                            <Subheader content="削除" />
                             {deleteMutation.isLoading ?
                                 <Loading />
                                 : <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">

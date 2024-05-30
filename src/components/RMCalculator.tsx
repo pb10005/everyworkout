@@ -30,7 +30,7 @@ export const RMCalcualtor: React.FC = () => {
     const result = calculate(weight, reps, exercise);
     return (
         <>
-            <div className="bg-white rounded-xl shadow-xl p-2 dark:bg-gray-900 dark:text-white dark:outline outline-1 outline-gray-500">
+            <div className="bg-white rounded-xl shadow-xl mx-2 md:mx-0 p-2 dark:bg-gray-900 dark:text-white dark:outline outline-1 outline-gray-500">
                 <div className="mb-2">
                     <label
                         className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"

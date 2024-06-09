@@ -2,6 +2,7 @@
 
 import { type NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { AuthShowcase } from "../components";
 
 const Home: NextPage = () => {
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
             <Image src="/logo_v.png" alt="logo" width={500} height={100} />
             <div className="flex flex-col items-center gap-2">
               <AuthShowcase />
+              <Link className="dark:text-white" href="https://everyworkout-docs.netlify.app/" target="_blank">ユーザーズガイド</Link>
             </div>
           </div>
         </main>

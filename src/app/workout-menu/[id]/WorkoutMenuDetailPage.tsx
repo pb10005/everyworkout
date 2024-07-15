@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BackButton, Dropdown, Loading, WorkoutMenu } from "../../../components";
 import { DropdownItem } from "../../../components/DropdownItem";
 import type { WorkoutMenuItemProps } from "../../../components/types";
@@ -56,7 +56,9 @@ export const WorkoutMenuDetailPage: React.FC = () => {
                     <span className="text-lg px-2">{data?.title}</span>
                     <Dropdown>
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                            <DropdownItem onClick={() => void removeMenu()}>
+                            <DropdownItem onClick={() => router.push(`/workout-menu/edit/${workoutMenuId}`)}>
+                                <span className="dark:text-white">編集</span>
+                            </DropdownItem><DropdownItem onClick={() => void removeMenu()}>
                                 <span className="text-red-600">削除</span>
                             </DropdownItem>
                         </ul>

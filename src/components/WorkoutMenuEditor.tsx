@@ -13,6 +13,7 @@ type Props = {
     bodyParts: BodyPart[];
     muscles: (Muscle & { exercises: { exercise: Exercise }[] })[]
     exercises: Exercise[];
+    title?: string;
     workoutMenu: WorkoutMenuItemProps[];
     setWorkoutMenu: (menu: WorkoutMenuItemProps[]) => void;
     submit: (data: WorkoutMenuSubmitProps) => void;
@@ -30,9 +31,9 @@ const schema = z.object({
         .min(1, '少なくとも1件の種目を選んでください'),
 });
 export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
-    const { bodyParts, muscles, exercises, workoutMenu, setWorkoutMenu, submit } = props;
+    const { bodyParts, muscles, exercises, title: initialTitle, workoutMenu, setWorkoutMenu, submit } = props;
     const [error, setError] = useState<string>("");
-    const [title, setTitle] = useState<string>("");
+    const [title, setTitle] = useState<string>(initialTitle || "");
 
     const {
         selectBodyPartId,

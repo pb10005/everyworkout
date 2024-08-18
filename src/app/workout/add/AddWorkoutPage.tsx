@@ -35,7 +35,7 @@ export const AddWorkoutPage: React.FC<Props> = (props: Props) => {
     selectExerciseId,
     selectedBodyPartId,
     selectBodyPartId
-  } = useExerciseSelector();
+  } = useExerciseSelector(muslces.flatMap(x => x.exercises));
 
   const mutation = api.workout.add.useMutation({
     async onSuccess({ id }) {

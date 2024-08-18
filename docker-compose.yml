@@ -2,7 +2,9 @@ version: '3'
 
 services:
   node:
-    image: node:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.node
     working_dir: /app
     tty: true
     volumes:

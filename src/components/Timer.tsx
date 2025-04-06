@@ -39,8 +39,8 @@ export const Timer: React.FC<Props> = (props: Props) => {
         return (`00${val}`).slice(-2);
     };
 
-    const resumeTimer = () => {
-        requestPermission();
+    const resumeTimer = async () => {
+        await requestPermission();
         setExpired(false);
         resume();
     };

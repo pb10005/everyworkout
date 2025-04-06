@@ -62,7 +62,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
                     <span>{zeroPadding(minutes)}</span>:<span>{zeroPadding(seconds)}</span>
                 </div>
                 <div className="flex justify-between items-center divide-x dark:divide-gray-500">
-                    <button className="w-full flex justify-center" onClick={resumeTimer}>
+                    <button className="w-full flex justify-center" onClick={() => void resumeTimer()}>
                         <span>
                             <PlayIcon className="w-10 h-10 cursor-pointer">再開</PlayIcon>
                         </span>

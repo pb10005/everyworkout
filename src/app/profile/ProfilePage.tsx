@@ -4,15 +4,17 @@ import { api } from "../../utils/api";
 
 import { Button, Loading, Subheader } from "../../components";
 import { useDarkMode } from "../../hooks/useDarkMode";
+import { useNotification } from "../../hooks/useNotification";
 
 export const ProfilePage: React.FC = () => {
 
     const { data, isLoading, isSuccess } = api.profile.get.useQuery();
     const { darkMode, toggleDarkMode } = useDarkMode();
+    const { permission, requestPermission } = useNotification();
 
     return (
         <>
-            <div className="m-2 md:m-0 flex flex-col gap-2">
+            <div className="m-2 md:m-0 flex flex-col gap-2 divide-y">
                 <section>
                     {isLoading && <Loading />}
                     {isSuccess && <>
@@ -26,9 +28,13 @@ export const ProfilePage: React.FC = () => {
                         </div>
                     </>}
                 </section>
-                <div className="flex items-center">
+                <div className="flex items-center gap-2 p-2 justify-between">
                     <Button onClick={() => toggleDarkMode()}>ダークモード切り替え</Button>
-                    <span className="dark:text-white p-2">{darkMode === 'dark' ? 'ON' : 'OFF'}</span>
+                    <span className="dark:text-white">{darkMode === 'dark' ? 'ON' : 'OFF'}</span>
+                </div>
+                <div className="flex items-center gap-2 p-2 justify-between">
+                    <Button onClick={() => void requestPermission(true)}>通知を許可</Button>
+                    <span className="dark:text-white">{ permission }</span>
                 </div>
             </div>
         </>

@@ -1,32 +1,40 @@
 "use client";
 
 export const useNotification = () => {
-    const notify = (message: string) =>  {
+    const notify = (message: string) => {
         if (!("Notification" in window)) {
-          // ブラウザーが通知に対応しているか調べる
-          alert("このブラウザーはデスクトップ通知に対応していません。");
+            // ブラウザーが通知に対応しているか調べる
+            alert("このブラウザーはデスクトップ通知に対応していません。");
         } else if (Notification.permission === "granted") {
-          // 通知権限が既に付与されているかどうかを調べる。
-          // そうであれば、通知を作成
-          const notification = new Notification(message);
-          // …
+            // 通知権限が既に付与されているかどうかを調べる。
+            // そうであれば、通知を作成
+            const notification = new Notification(message);
+            // …
         } else if (Notification.permission !== "denied") {
-          // ユーザーにその権限を要求する必要がある
+            // ユーザーにその権限を要求する必要がある
             Notification.requestPermission().then((permission) => {
-            // ユーザーが許可したら、通知を作成
-            if (permission === "granted") {
-                const notification = new Notification(message);
-            }
-          }).catch(() => {
-            alert("エラーが発生しました");
-          });
+                // ユーザーが許可したら、通知を作成
+                if (permission === "granted") {
+                    const notification = new Notification(message);
+                }
+            }).catch(() => {
+                alert("エラーが発生しました");
+            });
         } else {
             // ユーザーが拒否している場合、何もしない
         }
-      
-      }
-      
+    }
+
+    const requestPermission = async () => {
+        if (!("Notification" in window)) {
+            alert("このブラウザーはデスクトップ通知に対応していません。");
+        } else if (Notification.permission === "default") {
+            await Notification.requestPermission();
+        }
+    };
+
     return {
+        requestPermission,
         notify
     };
 };

@@ -33,7 +33,7 @@ export const Navigation: React.FC<Props> = (props: Props) => {
           <div className="flex justify-center items-center dark:divide-x divide-gray-500">
             {pages.map(p => {
               return (<>
-                <Link className={generateClassName(p.key)} href={p.path}>
+                <Link className={generateClassName(p.key)} href={p.path} key={p.key}>
                   {p.icon}
                   <span className="text-xs font-medium">{p.label}</span>
                 </Link>

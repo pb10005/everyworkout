@@ -17,7 +17,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
     const expiryTimestamp = new Date();
     expiryTimestamp.setSeconds(tmp);
 
-    const { notify } = useNotification();
+    const { requestPermission, notify } = useNotification();
     const {
         seconds,
         minutes,
@@ -40,6 +40,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
     };
 
     const resumeTimer = () => {
+        requestPermission();
         setExpired(false);
         resume();
     };
@@ -77,7 +78,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
                         </span>
                     </button>
                 </div>
-                {isExpired && <p className="text-4xl">インターバル終了！</p>}
+                {isExpired && <p className="text-4xl text-center">インターバル終了！</p>}
             </div>
         </>
     );

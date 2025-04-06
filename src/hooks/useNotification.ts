@@ -12,11 +12,13 @@ export const useNotification = () => {
           // …
         } else if (Notification.permission !== "denied") {
           // ユーザーにその権限を要求する必要がある
-          Notification.requestPermission().then((permission) => {
+            Notification.requestPermission().then((permission) => {
             // ユーザーが許可したら、通知を作成
             if (permission === "granted") {
                 const notification = new Notification(message);
             }
+          }).catch(() => {
+            alert("エラーが発生しました");
           });
         } else {
             // ユーザーが拒否している場合、何もしない

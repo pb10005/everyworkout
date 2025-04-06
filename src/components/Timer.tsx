@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { ArrowPathIcon, PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
+import { useNotification } from "../hooks/useNotification";
 
 type Props = {
     expiryTimeDelta: number;
@@ -16,6 +17,7 @@ export const Timer: React.FC<Props> = (props: Props) => {
     const expiryTimestamp = new Date();
     expiryTimestamp.setSeconds(tmp);
 
+    const { notify } = useNotification();
     const {
         seconds,
         minutes,
@@ -25,7 +27,12 @@ export const Timer: React.FC<Props> = (props: Props) => {
     } = useTimer({
         expiryTimestamp: expiryTimestamp,
         autoStart: false,
-        onExpire: () => { setExpired(true); resetInterval(new Date(), expiryTimeDelta); if (onExpire) onExpire(); }
+        onExpire: () => { 
+            notify("インターバル終了！");
+            setExpired(true); 
+            resetInterval(new Date(), expiryTimeDelta); 
+            if (onExpire) onExpire(); 
+        }
     });
 
     const zeroPadding = (val: number) => {

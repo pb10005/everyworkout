@@ -19,10 +19,10 @@ jobs:
           node-version: 22.x
 
       - name: Install
-        run: yarn install
+        run: yarn
 
       - name: Build Storybook
-        run: yarn build-storybook --disable-telemetry
+        run: yarn build-storybook
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

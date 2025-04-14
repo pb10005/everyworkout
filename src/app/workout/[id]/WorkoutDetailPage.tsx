@@ -168,7 +168,7 @@ export const WorkoutDetailPage: React.FC = () => {
                                 )}
                             {deleteMutation.isLoading ?
                                 <Loading />
-                                : <Button onClick={() => void deleteWorkout()} layout="danger" className="w-full">
+                                : <Button onClick={() => void deleteWorkout()} variant="danger" className="w-full">
                                     削除
                                 </Button>
                             }

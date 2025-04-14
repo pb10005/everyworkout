@@ -1,9 +1,14 @@
-import { RMCalcualtor } from "./RMCalculator";
+import { RMCalculator } from ".";
+import type { Meta, StoryObj } from "@storybook/react";
 
-export default {
-    component: RMCalcualtor,
+const meta: Meta<typeof RMCalculator> = {
+    component: RMCalculator,
     title: 'RM calculator',
     tags: ['autodocs'],
 };
 
-export const Default = {};
+export default meta;
+
+type Story = StoryObj<typeof RMCalculator>;
+
+export const Default: Story = {};

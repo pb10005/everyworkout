@@ -11,15 +11,15 @@ import { EditNoteForm } from "./EditNoteForm";
 import { ExerciseChart } from "./ExerciseChart";
 import { ExerciseSelector } from "./ExerciseSelector";
 import { FloatingButton } from "./FloatingButton";
-import { ListContainer } from "./ListConteiner";
+import { ListContainer } from "./ListContainer";
 import { Loading } from "./Loading";
 import { MaximumCard } from "./MaximumCard";
 import { NoDataCard } from "./NoDataCard";
 import { NotLoggedInCard } from "./NotLoggedInCard";
 import { Paginator } from "./Paginator";
 import { RecordCard } from "./RecordCard";
-import { RMCalcualtor } from "./RMCalculator";
-import { Subheader } from "./SubHeader";
+import { RMCalculator } from "./RMCalculator";
+import { Subheader } from "./Subheader";
 import { Timer } from "./Timer";
 import { ToolList } from "./ToolList";
 import { WorkoutCard } from "./WorkoutCard";
@@ -46,7 +46,7 @@ export {
   NotLoggedInCard,
   Paginator,
   RecordCard,
-  RMCalcualtor,
+  RMCalculator,
   Subheader,
   Timer,
   ToolList,

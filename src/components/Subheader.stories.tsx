@@ -1,4 +1,4 @@
-import { Subheader } from "./SubHeader";
+import { Subheader } from "./Subheader";
 
 export default {
     component: Subheader,

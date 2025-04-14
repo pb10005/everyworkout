@@ -19,7 +19,7 @@ export const AuthShowcase: React.FC = () => {
                         </Button>
                         <Button
                             onClick={() => void signOut()}
-                            layout="danger"
+                            variant="danger"
                         >ログアウト</Button>
                     </> : <>
                         <Button
@@ -33,4 +33,3 @@ export const AuthShowcase: React.FC = () => {
         </>
     );
 };
-

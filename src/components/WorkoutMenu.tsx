@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import React from "react";
-import { ListContainer } from "./ListConteiner";
+import { ListContainer } from ".";
 import type { ExerciseProps } from "./types";
 
 type Props = {

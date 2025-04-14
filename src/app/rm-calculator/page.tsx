@@ -2,10 +2,10 @@
 
 import { type NextPage } from "next";
 
-import { BackButton, RMCalcualtor } from "../../components";
+import { BackButton, RMCalculator } from "../../components";
 import { Container, Heading, Navigation } from "../../components/server";
 
-const RMCalculator: NextPage = () => {
+const RMCalculatorPage: NextPage = () => {
   return (
     <>
       <main className="md:mt-4">
@@ -13,11 +13,11 @@ const RMCalculator: NextPage = () => {
         <Navigation />
         <Container>
           <BackButton>戻る</BackButton>
-          <RMCalcualtor />
+          <RMCalculator />
         </Container>
       </main>
     </>
   );
 };
 
-export default RMCalculator;
+export default RMCalculatorPage;

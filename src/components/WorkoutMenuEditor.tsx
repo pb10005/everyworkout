@@ -6,7 +6,7 @@ import { z, ZodError } from "zod";
 import { useExerciseSelector } from "../hooks/useExerciseSelector";
 import { Button } from "./Button";
 import { ExerciseSelector } from "./ExerciseSelector";
-import { ListContainer } from "./ListConteiner";
+import { ListContainer } from ".";
 import type { WorkoutMenuItemProps, WorkoutMenuSubmitProps } from "./types";
 
 type Props = {

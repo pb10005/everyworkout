@@ -9,7 +9,11 @@ enum Exercise {
     DeadLift = 3,
 }
 
-export const RMCalcualtor: React.FC = () => {
+export interface RMCalculatorProps {
+    className?: string;
+}
+
+export const RMCalculator: React.FC<RMCalculatorProps> = ({ className }) => {
     const [exercise, setExercise] = useState<Exercise>(Exercise.BenchPress);
     const [weight, setWeight] = useState<number>(50);
     const [reps, setReps] = useState<number>(10);
@@ -28,73 +32,80 @@ export const RMCalcualtor: React.FC = () => {
     };
 
     const result = calculate(weight, reps, exercise);
+    
+    // Form styles
+    const formGroupStyle = "mb-4";
+    const labelStyle = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2";
+    const inputStyle = "w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-600 dark:focus:border-blue-600 transition-colors duration-200";
+    const resultContainerStyle = "mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg";
+    const resultLabelStyle = "text-sm font-medium text-gray-700 dark:text-gray-300";
+    const resultValueStyle = "text-3xl font-bold text-blue-600 dark:text-blue-400";
+    const referenceStyle = "mt-4 text-sm text-gray-500 dark:text-gray-400";
+    const linkStyle = "text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300";
+
     return (
-        <>
-            <div className="bg-white rounded-xl shadow-xl mx-2 md:mx-0 p-2 dark:bg-gray-900 dark:text-white dark:outline outline-1 outline-gray-500">
-                <div className="mb-2">
-                    <label
-                        className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"
-                        htmlFor="exercise"
-                    >
-                        種目
-                    </label>
-                    <select
-                        className="focus:shadow-outline w-full appearance-none
-                            rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none
-                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
-                        id="exercise"
-                        placeholder="種目"
-                        value={exercise}
-                        onChange={(e) => setExercise(parseInt(e.target.value))}
-                    >
-                        <option value={Exercise.BenchPress}>ベンチプレス</option>
-                        <option value={Exercise.Squat}>スクワット</option>
-                        <option value={Exercise.DeadLift}>デッドリフト</option>
-                    </select>
-                </div>
-                <div className="mb-2">
-                    <label
-                        className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"
-                        htmlFor="weight"
-                    >
-                        重量(kg)
-                    </label>
-                    <input
-                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
-                            text-gray-700 shadow focus:outline-none
-                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
-                        id="weight"
-                        type="number"
-                        placeholder="重量"
-                        value={weight}
-                        onChange={(e) => setWeight(parseFloat(e.target.value))}
-                    />
-                </div>
-                <div className="mb-2">
-                    <label
-                        className="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300"
-                        htmlFor="reps"
-                    >
-                        Reps
-                    </label>
-                    <input
-                        className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
-                            text-gray-700 shadow focus:outline-none
-                            dark:bg-gray-700 dark:text-white dark:border-gray-500"
-                        id="reps"
-                        type="number"
-                        placeholder="Reps"
-                        min={2}
-                        value={reps}
-                        onChange={(e) => setReps(parseInt(e.target.value))}
-                    />
-                </div>
-                <div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300">1RM換算重量</p>
-                    <p><span className="text-2xl font-extrabold mr-1">{result}</span>kg</p>
-                </div>
-                <p>参考: <a target="_blank" rel="noreferrer" href="https://fwj.jp/magazine/rm/">https://fwj.jp/magazine/rm/</a></p>
+        <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-md dark:border dark:border-gray-700 mx-2 md:mx-0 p-5 ${className || ''}`}>
+            <div className={formGroupStyle}>
+                <label
+                    className={labelStyle}
+                    htmlFor="exercise"
+                >
+                    種目
+                </label>
+                <select
+                    className={inputStyle}
+                    id="exercise"
+                    value={exercise}
+                    onChange={(e) => setExercise(parseInt(e.target.value))}
+                >
+                    <option value={Exercise.BenchPress}>ベンチプレス</option>
+                    <option value={Exercise.Squat}>スクワット</option>
+                    <option value={Exercise.DeadLift}>デッドリフト</option>
+                </select>
             </div>
-        </>
+            <div className={formGroupStyle}>
+                <label
+                    className={labelStyle}
+                    htmlFor="weight"
+                >
+                    重量(kg)
+                </label>
+                <input
+                    className={inputStyle}
+                    id="weight"
+                    type="number"
+                    placeholder="重量を入力"
+                    value={weight}
+                    onChange={(e) => setWeight(parseFloat(e.target.value))}
+                />
+            </div>
+            <div className={formGroupStyle}>
+                <label
+                    className={labelStyle}
+                    htmlFor="reps"
+                >
+                    Reps
+                </label>
+                <input
+                    className={inputStyle}
+                    id="reps"
+                    type="number"
+                    placeholder="回数を入力"
+                    min={2}
+                    value={reps}
+                    onChange={(e) => setReps(parseInt(e.target.value))}
+                />
+            </div>
+            <div className={resultContainerStyle}>
+                <p className={resultLabelStyle}>1RM換算重量</p>
+                <p className="flex items-baseline">
+                    <span className={resultValueStyle}>{result}</span>
+                    <span className="ml-1 text-gray-700 dark:text-gray-300">kg</span>
+                </p>
+            </div>
+            <p className={referenceStyle}>
+                参考: <a className={linkStyle} target="_blank" rel="noreferrer" href="https://fwj.jp/magazine/rm/">https://fwj.jp/magazine/rm/</a>
+            </p>
+        </div>
     );
 };

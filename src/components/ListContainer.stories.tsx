@@ -1,13 +1,18 @@
-import { ListContainer } from "./ListConteiner";
-import { NoDataCard } from ".";
+import { ListContainer, NoDataCard } from ".";
+import type { ListContainerProps } from "./ListContainer";
+import type { Meta, StoryObj } from "@storybook/react";
 
-export default {
+const meta: Meta<typeof ListContainer> = {
     component: ListContainer,
     title: "List container",
     tags: ["autodocs"]
-}
+};
 
-export const Default = {
+export default meta;
+
+type Story = StoryObj<typeof ListContainer>;
+
+export const Default: Story = {
     args: {
         children: <>
             <li>a</li>
@@ -17,7 +22,7 @@ export const Default = {
     }
 };
 
-export const NoData = {
+export const NoData: Story = {
     args: {
         children: <>
             <NoDataCard />

@@ -3,7 +3,7 @@ import * as React from "react";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import type { BodyPart, Muscle, Exercise } from "@prisma/client";
 import { ListContainer } from "./ListContainer";
-import { Subheader } from "."; // Ensure Subheader.tsx exists in the same directory or update the path
+import { Subheader } from "./Subheader";
 
 export interface ExerciseSelectorProps {
   selectedExerciseId: number;

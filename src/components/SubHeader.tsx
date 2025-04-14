@@ -1,5 +1,4 @@
 import React from "react";
-import type { ComponentProps } from "react";
 
 export interface SubheaderProps {
   content: string;

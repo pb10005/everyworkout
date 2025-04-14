@@ -1,5 +1,4 @@
 import React from "react";
-import type { ComponentProps } from "react";
 
 export interface ListContainerProps {
   children: React.ReactNode;
@@ -13,7 +12,7 @@ export const ListContainer: React.FC<ListContainerProps> = ({
   className
 }) => {
   // Base styles for all list containers
-  const baseStyle = "flex flex-col rounded-lg overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700";
+  const baseStyle = "flex flex-col rounded-lg overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm";
   
   // Get variant-specific styles for list items
   const getItemStyle = (variant: string) => {
@@ -36,14 +35,24 @@ export const ListContainer: React.FC<ListContainerProps> = ({
     className || ''
   ].filter(Boolean).join(" ");
 
+  // Get the item style based on the variant
+  const itemStyle = getItemStyle(variant);
+
   return (
     <ul className={containerClasses}>
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) return child;
         
-        // For simplicity, just return the child as is
-        // This avoids TypeScript errors with cloning elements
-        return child;
+        // Apply the item style to each child
+        const childProps = child.props as { className?: string };
+        const childClasses = childProps.className || '';
+        const mergedClasses = `${itemStyle} ${childClasses}`.trim();
+        
+        // Type-safe cloning of the element
+        return React.cloneElement(
+          child,
+          { className: mergedClasses } as React.HTMLAttributes<HTMLElement>
+        );
       })}
     </ul>
   );

@@ -18,15 +18,15 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   // Base styles for all buttons
-  const baseStyle = "rounded-lg font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyle = "rounded-lg font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center";
   
   // Variant-specific styles
   const variantStyles: { [key: string]: string } = {
-    "primary": "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed",
+    "primary": "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed shadow-sm",
     "secondary": "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 active:bg-gray-100 dark:active:bg-gray-600 focus:ring-blue-500",
     "text": "bg-transparent text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 active:bg-blue-100 dark:active:bg-blue-900/30 focus:ring-blue-500",
     "icon": "p-2 bg-transparent text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-blue-500",
-    "danger": "bg-red-500 text-white hover:bg-red-600 active:bg-red-700 focus:ring-red-500 disabled:bg-red-300 disabled:cursor-not-allowed"
+    "danger": "bg-red-500 text-white hover:bg-red-600 active:bg-red-700 focus:ring-red-500 disabled:bg-red-300 disabled:cursor-not-allowed shadow-sm"
   };
   
   // Size-specific styles

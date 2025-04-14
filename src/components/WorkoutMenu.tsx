@@ -11,14 +11,20 @@ type Props = {
 export const WorkoutMenu: React.FC<Props> = (props: Props) => {
     const { exercises, handleExerciseClick } = props;
 
-    return (<>
-        <ListContainer>
-            {exercises.map(e => (<>
-                <li key={e.id} className="px-4 py-2 flex justify-between cursor-pointer" onClick={() => handleExerciseClick(e.id, e.bodyPartId)}>
-                    <span className="dark:text-white">{e.name}</span>
-                    <span><CheckCircleIcon className={`${e.isSelected ? 'text-green-500' : 'text-gray-300'}`} width={25} height={25} /></span>
+    return (
+        <ListContainer variant="interactive">
+            {exercises.map(e => (
+                <li 
+                    key={e.id} 
+                    className="flex justify-between items-center cursor-pointer transition-all duration-200"
+                    onClick={() => handleExerciseClick(e.id, e.bodyPartId)}
+                >
+                    <span className="dark:text-white font-medium">{e.name}</span>
+                    <CheckCircleIcon 
+                        className={`${e.isSelected ? 'text-green-500 scale-110' : 'text-gray-300'} transition-all duration-200 w-6 h-6`} 
+                    />
                 </li>
-            </>))}
+            ))}
         </ListContainer>
-    </>);
+    );
 };

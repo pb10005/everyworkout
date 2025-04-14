@@ -1,5 +1,5 @@
 "use client";
-import { MinusCircleIcon } from "@heroicons/react/20/solid";
+import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
 import type { BodyPart, Exercise, Muscle } from "@prisma/client";
 import React, { useState } from "react";
 import { z, ZodError } from "zod";
@@ -7,6 +7,7 @@ import { useExerciseSelector } from "../hooks/useExerciseSelector";
 import { Button } from "./Button";
 import { ExerciseSelector } from "./ExerciseSelector";
 import { ListContainer } from ".";
+import { Subheader } from "./Subheader";
 import type { WorkoutMenuItemProps, WorkoutMenuSubmitProps } from "./types";
 
 type Props = {
@@ -30,6 +31,7 @@ const schema = z.object({
         )
         .min(1, '少なくとも1件の種目を選んでください'),
 });
+
 export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
     const { bodyParts, muscles, exercises, title: initialTitle, workoutMenu, setWorkoutMenu, submit } = props;
     const [error, setError] = useState<string>("");
@@ -82,61 +84,88 @@ export const WorkoutMenuEditor: React.FC<Props> = (props: Props) => {
         }
     };
 
-    return (<>
-        <div className="m-2 flex flex-col gap-2">
-            {error && <p className="rounded-lg bg-red-100 p-4 text-red-900">
-                エラーが発生しました: {error}
-            </p>}
-            <div className="grid gap-2">
+    return (
+        <div className="m-2 flex flex-col gap-4">
+            {error && (
+                <div className="rounded-lg bg-red-100 dark:bg-red-900/30 p-4 text-red-800 dark:text-red-300 flex items-center gap-2 shadow-sm border border-red-200 dark:border-red-800/50 animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    <span>{error}</span>
+                </div>
+            )}
+            
+            <div className="space-y-2">
                 <label
-                    className="block text-sm font-bold text-gray-700 dark:text-gray-300"
-                    htmlFor="note"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    htmlFor="menu-title"
                 >
-                    タイトル
+                    メニュータイトル
                 </label>
                 <input
-                    className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight
-              text-gray-700 shadow focus:outline-none
-              dark:bg-gray-700 dark:text-white dark:border-gray-500"
-                    id="note"
+                    className="w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-600 dark:focus:border-blue-600 transition-colors duration-200 shadow-sm"
+                    id="menu-title"
                     type="text"
-                    placeholder="タイトル"
+                    placeholder="メニュータイトルを入力"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
                 />
             </div>
 
-            <label
-                className="block text-sm font-bold text-gray-700 dark:text-gray-300"
-            >
-                種目を追加
-            </label>
-            <div className="rounded-lg dark:outline outline-1 outline-gray-500 p-2 flex flex-col gap-2">
-                {bodyParts && muscles && <ExerciseSelector
-                    selectedExerciseId={selectedExerciseId}
-                    selectedBodyPartId={selectedBodyPartId}
-                    bodyParts={bodyParts}
-                    muscles={muscles}
-                    handleExerciseClick={handleExerciseClick}
-                    handleBodyPartClick={handleBodyPartClick}
-                />}
-                {selectedExerciseId > 0 && <Button onClick={handleAddButtonClick}>追加</Button>}
+            <div className="mt-4">
+                <Subheader content="種目を追加" variant="section" />
+                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4 flex flex-col gap-3 bg-white dark:bg-gray-800 shadow-sm">
+                    {bodyParts && muscles && (
+                        <ExerciseSelector
+                            selectedExerciseId={selectedExerciseId}
+                            selectedBodyPartId={selectedBodyPartId}
+                            bodyParts={bodyParts}
+                            muscles={muscles}
+                            handleExerciseClick={handleExerciseClick}
+                            handleBodyPartClick={handleBodyPartClick}
+                        />
+                    )}
+                    {selectedExerciseId > 0 && (
+                        <Button 
+                            variant="primary" 
+                            onClick={handleAddButtonClick}
+                            className="mt-2"
+                        >
+                            <PlusCircleIcon className="w-5 h-5 mr-1" />
+                            追加
+                        </Button>
+                    )}
+                </div>
             </div>
-            {displayMenu.length > 0 &&
-                <ListContainer>
-                    {displayMenu.map((e, index) => (<>
-                        {
-                            e &&
-                            <li key={e.id} className="px-4 py-2 flex gap-2 items-center">
-                                <MinusCircleIcon onClick={() => handleDeleteButtonClick(index)} className="text-red-600 cursor-pointer" width={25} height={25} />
-                                <span className="dark:text-white">{e.name}</span>
-                            </li>
-                        }
-                    </>))}
-                </ListContainer>
-            }
-            <Button onClick={() => void handleSubmit()}>メニューを登録</Button>
+            
+            {displayMenu.length > 0 && (
+                <div className="mt-4">
+                    <Subheader content="選択した種目" variant="section" />
+                    <ListContainer variant="with-icons">
+                        {displayMenu.map((e, index) => (
+                            e && (
+                                <li key={e.id} className="flex items-center gap-3 group">
+                                    <MinusCircleIcon 
+                                        onClick={() => handleDeleteButtonClick(index)} 
+                                        className="text-red-500 cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95 w-6 h-6" 
+                                    />
+                                    <span className="dark:text-white font-medium">{e.name}</span>
+                                </li>
+                            )
+                        ))}
+                    </ListContainer>
+                </div>
+            )}
+            
+            <Button 
+                variant="primary" 
+                onClick={() => void handleSubmit()}
+                className="mt-4"
+                size="lg"
+            >
+                メニューを登録
+            </Button>
         </div>
-    </>);
+    );
 };

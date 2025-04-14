@@ -1,5 +1,4 @@
 import React from "react";
-import type { ComponentProps } from "react";
 
 export interface BadgeProps {
   label: string;
@@ -15,7 +14,7 @@ export const Badge: React.FC<BadgeProps> = ({
   className
 }) => {
   // Base styles for all badges
-  const baseStyle = "px-2.5 py-1 inline-block rounded-full text-xs font-medium transition-colors duration-200";
+  const baseStyle = "px-2.5 py-1 inline-flex items-center justify-center rounded-full text-xs font-medium transition-colors duration-200";
   
   // Variant-specific styles
   const variantStyles: { [key: string]: string } = {
@@ -28,7 +27,7 @@ export const Badge: React.FC<BadgeProps> = ({
   };
 
   // Add cursor-pointer only if onClick is provided
-  const cursorStyle = onClick ? "cursor-pointer hover:opacity-80" : "";
+  const cursorStyle = onClick ? "cursor-pointer hover:opacity-90 active:opacity-100" : "";
 
   // Combine all classes
   const badgeClasses = [
@@ -42,6 +41,8 @@ export const Badge: React.FC<BadgeProps> = ({
     <span
       className={badgeClasses}
       onClick={onClick}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
     >
       {label}
     </span>

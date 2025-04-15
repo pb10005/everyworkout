@@ -13,7 +13,7 @@ export interface TimerProps {
 
 export const Timer: React.FC<TimerProps> = ({
   expiryTimeDelta,
-  onExpire,
+  onExpire: onTimerExpire,
   variant = "standard",
   className
 }) => {
@@ -36,7 +36,7 @@ export const Timer: React.FC<TimerProps> = ({
       notify("インターバル終了！");
       setExpired(true); 
       resetInterval(new Date(), expiryTimeDelta); 
-      if (onExpire) onExpire(); 
+      if (onTimerExpire) onTimerExpire(); 
     }
   });
 
@@ -50,15 +50,19 @@ export const Timer: React.FC<TimerProps> = ({
     resume();
   };
 
-  const resetInterval = useCallback((now: Date, delta: number) => {
+  const resetInterval = (now: Date, delta: number) => {
     now.setSeconds(now.getSeconds() + delta);
     restart(now, false);
-  }, [restart]);
+  };
+  // const resetInterval = useCallback((now: Date, delta: number) => {
+  //   now.setSeconds(now.getSeconds() + delta);
+  //   restart(now, false);
+  // }, [restart]);
 
   useEffect(() => {
     const now = new Date();
     resetInterval(now, expiryTimeDelta);
-  }, [expiryTimeDelta, resetInterval]);
+  }, [expiryTimeDelta]);
 
   // Base styles for all timer variants
   const baseStyle = "flex flex-col overflow-hidden bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-md dark:border dark:border-gray-700";

@@ -44,7 +44,7 @@ export const ExerciseSelector: React.FC<ExerciseSelectorProps> = ({
                     className="flex justify-between items-center cursor-pointer"
                     onClick={() => void handleBodyPartClick(bp.id)}
                   >
-                    <span className="font-medium">{bp.name}</span>
+                    <span className="font-medium dark:text-white">{bp.name}</span>
                     <ChevronRightIcon className="w-5 h-5 text-gray-400" />
                   </li>
                 ))}
@@ -88,7 +88,7 @@ export const ExerciseSelector: React.FC<ExerciseSelectorProps> = ({
                             key={e.exercise.id}
                             className={`transition-colors duration-200 ${
                               e.exercise.id === selectedExerciseId 
-                                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 font-medium' 
+                                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-white font-medium' 
                                 : ''
                             }`}
                             onClick={() => void handleExerciseClick(e.exercise.id, e.exercise.name)}

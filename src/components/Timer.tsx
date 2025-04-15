@@ -33,10 +33,14 @@ export const Timer: React.FC<TimerProps> = ({
     expiryTimestamp: expiryTimestamp,
     autoStart: false,
     onExpire: () => { 
-      notify("インターバル終了！");
       setExpired(true); 
       resetInterval(new Date(), expiryTimeDelta); 
       if (onTimerExpire) onTimerExpire(); 
+      try {
+        notify("インターバル終了！");
+      } catch (error) {
+        console.error("Notification error:", error);
+      }
     }
   });
 

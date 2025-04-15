@@ -86,9 +86,9 @@ export const ExerciseSelector: React.FC<ExerciseSelectorProps> = ({
                         {d.exercises.map(e => (
                           <li 
                             key={e.exercise.id}
-                            className={`transition-colors duration-200 ${
+                            className={`transition-colors duration-200 text-blue-800 dark:text-white font-medium ${
                               e.exercise.id === selectedExerciseId 
-                                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-white font-medium' 
+                                ? 'bg-blue-100 dark:bg-blue-900/30' 
                                 : ''
                             }`}
                             onClick={() => void handleExerciseClick(e.exercise.id, e.exercise.name)}

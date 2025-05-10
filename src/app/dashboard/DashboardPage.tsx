@@ -22,12 +22,13 @@ import type { ChartProp } from "../../components/types";
 import type { Goal } from "@prisma/client";
 
 type Props = {
+    isEmptyData: boolean;
     userWorkoutVolumesInThisWeek: Partial<ChartProp>[];
     goal: Goal | null;
 };
 
 export const DashboardPage = (props: Props) => {
-    const { userWorkoutVolumesInThisWeek, goal } = props;
+    const { isEmptyData, userWorkoutVolumesInThisWeek, goal } = props;
     const router = useRouter();
 
     const chartData = userWorkoutVolumesInThisWeek.map(x => {
@@ -58,7 +59,7 @@ export const DashboardPage = (props: Props) => {
             <section className="flex flex-col gap-2">
                 <Subheader content="今週のトレーニング履歴" />
                 <div className="dark:bg-black">
-                    {chartData.length > 0 ? (
+                    {!isEmptyData ? (
                         <ExerciseChart chartData={chartData} />
                     ) : (
                         <EmptyState 

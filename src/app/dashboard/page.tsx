@@ -43,7 +43,10 @@ function Content(props: ContentProps) {
     const dateQuery = new Date(data[0]?.max || '1975-01-01');
 
     const daily = await prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${session.user?.id} and to_char(date, 'yyyy-mm-dd') >= ${dateQuery.toISOString().split('T')[0]} and weight > 0 group by date order by date;`
-    return Array.from(cumulativeDaily(dateQuery, daily));
+    return {
+      isEmpty: daily.length === 0,
+      data: Array.from(cumulativeDaily(dateQuery, daily))
+    };
   })());
 
   const goal = use(prisma.goal.findFirst({
@@ -57,7 +60,7 @@ function Content(props: ContentProps) {
   }));
 
   return (<>
-    <DashboardPage userWorkoutVolumesInThisWeek={cumulativeChartData} goal={goal}/>
+    <DashboardPage isEmptyData={cumulativeChartData.isEmpty} userWorkoutVolumesInThisWeek={cumulativeChartData.data} goal={goal}/>
   </>);
 }
 

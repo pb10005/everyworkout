@@ -81,9 +81,7 @@ export const DashboardPage = (props: Props) => {
                 </div>
             </section>
             <section className="flex flex-col gap-2">
-                <section className="flex justify-between">
-                    <Subheader content="目標" />
-                </section>
+                <Subheader content="目標" />
                 {goal ? <>
                     <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
                         <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>

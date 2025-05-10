@@ -8,6 +8,7 @@ import { Dropdown } from "./Dropdown";
 import { DropdownItem } from "./DropdownItem";
 import { EditGoalForm } from "./EditGoalForm";
 import { EditNoteForm } from "./EditNoteForm";
+import { EmptyState } from "./EmptyState";
 import { ExerciseChart } from "./ExerciseChart";
 import { ExerciseSelector } from "./ExerciseSelector";
 import { FloatingButton } from "./FloatingButton";
@@ -36,6 +37,7 @@ export {
   DropdownItem,
   EditGoalForm,
   EditNoteForm,
+  EmptyState,
   ExerciseChart,
   ExerciseSelector,
   FloatingButton,

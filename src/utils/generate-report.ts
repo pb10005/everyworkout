@@ -21,6 +21,7 @@ export const generateReport = async () => {
             const weekData = await prisma.workout.findMany({
                 select: {
                     userId: true,
+                    date: true,
                     exerciseId: true,
                     weight: true,
                     reps: true,
@@ -35,6 +36,7 @@ export const generateReport = async () => {
             });
             
             type StatProps = {
+                dates: Set<string>;
                 count: number;
                 volume: number;
                 exercises: Set<number>;
@@ -48,7 +50,12 @@ export const generateReport = async () => {
                         const tmp: Set<number> = acc[userId]?.exercises || new Set<number>();
                         tmp.add(suc.exerciseId);
 
+                        const tmpDates = acc[userId]?.dates || new Set<string>();
+                        const dateString = suc.date.toISOString().split('T')[0];
+                        if(dateString) tmpDates.add(dateString);
+
                         acc[userId] = {
+                            dates: tmpDates,
                             count: (acc[userId]?.count || 0) + 1,
                             volume: (acc[userId]?.volume || 0) + suc.weight * suc.reps * suc.sets,
                             exercises: tmp
@@ -61,8 +68,8 @@ export const generateReport = async () => {
         
             // ユーザー単位でレポートメッセージ生成
             const reports = users.map(u => {
-                const stat = u.id ? stats[u.id] : {count: 0, volume: 0, exercises: new Set<number>()};
-                const count = stat?.count || 0;
+                const stat = u.id ? stats[u.id] : {dates: new Set<string>(), count: 0, volume: 0, exercises: new Set<number>()};
+                const count = stat?.dates.size || 0;
                 const exerciseCount = stat?.exercises.size || 0;
 
                 if(count <= 0) return null;

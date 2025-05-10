@@ -83,7 +83,7 @@ export const ExerciseDetailPage: React.FC = () => {
                         </p>
                     </>
                 )}
-                <Subheader content="種目別グラフ" />
+                <Subheader content="種目別グラフ" variant="section"/>
                 {isLoading && <Loading />}
                 {isError && (
                     <>
@@ -110,7 +110,7 @@ export const ExerciseDetailPage: React.FC = () => {
                         </div>
                     </div>
                     <div className="mb-2 md:grid-span-3">
-                        <Subheader content="ベスト更新履歴" />
+                        <Subheader content="ベスト更新履歴" variant="section"/>
                     </div>
                     <ListContainer>
                         {data?.length && data?.length > 0

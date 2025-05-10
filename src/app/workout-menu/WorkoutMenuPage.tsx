@@ -11,10 +11,10 @@ export function WorkoutMenuPage() {
     return (<>
         <div className="">
             <section>
-                <Subheader content="便利ツール" />
+                <Subheader content="便利ツール" variant="section"/>
                 <ToolList />
             </section>
-            <Subheader content="あなたのトレーニングメニュー" />
+            <Subheader content="あなたのトレーニングメニュー" variant="section"/>
             <section className="flex flex-col gap-2">
                 <div className="flex justify-left">
                     <Link href="/workout-menu/add" className="flex items-center gap-1 text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full">

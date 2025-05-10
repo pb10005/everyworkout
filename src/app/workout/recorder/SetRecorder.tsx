@@ -89,7 +89,7 @@ export function SetRecorder(props: Props) {
                     <ChevronRightIcon onClick={onNextSet} className="w-10 h-10 cursor-pointer"></ChevronRightIcon>
                 </div>
             </div>
-            <Subheader content="インターバル" />
+            <Subheader content="インターバル" variant="section"/>
             <div>
                 <Timer expiryTimeDelta={expiryTimeDelta} onExpire={onNextSet}></Timer>
             </div>

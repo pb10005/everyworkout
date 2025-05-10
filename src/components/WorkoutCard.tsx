@@ -61,7 +61,7 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
                         <span>{exerciseName}</span>
                     </p>
                     {dateDisplay && (
-                        <Subheader content={dateDisplay} />
+                        <Subheader content={dateDisplay} variant="subsection"/>
                     )}
                     {muscles.map(m => {
                         return (

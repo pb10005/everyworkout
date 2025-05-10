@@ -10,7 +10,7 @@ export const GoalHistoryPage: React.FC = () => {
     const router = useRouter();
 
     return (<>
-        <Subheader content="過去の目標" />
+        <Subheader content="過去の目標" variant="section"/>
         <ListContainer>
             {goals && goals.map(g => <>
                 <div key={g.id} className="dark:text-white p-2 flex justify-between items-center">

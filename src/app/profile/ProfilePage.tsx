@@ -18,7 +18,7 @@ export const ProfilePage: React.FC = () => {
                 <section>
                     {isLoading && <Loading />}
                     {isSuccess && <>
-                        <Subheader content="ログインユーザー(公開されません)" />
+                        <Subheader content="ログインユーザー(公開されません)" variant="section"/>
                         <div className="flex items-center gap-2">
                             {data?.image && <img src={data.image} width={60} alt="プロフィール画像"></img>}
                             <div className="flex flex-col gap-1">

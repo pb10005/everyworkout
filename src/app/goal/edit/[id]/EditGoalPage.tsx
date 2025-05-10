@@ -44,7 +44,7 @@ export const EditGoalPage: React.FC = () => {
         <>
             <EditGoalForm goal={goal || ""} setGoal={(e) => setGoal(e.target.value)} submit={() => void handleSubmit()} cancel={() => void handleCancel()} />
             <div>
-                <Subheader content="目標設定のヒント" />
+                <Subheader content="目標設定のヒント" variant="section"/>
                 <p className="dark:text-white">一度に設定する目標は一つにしよう！</p>
             </div>
         </>

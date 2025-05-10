@@ -57,7 +57,7 @@ export const DashboardPage = (props: Props) => {
         <>
             {(errorM && errorR) && <NotLoggedInCard />}
             <section className="flex flex-col gap-2">
-                <Subheader content="今週のトレーニング履歴" />
+                <Subheader content="今週のトレーニング履歴" variant="section"/>
                 <div className="dark:bg-black">
                     {!isEmptyData ? (
                         <ExerciseChart chartData={chartData} />
@@ -81,7 +81,7 @@ export const DashboardPage = (props: Props) => {
                 </div>
             </section>
             <section className="flex flex-col gap-2">
-                <Subheader content="目標" />
+                <Subheader content="目標" variant="section"/>
                 {goal ? <>
                     <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
                         <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>
@@ -105,7 +105,7 @@ export const DashboardPage = (props: Props) => {
                 </div>
             </section>
             <section>
-                <Subheader content="自己ベスト" />
+                <Subheader content="自己ベスト" variant="section"/>
                 {loadingM && <Loading />}
                 {successM && (
                     <>
@@ -133,7 +133,7 @@ export const DashboardPage = (props: Props) => {
                 )}
             </section>
             <section>
-                <Subheader content="週次レポート" />
+                <Subheader content="週次レポート" variant="section"/>
                 {loadingR && <Loading />}
                 {successR && (
                     <>
@@ -141,7 +141,7 @@ export const DashboardPage = (props: Props) => {
                             {reports?.length && reports.length > 0
                                 ? reports?.map(r => (
                                     <li key={r.id} className="py-2 px-4">
-                                        <Subheader content={r.executeDate || ''} />
+                                        <Subheader content={r.executeDate || ''} variant="subsection"/>
                                         <span className="dark:text-white">{r.content}</span>
                                     </li>)
                                 )

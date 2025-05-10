@@ -55,7 +55,7 @@ const History: NextPage = () => {
         <Navigation />
         <Container>
           <section className="flex flex-col gap-2">
-            <Subheader content="トレーニング履歴" />
+            <Subheader content="トレーニング履歴" variant="section"/>
             <div className="px-2">
               <label
                 className="block text-sm font-bold text-gray-700 dark:text-gray-300"

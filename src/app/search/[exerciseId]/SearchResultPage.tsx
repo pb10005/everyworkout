@@ -34,7 +34,7 @@ export const SearchResultPage: React.FC = () => {
         <>
             <BackButton>戻る</BackButton>
             <section>
-                <Subheader content="種目別トレーニング履歴" />
+                <Subheader content="種目別トレーニング履歴" variant="section"/>
                 {count > 0 && (
                     <Paginator
                         className="dark:text-gray-300"

@@ -54,3 +54,4 @@ yarn-error.log*
 
 tools/*.*
 *storybook.log
+storybook-static

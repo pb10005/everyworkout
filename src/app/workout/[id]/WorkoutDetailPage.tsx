@@ -93,7 +93,7 @@ export const WorkoutDetailPage: React.FC = () => {
     };
 
     return (
-        <div className="p-4 max-w-4xl mx-auto">
+        <div>
             <div>{!(loadingGet || successGet) && <AuthShowcase />}</div>
             
             {loadingGet && <div className="flex justify-center py-8"><Loading /></div>}

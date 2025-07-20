@@ -5,7 +5,6 @@ import { api } from "../../utils/api";
 import { Button } from "../../components";
 import { useRouter } from "next/navigation";
 import type { WorkoutProp } from "../../components/types";
-import { revalidate } from "../actions";
 
 type Props = {
     sets: string;
@@ -24,8 +23,7 @@ export function ConfirmSubmit(props: Props) {
     const [exerciseName, setExerciseName] = useState<string>("");
 
     const mutation = api.workout.add.useMutation({
-        async onSuccess({ id }) {
-            await revalidate('/dashboard');
+        onSuccess({ id }) {
             window.sessionStorage.removeItem('workout');
             return router.push(`/workout-detail?id=${id}`);
         }

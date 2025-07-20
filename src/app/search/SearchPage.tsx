@@ -59,7 +59,7 @@ export const SearchPage: React.FC<Props> = (props: Props) => {
             variant="primary" 
             size="lg"
             className="w-full md:w-auto"
-            onClick={() => router.push(`/search/${selectedExerciseId}`)}
+            onClick={() => router.push(`/search-result?exerciseId=${selectedExerciseId}`)}
           >
             <MagnifyingGlassIcon className="w-5 h-5 mr-2" />
             履歴を検索

@@ -1,5 +1,4 @@
-export const dynamic = 'force-dynamic' ;
-import { addNewReport } from '../../../utils/add-new-report';
+import { generateReport } from "../../src/utils/generate-report";
 
 /**
  *  毎週月曜10時に動くCron Job
@@ -11,8 +10,7 @@ export async function GET(request: Request) {
   if (process.env.CRON_SECRET && request.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response('Unauthorized', { status: 401 });
   }
-  
-  await addNewReport();
+  await generateReport();
  
   return new Response('success', { status: 200 });
 }

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Link from "next/link";
 import { HomeIcon, ListBulletIcon, MagnifyingGlassIcon, PencilSquareIcon, UserIcon } from "@heroicons/react/20/solid";

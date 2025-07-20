@@ -55,7 +55,7 @@ export const useNotification = () => {
             .catch(() => {
                 alert("エラーが発生しました");
             });
-    });
+    }, []);
 
     return {
         permission,

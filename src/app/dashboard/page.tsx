@@ -1,6 +1,8 @@
+"use client";
 
-import { getServerSession, type Session } from "next-auth";
-import { redirect } from "next/navigation";
+import { type Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { prisma } from "../../server/db";
 
@@ -12,7 +14,7 @@ import type { DailyVolumeProp } from "../../components/types";
 import { Suspense, use } from "react";
 
 type ContentProps = {
-  session: Session;
+  session: Session | null;
 };
 
 function* cumulativeDaily(startDate: Date, data: DailyVolumeProp[]) {
@@ -42,7 +44,7 @@ function Content(props: ContentProps) {
     const data = await prisma.$queryRaw<{ max: string }[]>`select max("executeDate") from "WeeklyReportMaster";`;
     const dateQuery = new Date(data[0]?.max || '1975-01-01');
 
-    const daily = await prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${session.user?.id} and to_char(date, 'yyyy-mm-dd') >= ${dateQuery.toISOString().split('T')[0]} and weight > 0 group by date order by date;`
+    const daily = await prisma.$queryRaw<DailyVolumeProp[]>`select date, sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${session?.user?.id} and to_char(date, 'yyyy-mm-dd') >= ${dateQuery.toISOString().split('T')[0]} and weight > 0 group by date order by date;`
     return {
       isEmpty: daily.length === 0,
       data: Array.from(cumulativeDaily(dateQuery, daily))
@@ -51,7 +53,7 @@ function Content(props: ContentProps) {
 
   const goal = use(prisma.goal.findFirst({
     where: {
-      userId: session.user?.id,
+      userId: session?.user?.id,
     },
     orderBy: {
       createdAt: "desc"
@@ -64,9 +66,11 @@ function Content(props: ContentProps) {
   </>);
 }
 
-export default async function Page() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) redirect('/login');
+export default function Page() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  // const session = await getServerSession(authOptions);
+  if (!session?.user) router.push('/login');
 
   return (
     <>

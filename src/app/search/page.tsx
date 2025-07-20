@@ -1,4 +1,7 @@
-import { getServerSession } from "next-auth";
+"use client";
+// import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 import { Suspense, use } from "react";
 
@@ -26,9 +29,11 @@ function Content() {
   </>)
 }
 
-export default async function Page() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) redirect('/login');
+export default function Page() {
+  const {data: session} = useSession();
+  const router = useRouter();
+  // const session = await getServerSession(authOptions);
+  if (!session?.user) router.push('/login');
 
   return (
     <>

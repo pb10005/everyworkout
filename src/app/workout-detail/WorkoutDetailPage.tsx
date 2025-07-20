@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import { AuthShowcase, Button, Loading, Subheader, WorkoutCard } from "../../components";
 import { api } from "../../utils/api";
-import { revalidate } from "../actions";
 import { ChartBarIcon, ListBulletIcon, ShareIcon, TrophyIcon } from "@heroicons/react/20/solid";
 
 type ShareButtonProps = {
@@ -61,9 +60,6 @@ export const WorkoutDetailPage: React.FC = () => {
     const [metricsCode, setMetricsCode] = useState<string>("01");
     const mutation = api.maximum.add.useMutation();
     const deleteMutation = api.workout.delete.useMutation({
-        async onSuccess() {
-            await revalidate('/dashboard');
-        }
     });
 
     const registerMaximum = async () => {

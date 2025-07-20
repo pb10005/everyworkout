@@ -4,6 +4,14 @@ const withPWA = require("next-pwa")({
     skipWaiting: true,
 });
 
-module.exports = withPWA({
+module.exports = {
+    output: "export",
+    distDir: "dist",
     reactStrictMode: true,
-});
+};
+
+// module.exports = withPWA({
+//     output: "export",
+//     distDir: "dist",
+//     reactStrictMode: true,
+// });

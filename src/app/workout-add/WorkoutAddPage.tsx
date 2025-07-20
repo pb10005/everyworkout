@@ -9,7 +9,6 @@ import {
 } from "../../components";
 import { api } from "../../utils/api";
 import { useExerciseSelector } from "../../hooks/useExerciseSelector";
-import { revalidate } from "../actions";
 
 export const WorkoutAddPage: React.FC = () => {
   const router = useRouter();
@@ -33,8 +32,7 @@ export const WorkoutAddPage: React.FC = () => {
   } = useExerciseSelector(exercises || []);
 
   const mutation = api.workout.add.useMutation({
-    async onSuccess({ id }) {
-      await revalidate('/dashboard');
+    onSuccess({ id }) {
       return router.push(`/workout-detail?id=${id}`);
     }
   });

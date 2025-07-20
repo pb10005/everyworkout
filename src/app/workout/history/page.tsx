@@ -94,7 +94,7 @@ const History: NextPage = () => {
                 <ListContainer>
                   {data?.length && data?.length > 0
                     ? data?.map((d) => {
-                      return <Link key={d.id} href={`/workout/${d.id}`}><RecordCard
+                      return <Link key={d.id} href={`/workout-detail?id=${d.id}`}><RecordCard
                         id={d.id}
                         exerciseName={d.exercise.name}
                         date={d.date}

@@ -1,17 +1,15 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-import { api } from "../../../utils/api";
+import { api } from "../../utils/api";
 
-import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader, BackButton } from "../../../components";
+import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader, BackButton } from "../../components";
 import Link from "next/link";
 
 export const SearchResultPage: React.FC = () => {
-
-    const params = useParams();
-    const ids = params?.exerciseId || "";
-    const exerciseId = Array.isArray(ids) ? ids[0] : ids;
+    const searchParams = useSearchParams();
+    const exerciseId = searchParams?.get('exerciseId') || "-1";
 
     const [page, setPage] = useState<number>(0);
     const [perPage] = useState<number>(10);

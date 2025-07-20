@@ -17,7 +17,7 @@ export function WorkoutMenuPage() {
             <Subheader content="あなたのトレーニングメニュー" variant="section"/>
             <section className="flex flex-col gap-2">
                 <div className="flex justify-left">
-                    <Link href="/workout-menu/add" className="flex items-center gap-1 text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full">
+                    <Link href="/workout-menu-add" className="flex items-center gap-1 text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full">
                         <PlusIcon width={20} height={20} />
                         <span>新規作成</span>
                     </Link>
@@ -27,7 +27,7 @@ export function WorkoutMenuPage() {
                     {workoutMenus && workoutMenus?.length > 0 ? <>
                         <ListContainer>
                             {workoutMenus?.map(wm => (<>
-                                <Link key={wm.id} href={`/workout-menu/${wm.id}`} className="w-full px-4 py-2 dark:text-white">
+                                <Link key={wm.id} href={`/workout-menu-detail?id=${wm.id}`} className="w-full px-4 py-2 dark:text-white">
                                     {wm.title}
                                 </Link>
                             </>))}

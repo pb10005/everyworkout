@@ -74,7 +74,7 @@ export const DashboardPage = (props: Props) => {
                     )}
                 </div>
                 <div className="flex">
-                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/workout/history">
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/workout-history">
                         <ListBulletIcon className="w-4 h-4"></ListBulletIcon>
                         <span>詳細を見る</span>
                     </Link>
@@ -87,10 +87,10 @@ export const DashboardPage = (props: Props) => {
                         <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>
                         <Dropdown>
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                                <DropdownItem onClick={() => router.push(`/goal/edit/${goal.id}`)}>
+                                <DropdownItem onClick={() => router.push(`/goal-edit?id=${goal.id}`)}>
                                     編集
                                 </DropdownItem>
-                                <DropdownItem onClick={() => router.push("/goal/history")}>
+                                <DropdownItem onClick={() => router.push("/goal-history")}>
                                     過去の目標
                                 </DropdownItem>
                             </ul>
@@ -98,7 +98,7 @@ export const DashboardPage = (props: Props) => {
                     </section>
                 </> : <NoDataCard />}
                 <div className="flex">
-                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href={`/goal/add`}>
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/goal-add">
                         <PlusIcon className="w-4 h-4"></PlusIcon>
                         <span>新規作成</span>
                     </Link>
@@ -117,7 +117,7 @@ export const DashboardPage = (props: Props) => {
                                             key={`${m.exerciseId}${m.metrics_code}`}
                                             className="md:grid-span-1"
                                         >
-                                            <Link href={`/exercise/${m.exerciseId}`}>
+                                            <Link href={`/exercise-detail?id=${m.exerciseId}`}>
                                                 <MaximumCard
                                                     exerciseName={m.exercise?.name}
                                                     metrics_code={m.metrics_code}
@@ -150,7 +150,7 @@ export const DashboardPage = (props: Props) => {
                     </>
                 )}
             </section>
-            <FloatingButton href="/workout/add">
+            <FloatingButton href="/workout-add">
                 <PlusIcon className="w-10 h-10 text-white dark:text-gray-900"></PlusIcon>
             </FloatingButton>
         </>

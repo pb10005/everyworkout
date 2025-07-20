@@ -18,7 +18,7 @@ export const ProfilePage: React.FC = () => {
                 <section>
                     {isLoading && <Loading />}
                     {isSuccess && <>
-                        <Subheader content="ログインユーザー(公開されません)" variant="section"/>
+                        <Subheader content="ログインユーザー(公開されません)" variant="section" />
                         <div className="flex items-center gap-2">
                             {data?.image && <img src={data.image} width={60} alt="プロフィール画像"></img>}
                             <div className="flex flex-col gap-1">
@@ -32,10 +32,10 @@ export const ProfilePage: React.FC = () => {
                     <Button onClick={() => toggleDarkMode()}>ダークモード切り替え</Button>
                     <span className="dark:text-white">{darkMode === 'dark' ? 'ON' : 'OFF'}</span>
                 </div>
-                <div className="flex items-center gap-2 p-2 justify-between">
+                {permission && <div className="flex items-center gap-2 p-2 justify-between">
                     <Button onClick={() => void requestPermission(true)}>通知を許可</Button>
-                    <span className="dark:text-white">{ permission }</span>
-                </div>
+                    <span className="dark:text-white">{permission}</span>
+                </div>}
             </div>
         </>
     );

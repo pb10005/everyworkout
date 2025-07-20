@@ -50,7 +50,7 @@ export const Navigation: React.FC<Props> = (props: Props) => {
     },
     { 
       key: 'workout-recorder', 
-      path: '/workout/recorder', 
+      path: '/workout-recorder', 
       icon: <PencilSquareIcon className="w-6 h-6" />, 
       label: 'Record',
       ariaLabel: 'Record workout' 

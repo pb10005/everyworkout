@@ -8,7 +8,7 @@ export const useNotification = () => {
     const notify = (message: string) => {
         if (!("Notification" in window)) {
             // ブラウザーが通知に対応しているか調べる
-            alert("このブラウザーはデスクトップ通知に対応していません。");
+            return;
         } else if (Notification.permission === "granted") {
             // 通知権限が既に付与されているかどうかを調べる。
             // そうであれば、通知を作成
@@ -31,7 +31,7 @@ export const useNotification = () => {
 
     const requestPermission = async (forceRequest?: boolean) => {
         if (!("Notification" in window)) {
-            alert("このブラウザーはデスクトップ通知に対応していません。");
+            return;
         } else if (Notification.permission === "default") {
             await Notification.requestPermission();
         } else if (forceRequest) {
@@ -40,6 +40,10 @@ export const useNotification = () => {
     };
 
     useEffect(() => {
+        if (!("Notification" in window)) {
+            // ブラウザーが通知に対応しているか調べる
+            return;
+        }
         setPermission(Notification.permission);
         navigator.permissions
             .query({ name: "notifications" })

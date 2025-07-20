@@ -1,5 +1,6 @@
 import { ExerciseDetailPage } from "./ExerciseDetailPage";
 import { Container, Heading, Navigation } from "../../components/server";
+import { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -8,7 +9,9 @@ export default function Page() {
         <Heading />
         <Navigation />
         <Container>
-          <ExerciseDetailPage />
+          <Suspense fallback={<div>Loading...</div>}>
+            <ExerciseDetailPage />
+          </Suspense>
         </Container>
       </main>
     </>

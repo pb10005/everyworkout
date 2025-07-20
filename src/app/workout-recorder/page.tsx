@@ -1,5 +1,6 @@
 import { WorkoutRecorderPage } from "./WorkoutRecorderPage";
 import { Container, Heading, Navigation } from "../../components/server";
+import { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -8,7 +9,9 @@ export default function Page() {
         <Heading />
         <Navigation />
         <Container>
-          <WorkoutRecorderPage />
+          <Suspense fallback={<div>Loading...</div>}>
+            <WorkoutRecorderPage />
+          </Suspense>
         </Container>
       </main>
     </>

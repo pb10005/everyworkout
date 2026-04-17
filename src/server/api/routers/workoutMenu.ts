@@ -6,8 +6,8 @@ export const workoutMenuRouter = createTRPCRouter({
   add: protectedProcedure
     .input(
       z.object({
-        title: z.string(),
-        exercisesJson: z.string(),
+        title: z.string().max(100),
+        exercisesJson: z.string().max(10000),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -24,8 +24,8 @@ export const workoutMenuRouter = createTRPCRouter({
   update: protectedProcedure
     .input(z.object({
       id: z.string(),
-      title: z.string(),
-      exercisesJson: z.string(),
+      title: z.string().max(100),
+      exercisesJson: z.string().max(10000),
     }))
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.workoutMenu.updateMany({

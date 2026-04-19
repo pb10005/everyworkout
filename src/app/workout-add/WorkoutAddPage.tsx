@@ -66,7 +66,7 @@ export const WorkoutAddPage: React.FC = () => {
       <div className="m-2 flex flex-col gap-2">
         {mutation.isError && (
           <p className="rounded-lg bg-red-100 p-4 text-red-900">
-            エラーが発生しました: {mutation.error.data?.path}
+            エラーが発生しました。もう一度お試しください。
           </p>
         )}
         <div className="grid gap-2">

@@ -5,7 +5,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const goalRouter = createTRPCRouter({
     add: protectedProcedure
         .input(z.object({
-            content: z.string()
+            content: z.string().max(500)
         }))
         .mutation(({ ctx, input}) => {
             return ctx.prisma.goal.create({
@@ -18,7 +18,7 @@ export const goalRouter = createTRPCRouter({
     update: protectedProcedure
         .input(z.object({
             id: z.string().cuid(),
-            content: z.string()
+            content: z.string().max(500)
         }))
         .mutation(async ({ctx, input}) => {
             await ctx.prisma.goal.updateMany({

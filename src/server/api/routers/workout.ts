@@ -15,7 +15,7 @@ export const workoutRouter = createTRPCRouter({
         weight: z.number(),
         reps: z.number(),
         sets: z.number(),
-        note: z.string(),
+        note: z.string().max(500),
         exerciseId: z.number(),
       })
     )
@@ -38,7 +38,7 @@ export const workoutRouter = createTRPCRouter({
   update: protectedProcedure
     .input(z.object({
       id: z.string(),
-      note: z.string()
+      note: z.string().max(500)
     }))
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.workout.updateMany({
@@ -155,6 +155,9 @@ export const workoutRouter = createTRPCRouter({
       date: z.string().datetime().optional(),
     })).query(({ ctx, input }) => {
       const dateString = input.date?.split("T")[0] || "";
+      if (dateString && !/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+        throw new Error("Invalid date format");
+      }
       const volume = ctx.prisma.$queryRaw<VolumeProp[]>`select sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and to_char(date,'YYYY-MM-DD')=${dateString} and weight > 0 group by date;`
       return volume;
     }),

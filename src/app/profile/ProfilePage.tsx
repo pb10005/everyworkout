@@ -11,6 +11,7 @@ export const ProfilePage: React.FC = () => {
     const { data, isLoading, isSuccess } = api.profile.get.useQuery();
     const { darkMode, toggleDarkMode } = useDarkMode();
     const { permission, requestPermission } = useNotification();
+    const { data: aiSettings } = api.userSettings.get.useQuery();
 
     return (
         <>
@@ -36,6 +37,17 @@ export const ProfilePage: React.FC = () => {
                     <Button onClick={() => void requestPermission(true)}>通知を許可</Button>
                     <span className="dark:text-white">{permission}</span>
                 </div>}
+                <div className="flex items-center gap-2 p-2 justify-between">
+                    <div className="flex flex-col gap-0.5">
+                        <span className="text-sm font-medium dark:text-white">AI機能</span>
+                        <span className="text-xs text-gray-400 dark:text-gray-500">
+                            有効化は管理者にお問い合わせください
+                        </span>
+                    </div>
+                    <span className={`text-sm font-bold ${aiSettings?.aiEnabled ? "text-green-500" : "text-gray-400"}`}>
+                        {aiSettings?.aiEnabled ? "有効 🟢" : "未有効化 ⚪"}
+                    </span>
+                </div>
             </div>
         </>
     );

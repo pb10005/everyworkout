@@ -98,7 +98,7 @@ export const DashboardPage = (props: Props) => {
             </section>
             <section className="flex flex-col gap-2">
                 <Subheader content="今週のトレーニング履歴" variant="section"/>
-                <div className="dark:bg-black">
+                <div>
                     {!isEmptyData ? (
                         <ExerciseChart chartData={chartData} />
                     ) : (

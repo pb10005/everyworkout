@@ -8,6 +8,7 @@ import { bodyPartRouter } from "./routers/bodyPart";
 import { weeklyReportRouter } from "./routers/weeklyReport";
 import { workoutMenuRouter } from "./routers/workoutMenu";
 import { goalRouter } from "./routers/goal";
+import { bodyWeightRouter } from "./routers/bodyWeight";
 
 /**
  * This is the primary router for your server.
@@ -24,6 +25,7 @@ export const appRouter = createTRPCRouter({
   bodyPart: bodyPartRouter,
   weeklyReport: weeklyReportRouter,
   workoutMenu: workoutMenuRouter,
+  bodyWeight: bodyWeightRouter,
 });
 
 // export type definition of API

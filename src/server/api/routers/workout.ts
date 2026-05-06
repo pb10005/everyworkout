@@ -3,6 +3,16 @@ import type { DailyVolumeProp } from "../../../components/types";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
+type TrainingStatRow = {
+  date: Date;
+};
+
+type TopExerciseRow = {
+  exerciseId: number;
+  name: string;
+  count: bigint;
+};
+
 type VolumeProp = {
   totalVolume: number
 };
@@ -161,6 +171,70 @@ export const workoutRouter = createTRPCRouter({
       const volume = ctx.prisma.$queryRaw<VolumeProp[]>`select sum("weight" * "reps" * "sets") "totalVolume" from "Workout" where "userId"=${ctx.session.user.id} and to_char(date,'YYYY-MM-DD')=${dateString} and weight > 0 group by date;`
       return volume;
     }),
+
+  getTrainingStats: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+
+    // 全ワークアウト日（重複排除）を取得して連続日数を計算
+    const dates = await ctx.prisma.$queryRaw<TrainingStatRow[]>`
+      SELECT DISTINCT date_trunc('day', date) AS date
+      FROM "Workout"
+      WHERE "userId" = ${userId}
+      ORDER BY date DESC
+    `;
+
+    let streak = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < dates.length; i++) {
+      const d = new Date(dates[i]?.date ?? 0);
+      d.setHours(0, 0, 0, 0);
+      const expected = new Date(today);
+      expected.setDate(today.getDate() - i);
+      if (d.getTime() === expected.getTime()) {
+        streak++;
+      } else {
+        break;
+      }
+    }
+
+    // 今月のトレーニング日数
+    const firstOfMonth = new Date();
+    firstOfMonth.setDate(1);
+    firstOfMonth.setHours(0, 0, 0, 0);
+    const workoutsThisMonth = await ctx.prisma.workout.count({
+      where: {
+        userId,
+        date: { gte: firstOfMonth },
+      },
+    });
+
+    // 総ワークアウト記録数
+    const totalWorkouts = await ctx.prisma.workout.count({ where: { userId } });
+
+    // 最も多く記録したエクササイズ（上位3件）
+    const topExercises = await ctx.prisma.$queryRaw<TopExerciseRow[]>`
+      SELECT w."exerciseId", e.name, COUNT(*) AS count
+      FROM "Workout" w
+      JOIN "Exercise" e ON e.id = w."exerciseId"
+      WHERE w."userId" = ${userId}
+      GROUP BY w."exerciseId", e.name
+      ORDER BY count DESC
+      LIMIT 3
+    `;
+
+    return {
+      streak,
+      workoutsThisMonth,
+      totalWorkouts,
+      topExercises: topExercises.map(r => ({
+        exerciseId: r.exerciseId,
+        name: r.name,
+        count: Number(r.count),
+      })),
+    };
+  }),
 
   getUserWorkoutVolumeByExerciseId: protectedProcedure.input(
     z.object({

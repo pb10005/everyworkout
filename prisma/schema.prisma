@@ -149,6 +149,27 @@ model BodyWeight {
   @@index([userId, date])
 }
 
+model UserSettings {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  aiEnabled Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model AiReview {
+  id          String   @id @default(cuid())
+  userId      String
+  executeDate String
+  content     String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, executeDate])
+  @@index([userId])
+}
+
 model User {
   id            String         @id @default(cuid())
   name          String?
@@ -163,6 +184,8 @@ model User {
   weeklyReports WeeklyReport[]
   workoutMenus  WorkoutMenu[]
   bodyWeights   BodyWeight[]
+  settings      UserSettings?
+  aiReviews     AiReview[]
 }
 
 model VerificationToken {

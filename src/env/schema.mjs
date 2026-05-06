@@ -24,6 +24,7 @@ export const serverSchema = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   CRON_SECRET: z.string(),
+  ANTHROPIC_API_KEY: z.string(),
 });
 
 /**
@@ -41,6 +42,7 @@ export const serverEnv = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   CRON_SECRET: process.env.CRON_SECRET,
+  ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
 };
 
 /**

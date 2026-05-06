@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { api } from "../../utils/api";
-import { ListBulletIcon, PlusIcon, FireIcon, CalendarIcon, ScaleIcon } from "@heroicons/react/20/solid";
+import { ListBulletIcon, PlusIcon, FireIcon, CalendarIcon, ScaleIcon, SparklesIcon } from "@heroicons/react/20/solid";
 
 import {
     FloatingButton,
@@ -53,6 +53,12 @@ export const DashboardPage = (props: Props) => {
     } = api.weeklyReport.getUserReports.useQuery();
 
     const { data: stats, isLoading: loadingStats } = api.workout.getTrainingStats.useQuery();
+
+    const { data: aiSettings } = api.userSettings.get.useQuery();
+    const { data: aiReviews, isLoading: loadingAiReviews } = api.ai.getUserAiReviews.useQuery(
+      undefined,
+      { enabled: aiSettings?.aiEnabled === true }
+    );
 
 
     return (
@@ -190,6 +196,28 @@ export const DashboardPage = (props: Props) => {
                     </>
                 )}
             </section>
+            {aiSettings?.aiEnabled && (
+                <section>
+                    <Subheader content="AIコーチからのレビュー" variant="section"/>
+                    <div className="flex items-center gap-1 mb-2">
+                        <SparklesIcon className="w-4 h-4 text-purple-400" />
+                        <span className="text-xs text-purple-400">AI生成（毎週月曜更新）</span>
+                    </div>
+                    {loadingAiReviews && <Loading />}
+                    {!loadingAiReviews && (
+                        <ListContainer>
+                            {aiReviews && aiReviews.length > 0
+                                ? aiReviews.map(r => (
+                                    <li key={r.id} className="py-2 px-4">
+                                        <Subheader content={r.executeDate} variant="subsection"/>
+                                        <span className="dark:text-white">{r.content}</span>
+                                    </li>
+                                ))
+                                : <NoDataCard />}
+                        </ListContainer>
+                    )}
+                </section>
+            )}
             <FloatingButton href="/workout-add">
                 <PlusIcon className="w-10 h-10 text-white dark:text-gray-900"></PlusIcon>
             </FloatingButton>

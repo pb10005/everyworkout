@@ -103,7 +103,7 @@ export const ExerciseDetailPage: React.FC = () => {
                                 <option value="02">全期間</option>
                             </select>
                         </div>
-                        <div className="dark:bg-black">
+                        <div>
                             <ExerciseChart chartData={chartData} />
                         </div>
                     </div>

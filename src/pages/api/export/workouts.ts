@@ -35,7 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const csv = "﻿" + header + rows; // BOM for Excel
 
+  const dateStr = new Date().toISOString().split("T")[0] ?? "";
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
-  res.setHeader("Content-Disposition", `attachment; filename="workouts_${new Date().toISOString().split("T")[0]}.csv"`);
+  res.setHeader("Content-Disposition", `attachment; filename="workouts_${dateStr}.csv"`);
   return res.status(200).send(csv);
 }

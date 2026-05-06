@@ -104,6 +104,7 @@ export const DashboardPage = (props: Props) => {
     return (
         <>
             {(errorM && errorR) && <NotLoggedInCard />}
+            <div>
             <section id="tour-stats" className="flex flex-col gap-2">
                 <Subheader content="トレーニング統計" variant="section"/>
                 {loadingStats && <Loading />}

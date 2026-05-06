@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { api } from "../../utils/api";
-import { ListBulletIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { ListBulletIcon, PlusIcon, FireIcon, CalendarIcon, ScaleIcon } from "@heroicons/react/20/solid";
 
 import {
     FloatingButton,
@@ -52,10 +52,50 @@ export const DashboardPage = (props: Props) => {
         isError: errorR,
     } = api.weeklyReport.getUserReports.useQuery();
 
+    const { data: stats, isLoading: loadingStats } = api.workout.getTrainingStats.useQuery();
+
 
     return (
         <>
             {(errorM && errorR) && <NotLoggedInCard />}
+            <section className="flex flex-col gap-2">
+                <Subheader content="トレーニング統計" variant="section"/>
+                {loadingStats && <Loading />}
+                {stats && (
+                    <div className="grid grid-cols-3 gap-2">
+                        <div className="flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 rounded-lg py-3 px-2">
+                            <FireIcon className="w-6 h-6 text-orange-400 mb-1" />
+                            <span className="text-2xl font-extrabold text-orange-400">{stats.streak}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 text-center">連続日数</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 rounded-lg py-3 px-2">
+                            <CalendarIcon className="w-6 h-6 text-blue-400 mb-1" />
+                            <span className="text-2xl font-extrabold text-blue-400">{stats.workoutsThisMonth}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 text-center">今月の記録数</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 rounded-lg py-3 px-2">
+                            <Link href="/body-weight" className="flex flex-col items-center">
+                                <ScaleIcon className="w-6 h-6 text-green-400 mb-1" />
+                                <span className="text-xs font-bold text-green-400">体重記録</span>
+                                <span className="text-xs text-gray-500 dark:text-gray-400 text-center">トラッキング</span>
+                            </Link>
+                        </div>
+                    </div>
+                )}
+                {stats && stats.topExercises.length > 0 && (
+                    <div className="bg-gray-100 dark:bg-gray-900 rounded-lg px-4 py-3">
+                        <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">よくやる種目</p>
+                        <ul className="flex flex-col gap-1">
+                            {stats.topExercises.map((ex, i) => (
+                                <li key={ex.exerciseId} className="flex items-center justify-between dark:text-white text-sm">
+                                    <span>{i + 1}. {ex.name}</span>
+                                    <span className="text-xs text-gray-400">{ex.count}回</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </section>
             <section className="flex flex-col gap-2">
                 <Subheader content="今週のトレーニング履歴" variant="section"/>
                 <div className="dark:bg-black">

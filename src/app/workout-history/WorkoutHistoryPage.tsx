@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { ChevronLeftIcon, ChevronRightIcon, ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 import { api } from "../../utils/api";
 
 import { RecordCard, Loading, Paginator, NoDataCard, ListContainer, Subheader } from "../../components";
@@ -48,7 +48,17 @@ export const WorkoutHistoryPage: React.FC = () => {
 
   return (
     <section className="flex flex-col gap-2">
-      <Subheader content="トレーニング履歴" variant="section"/>
+      <div className="flex items-center justify-between">
+        <Subheader content="トレーニング履歴" variant="section"/>
+        <a
+          href="/api/export/workouts"
+          download
+          className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+          <ArrowDownTrayIcon className="w-4 h-4" />
+          CSV
+        </a>
+      </div>
       <div className="px-2">
         <label
           className="block text-sm font-bold text-gray-700 dark:text-gray-300"

@@ -18,8 +18,17 @@ import {
     EmptyState
 } from "../../components";
 import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import type { ChartProp } from "../../components/types";
 import type { Goal } from "@prisma/client";
+
+
+
+type TourStep = {
+    title: string;
+    description: string;
+    targetId: string;
+};
 
 type Props = {
     isEmptyData: boolean;
@@ -30,6 +39,37 @@ type Props = {
 export const DashboardPage = (props: Props) => {
     const { isEmptyData, userWorkoutVolumesInThisWeek, goal } = props;
     const router = useRouter();
+    const [tourOpen, setTourOpen] = useState(false);
+    const [tourStepIndex, setTourStepIndex] = useState(0);
+
+    const tourSteps = useMemo<TourStep[]>(() => ([
+        { title: "統計", description: "ここで連続日数や今月の記録数を確認できます。", targetId: "tour-stats" },
+        { title: "履歴グラフ", description: "週次のトレーニング推移を可視化できます。", targetId: "tour-chart" },
+        { title: "目標", description: "達成したい目標を登録して継続につなげましょう。", targetId: "tour-goal" },
+        { title: "記録を追加", description: "右下のボタンから素早く新規ワークアウトを追加できます。", targetId: "tour-add-workout" },
+    ]), []);
+
+    useEffect(() => {
+        const done = localStorage.getItem("everyworkout-onboarding-v1");
+        if (!done) {
+            setTourOpen(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!tourOpen) return;
+        const targetId = tourSteps[tourStepIndex]?.targetId;
+        if (!targetId) return;
+        const target = document.getElementById(targetId);
+        target?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, [tourOpen, tourStepIndex, tourSteps]);
+
+    const closeTour = () => {
+        localStorage.setItem("everyworkout-onboarding-v1", "done");
+        setTourOpen(false);
+    };
+
+    const currentStep = tourSteps[tourStepIndex];
 
     const chartData = userWorkoutVolumesInThisWeek.map(x => {
         return {
@@ -58,7 +98,7 @@ export const DashboardPage = (props: Props) => {
     return (
         <>
             {(errorM && errorR) && <NotLoggedInCard />}
-            <section className="flex flex-col gap-2">
+            <section id="tour-stats" className="flex flex-col gap-2">
                 <Subheader content="トレーニング統計" variant="section"/>
                 {loadingStats && <Loading />}
                 {stats && (
@@ -96,7 +136,7 @@ export const DashboardPage = (props: Props) => {
                     </div>
                 )}
             </section>
-            <section className="flex flex-col gap-2">
+            <section id="tour-chart" className="flex flex-col gap-2">
                 <Subheader content="今週のトレーニング履歴" variant="section"/>
                 <div>
                     {!isEmptyData ? (
@@ -120,7 +160,7 @@ export const DashboardPage = (props: Props) => {
                     </Link>
                 </div>
             </section>
-            <section className="flex flex-col gap-2">
+            <section id="tour-goal" className="flex flex-col gap-2">
                 <Subheader content="目標" variant="section"/>
                 {goal ? <>
                     <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
@@ -190,9 +230,38 @@ export const DashboardPage = (props: Props) => {
                     </>
                 )}
             </section>
-            <FloatingButton href="/workout-add">
+            <div id="tour-add-workout">
+                <FloatingButton href="/workout-add">
                 <PlusIcon className="w-10 h-10 text-white dark:text-gray-900"></PlusIcon>
             </FloatingButton>
+            </div>
+
+            {tourOpen && currentStep && (
+                <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 md:items-center">
+                    <div className="w-full max-w-md rounded-xl bg-white p-5 shadow-xl dark:bg-gray-800">
+                        <p className="text-xs text-gray-500 dark:text-gray-300">
+                            オンボーディング {tourStepIndex + 1} / {tourSteps.length}
+                        </p>
+                        <h3 className="mt-1 text-lg font-bold dark:text-white">{currentStep.title}</h3>
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{currentStep.description}</p>
+                        <div className="mt-4 flex justify-between gap-2">
+                            <button className="rounded-md px-3 py-2 text-sm text-gray-500" onClick={closeTour}>スキップ</button>
+                            <button
+                                className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white"
+                                onClick={() => {
+                                    if (tourStepIndex === tourSteps.length - 1) {
+                                        closeTour();
+                                        return;
+                                    }
+                                    setTourStepIndex((prev) => prev + 1);
+                                }}
+                            >
+                                {tourStepIndex === tourSteps.length - 1 ? "開始する" : "次へ"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

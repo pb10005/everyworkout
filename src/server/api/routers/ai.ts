@@ -4,7 +4,16 @@ import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import type { WorkoutMenuItemProps } from "../../../components/types";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+function getAnthropicClient() {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "AI機能の設定が完了していません。管理者にお問い合わせください。",
+    });
+  }
+  return new Anthropic({ apiKey });
+}
 
 async function assertAiEnabled(userId: string, prisma: typeof import("../../../server/db").prisma) {
   const settings = await prisma.userSettings.findUnique({ where: { userId } });
@@ -105,6 +114,7 @@ ${exerciseList}
 
       let raw: string;
       try {
+        const client = getAnthropicClient();
         const message = await client.messages.create({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 512,
@@ -112,7 +122,9 @@ ${exerciseList}
         });
         const block = message.content[0];
         raw = block?.type === "text" ? block.text : "";
-      } catch {
+      } catch (err) {
+        console.error("[AI] generateWorkoutMenu failed:", err);
+        if (err instanceof TRPCError) throw err;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "AI生成に失敗しました。手動でメニューを作成してください。",

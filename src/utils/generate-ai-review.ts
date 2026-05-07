@@ -1,7 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { prisma } from "../server/db";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+function getClient() {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set");
+  return new Anthropic({ apiKey });
+}
 
 export const generateAiReview = async () => {
   const dates = await prisma.weeklyReportMaster.findMany({
@@ -67,6 +71,7 @@ export const generateAiReview = async () => {
 
     let content: string;
     try {
+      const client = getClient();
       const message = await client.messages.create({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 256,
@@ -74,7 +79,8 @@ export const generateAiReview = async () => {
       });
       const block = message.content[0];
       content = block?.type === "text" ? block.text.trim() : "";
-    } catch {
+    } catch (err) {
+      console.error("[AI] generateAiReview failed for user", user.id, err);
       continue;
     }
 

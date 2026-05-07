@@ -324,15 +324,42 @@ ${exerciseList}
 返却形式:
 {"phases":[{"name":"","weeks":"1-4","focus":""}],"weeklyTemplate":[{"day":1,"focus":"","examples":["..."]}],"adjustmentRules":["..."]}`;
 
-      const message = await client.messages.create({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 700,
-        messages: [{ role: "user", content: prompt }],
-      });
-      const block = message.content[0];
-      const raw = block?.type === "text" ? block.text : "{}";
-      const jsonMatch = raw.match(/\{[\s\S]*\}/);
-      const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : raw) as Record<string, unknown>;
+      let raw: string;
+      try {
+        const client = getAnthropicClient();
+        const message = await client.messages.create({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 700,
+          system: [
+            {
+              type: "text",
+              text: "あなたは経験豊富なストレングスコーチです。ユーザーの目標と条件を分析し、科学的根拠に基づいた中長期トレーニングプランを提案します。必ず指定されたJSON形式のみで応答してください。",
+              cache_control: { type: "ephemeral" },
+            },
+          ],
+          messages: [{ role: "user", content: prompt }],
+        });
+        const block = message.content[0];
+        raw = block?.type === "text" ? block.text : "{}";
+      } catch (err) {
+        console.error("[AI] generateGoalProgram failed:", err);
+        if (err instanceof TRPCError) throw err;
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "AI生成に失敗しました。しばらくしてから再試行してください。",
+        });
+      }
+
+      let parsed: Record<string, unknown>;
+      try {
+        const jsonMatch = raw.match(/\{[\s\S]*\}/);
+        parsed = JSON.parse(jsonMatch ? jsonMatch[0] : raw) as Record<string, unknown>;
+      } catch {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "AIの応答を解析できませんでした。しばらくしてから再試行してください。",
+        });
+      }
 
       return { goal: input.goal, weeks: input.weeks, daysPerWeek: input.daysPerWeek, plan: parsed };
     }),

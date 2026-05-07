@@ -33,7 +33,7 @@ export const AiToolsPage = () => {
         <Subheader content="1) 今日のおすすめメニュー" variant="section" />
         <div className="flex items-center gap-2">
           <input type="number" min={0} max={14} value={recommendExcludeDays} onChange={(e) => setRecommendExcludeDays(Number(e.target.value))} className="w-20 rounded border px-2 py-1 text-sm" />
-          <button className="rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => recommendationQuery.refetch()}>実行</button>
+          <button className="rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => { void recommendationQuery.refetch(); }}>実行</button>
         </div>
         {recommendationQuery.data && <ul className="rounded bg-white p-3 text-sm dark:bg-gray-800 dark:text-white">{recommendationQuery.data.recommendations.map((item) => <li key={`${item.exerciseId}-${item.bodyPartId}`}>{item.exerciseName}（{item.bodyPartName}）</li>)}</ul>}
       </section>
@@ -42,7 +42,7 @@ export const AiToolsPage = () => {
         <Subheader content="3) 停滞検知" variant="section" />
         <div className="flex items-center gap-2">
           <input type="number" min={2} max={12} value={plateauWeeks} onChange={(e) => setPlateauWeeks(Number(e.target.value))} className="w-20 rounded border px-2 py-1 text-sm" />
-          <button className="rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => plateauQuery.refetch()}>実行</button>
+          <button className="rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => { void plateauQuery.refetch(); }}>実行</button>
         </div>
         {plateauQuery.data && <div className="rounded bg-white p-3 text-sm dark:bg-gray-800 dark:text-white"><p>{plateauQuery.data.summary}</p></div>}
       </section>
@@ -55,7 +55,7 @@ export const AiToolsPage = () => {
           <input className="w-24 rounded border px-2 py-1 text-sm" type="number" value={daysPerWeek} min={2} max={7} onChange={(e) => setDaysPerWeek(Number(e.target.value))} />
         </div>
         <input className="rounded border px-2 py-1 text-sm" value={equipment} onChange={(e) => setEquipment(e.target.value)} placeholder="利用器具" />
-        <button className="w-fit rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => goalProgramMutation.mutate({ goal, weeks, daysPerWeek, equipment })}>生成</button>
+        <button className="w-fit rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => { goalProgramMutation.mutate({ goal, weeks, daysPerWeek, equipment }); }}>生成</button>
         {goalProgramMutation.data && <pre className="overflow-auto rounded bg-white p-2 text-xs dark:bg-gray-800 dark:text-white">{JSON.stringify(goalProgramMutation.data.plan, null, 2)}</pre>}
       </section>
     </div>

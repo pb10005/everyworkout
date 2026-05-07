@@ -5,58 +5,189 @@ import { SparklesIcon } from "@heroicons/react/20/solid";
 import { api } from "../../utils/api";
 import { Loading, Subheader } from "../../components";
 
+const inputClass = "w-full rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400";
+const labelClass = "text-xs font-medium text-gray-500 dark:text-gray-400";
+
 export const AiToolsPage = () => {
   const { data: aiSettings, isLoading: loadingSettings } = api.userSettings.get.useQuery();
   const [recommendExcludeDays, setRecommendExcludeDays] = useState(2);
   const [plateauWeeks, setPlateauWeeks] = useState(6);
-  const recommendationQuery = api.ai.getTodayWorkoutRecommendation.useQuery({ excludeRecentDays: recommendExcludeDays }, { enabled: false });
-  const plateauQuery = api.ai.detectPlateau.useQuery({ lookbackWeeks: plateauWeeks }, { enabled: false });
+  const recommendationQuery = api.ai.getTodayWorkoutRecommendation.useQuery(
+    { excludeRecentDays: recommendExcludeDays },
+    { enabled: false }
+  );
+  const plateauQuery = api.ai.detectPlateau.useQuery(
+    { lookbackWeeks: plateauWeeks },
+    { enabled: false }
+  );
   const goalProgramMutation = api.ai.generateGoalProgram.useMutation();
-  const [goal, setGoal] = useState("筋肥大");
+  const [goal, setGoal] = useState("");
   const [weeks, setWeeks] = useState(8);
   const [daysPerWeek, setDaysPerWeek] = useState(4);
-  const [equipment, setEquipment] = useState("ダンベル, バーベル");
+  const [equipment, setEquipment] = useState("");
 
   if (loadingSettings) return <Loading />;
-  if (!aiSettings?.aiEnabled) return <p className="text-sm">AI機能は現在無効です。</p>;
+  if (!aiSettings?.aiEnabled) return <p className="text-sm text-gray-500 dark:text-gray-400 p-4">AI機能は現在無効です。プロフィールページから有効化を申請してください。</p>;
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-lg bg-purple-50 px-4 py-3 dark:bg-gray-900">
+      <div className="rounded-lg bg-purple-50 px-4 py-3 dark:bg-purple-900/20">
         <div className="flex items-center gap-2">
           <SparklesIcon className="h-5 w-5 text-purple-500" />
           <h1 className="text-lg font-bold dark:text-white">AIコーチツール</h1>
         </div>
       </div>
 
-      <section className="flex flex-col gap-2 rounded-lg bg-gray-100 p-3 dark:bg-gray-900">
-        <Subheader content="1) 今日のおすすめメニュー" variant="section" />
-        <div className="flex items-center gap-2">
-          <input type="number" min={0} max={14} value={recommendExcludeDays} onChange={(e) => setRecommendExcludeDays(Number(e.target.value))} className="w-20 rounded border px-2 py-1 text-sm" />
-          <button className="rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => { void recommendationQuery.refetch(); }}>実行</button>
+      {/* 今日のおすすめメニュー */}
+      <section className="flex flex-col gap-3 rounded-lg bg-gray-100 p-4 dark:bg-gray-900">
+        <Subheader content="今日のおすすめメニュー" variant="section" />
+        <div className="flex flex-col gap-1">
+          <label className={labelClass}>直近除外日数（この日数以内に行った部位を除外）</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min={0}
+              max={14}
+              value={recommendExcludeDays}
+              onChange={(e) => setRecommendExcludeDays(Number(e.target.value))}
+              className="w-24 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white"
+              aria-label="直近除外日数"
+            />
+            <span className={labelClass}>日</span>
+          </div>
         </div>
-        {recommendationQuery.data && <ul className="rounded bg-white p-3 text-sm dark:bg-gray-800 dark:text-white">{recommendationQuery.data.recommendations.map((item) => <li key={`${item.exerciseId}-${item.bodyPartId}`}>{item.exerciseName}（{item.bodyPartName}）</li>)}</ul>}
+        <button
+          className="w-fit rounded bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-600 active:scale-95 transition-all disabled:opacity-40"
+          disabled={recommendationQuery.isFetching}
+          onClick={() => { void recommendationQuery.refetch(); }}
+        >
+          {recommendationQuery.isFetching ? "取得中..." : "おすすめを表示"}
+        </button>
+        {recommendationQuery.data && (
+          <div className="flex flex-col gap-2">
+            <ul className="rounded bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
+              {recommendationQuery.data.recommendations.map((item) => (
+                <li key={`${item.exerciseId}-${item.bodyPartId}`} className="flex justify-between px-3 py-2 text-sm dark:text-white">
+                  <span>{item.exerciseName}</span>
+                  <span className="text-xs text-gray-400">{item.bodyPartName}</span>
+                </li>
+              ))}
+            </ul>
+            <ul className="text-xs text-gray-400 dark:text-gray-500 list-disc list-inside">
+              {recommendationQuery.data.reasons.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </div>
+        )}
       </section>
 
-      <section className="flex flex-col gap-2 rounded-lg bg-gray-100 p-3 dark:bg-gray-900">
-        <Subheader content="3) 停滞検知" variant="section" />
-        <div className="flex items-center gap-2">
-          <input type="number" min={2} max={12} value={plateauWeeks} onChange={(e) => setPlateauWeeks(Number(e.target.value))} className="w-20 rounded border px-2 py-1 text-sm" />
-          <button className="rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => { void plateauQuery.refetch(); }}>実行</button>
+      {/* 停滞検知 */}
+      <section className="flex flex-col gap-3 rounded-lg bg-gray-100 p-4 dark:bg-gray-900">
+        <Subheader content="停滞検知" variant="section" />
+        <div className="flex flex-col gap-1">
+          <label className={labelClass}>分析期間（週数で指定、最近N週間のデータを分析）</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min={2}
+              max={12}
+              value={plateauWeeks}
+              onChange={(e) => setPlateauWeeks(Number(e.target.value))}
+              className="w-24 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white"
+              aria-label="分析期間（週）"
+            />
+            <span className={labelClass}>週間</span>
+          </div>
         </div>
-        {plateauQuery.data && <div className="rounded bg-white p-3 text-sm dark:bg-gray-800 dark:text-white"><p>{plateauQuery.data.summary}</p></div>}
+        <button
+          className="w-fit rounded bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-600 active:scale-95 transition-all disabled:opacity-40"
+          disabled={plateauQuery.isFetching}
+          onClick={() => { void plateauQuery.refetch(); }}
+        >
+          {plateauQuery.isFetching ? "分析中..." : "停滞を診断"}
+        </button>
+        {plateauQuery.data && (
+          <div className="rounded bg-white dark:bg-gray-800 p-3 text-sm dark:text-white flex flex-col gap-2">
+            <p className={`font-medium ${plateauQuery.data.isPlateau ? "text-orange-500" : "text-green-500"}`}>
+              {plateauQuery.data.isPlateau ? "⚠️ 停滞傾向あり" : "✅ 停滞なし"}
+            </p>
+            <p>{plateauQuery.data.summary}</p>
+            {plateauQuery.data.suggestions && (
+              <ul className="list-disc list-inside text-xs text-gray-500 dark:text-gray-400 mt-1">
+                {plateauQuery.data.suggestions.map((s, i) => <li key={i}>{s}</li>)}
+              </ul>
+            )}
+          </div>
+        )}
       </section>
 
-      <section className="flex flex-col gap-2 rounded-lg bg-gray-100 p-3 dark:bg-gray-900">
-        <Subheader content="6) 目標プラン生成" variant="section" />
-        <input className="rounded border px-2 py-1 text-sm" value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="目標" />
-        <div className="flex gap-2">
-          <input className="w-24 rounded border px-2 py-1 text-sm" type="number" value={weeks} min={2} max={24} onChange={(e) => setWeeks(Number(e.target.value))} />
-          <input className="w-24 rounded border px-2 py-1 text-sm" type="number" value={daysPerWeek} min={2} max={7} onChange={(e) => setDaysPerWeek(Number(e.target.value))} />
+      {/* 目標プラン生成 */}
+      <section className="flex flex-col gap-3 rounded-lg bg-gray-100 p-4 dark:bg-gray-900">
+        <Subheader content="目標プラン生成" variant="section" />
+        <div className="flex flex-col gap-1">
+          <label className={labelClass}>トレーニング目標</label>
+          <input
+            className={inputClass}
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+            placeholder="例）筋肥大、ダイエット、筋力アップ"
+          />
         </div>
-        <input className="rounded border px-2 py-1 text-sm" value={equipment} onChange={(e) => setEquipment(e.target.value)} placeholder="利用器具" />
-        <button className="w-fit rounded bg-purple-500 px-3 py-1 text-sm text-white" onClick={() => { goalProgramMutation.mutate({ goal, weeks, daysPerWeek, equipment }); }}>生成</button>
-        {goalProgramMutation.data && <pre className="overflow-auto rounded bg-white p-2 text-xs dark:bg-gray-800 dark:text-white">{JSON.stringify(goalProgramMutation.data.plan, null, 2)}</pre>}
+        <div className="flex gap-3">
+          <div className="flex flex-col gap-1 flex-1">
+            <label className={labelClass}>期間</label>
+            <div className="flex items-center gap-1">
+              <input
+                className="w-full rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white"
+                type="number"
+                value={weeks}
+                min={2}
+                max={24}
+                onChange={(e) => setWeeks(Number(e.target.value))}
+                aria-label="期間（週）"
+              />
+              <span className={labelClass}>週</span>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 flex-1">
+            <label className={labelClass}>週の練習日数</label>
+            <div className="flex items-center gap-1">
+              <input
+                className="w-full rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white"
+                type="number"
+                value={daysPerWeek}
+                min={2}
+                max={7}
+                onChange={(e) => setDaysPerWeek(Number(e.target.value))}
+                aria-label="週あたり練習日数"
+              />
+              <span className={labelClass}>日</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className={labelClass}>利用できる器具</label>
+          <input
+            className={inputClass}
+            value={equipment}
+            onChange={(e) => setEquipment(e.target.value)}
+            placeholder="例）ダンベル、バーベル、マシン（任意）"
+          />
+        </div>
+        <button
+          className="w-fit rounded bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-600 active:scale-95 transition-all disabled:opacity-40"
+          disabled={goalProgramMutation.isLoading || !goal}
+          onClick={() => { goalProgramMutation.mutate({ goal, weeks, daysPerWeek, equipment: equipment || undefined }); }}
+        >
+          {goalProgramMutation.isLoading ? "生成中..." : "プランを生成"}
+        </button>
+        {goalProgramMutation.isError && (
+          <p className="text-sm text-red-500" role="alert">{goalProgramMutation.error.message}</p>
+        )}
+        {goalProgramMutation.data && (
+          <pre className="overflow-auto rounded bg-white dark:bg-gray-800 p-3 text-xs dark:text-white whitespace-pre-wrap">
+            {JSON.stringify(goalProgramMutation.data.plan, null, 2)}
+          </pre>
+        )}
       </section>
     </div>
   );

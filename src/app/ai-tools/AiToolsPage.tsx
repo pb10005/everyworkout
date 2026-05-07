@@ -8,10 +8,17 @@ import { Loading, Subheader } from "../../components";
 const inputClass = "w-full rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400";
 const labelClass = "text-xs font-medium text-gray-500 dark:text-gray-400";
 
+const clamp = (value: number, min: number, max: number, fallback: number): number => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return fallback;
+  return Math.max(min, Math.min(max, n));
+};
+
 export const AiToolsPage = () => {
   const { data: aiSettings, isLoading: loadingSettings } = api.userSettings.get.useQuery();
   const [recommendExcludeDays, setRecommendExcludeDays] = useState(2);
   const [plateauWeeks, setPlateauWeeks] = useState(6);
+
   const recommendationQuery = api.ai.getTodayWorkoutRecommendation.useQuery(
     { excludeRecentDays: recommendExcludeDays },
     { enabled: false }
@@ -27,7 +34,11 @@ export const AiToolsPage = () => {
   const [equipment, setEquipment] = useState("");
 
   if (loadingSettings) return <Loading />;
-  if (!aiSettings?.aiEnabled) return <p className="text-sm text-gray-500 dark:text-gray-400 p-4">AI機能は現在無効です。プロフィールページから有効化を申請してください。</p>;
+  if (!aiSettings?.aiEnabled) return (
+    <p className="text-sm text-gray-500 dark:text-gray-400 p-4">
+      AI機能は現在無効です。プロフィールページから有効化を申請してください。
+    </p>
+  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -49,7 +60,7 @@ export const AiToolsPage = () => {
               min={0}
               max={14}
               value={recommendExcludeDays}
-              onChange={(e) => setRecommendExcludeDays(Number(e.target.value))}
+              onChange={(e) => setRecommendExcludeDays(clamp(Number(e.target.value), 0, 14, 2))}
               className="w-24 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white"
               aria-label="直近除外日数"
             />
@@ -63,6 +74,9 @@ export const AiToolsPage = () => {
         >
           {recommendationQuery.isFetching ? "取得中..." : "おすすめを表示"}
         </button>
+        {recommendationQuery.isError && (
+          <p className="text-sm text-red-500" role="alert">{recommendationQuery.error.message}</p>
+        )}
         {recommendationQuery.data && (
           <div className="flex flex-col gap-2">
             <ul className="rounded bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
@@ -91,7 +105,7 @@ export const AiToolsPage = () => {
               min={2}
               max={12}
               value={plateauWeeks}
-              onChange={(e) => setPlateauWeeks(Number(e.target.value))}
+              onChange={(e) => setPlateauWeeks(clamp(Number(e.target.value), 2, 12, 6))}
               className="w-24 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-white"
               aria-label="分析期間（週）"
             />
@@ -105,6 +119,9 @@ export const AiToolsPage = () => {
         >
           {plateauQuery.isFetching ? "分析中..." : "停滞を診断"}
         </button>
+        {plateauQuery.isError && (
+          <p className="text-sm text-red-500" role="alert">{plateauQuery.error.message}</p>
+        )}
         {plateauQuery.data && (
           <div className="rounded bg-white dark:bg-gray-800 p-3 text-sm dark:text-white flex flex-col gap-2">
             <p className={`font-medium ${plateauQuery.data.isPlateau ? "text-orange-500" : "text-green-500"}`}>
@@ -142,7 +159,7 @@ export const AiToolsPage = () => {
                 value={weeks}
                 min={2}
                 max={24}
-                onChange={(e) => setWeeks(Number(e.target.value))}
+                onChange={(e) => setWeeks(clamp(Number(e.target.value), 2, 24, 8))}
                 aria-label="期間（週）"
               />
               <span className={labelClass}>週</span>
@@ -157,7 +174,7 @@ export const AiToolsPage = () => {
                 value={daysPerWeek}
                 min={2}
                 max={7}
-                onChange={(e) => setDaysPerWeek(Number(e.target.value))}
+                onChange={(e) => setDaysPerWeek(clamp(Number(e.target.value), 2, 7, 4))}
                 aria-label="週あたり練習日数"
               />
               <span className={labelClass}>日</span>
@@ -175,11 +192,14 @@ export const AiToolsPage = () => {
         </div>
         <button
           className="w-fit rounded bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-600 active:scale-95 transition-all disabled:opacity-40"
-          disabled={goalProgramMutation.isLoading || !goal}
+          disabled={goalProgramMutation.isLoading || goal.length < 3}
           onClick={() => { goalProgramMutation.mutate({ goal, weeks, daysPerWeek, equipment: equipment || undefined }); }}
         >
           {goalProgramMutation.isLoading ? "生成中..." : "プランを生成"}
         </button>
+        {goal.length > 0 && goal.length < 3 && (
+          <p className="text-xs text-orange-500">目標は3文字以上入力してください</p>
+        )}
         {goalProgramMutation.isError && (
           <p className="text-sm text-red-500" role="alert">{goalProgramMutation.error.message}</p>
         )}

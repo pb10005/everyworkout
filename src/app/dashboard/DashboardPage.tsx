@@ -47,6 +47,7 @@ export const DashboardPage = (props: Props) => {
         { title: "履歴グラフ", description: "週次のトレーニング推移を可視化できます。", targetId: "tour-chart" },
         { title: "目標", description: "達成したい目標を登録して継続につなげましょう。", targetId: "tour-goal" },
         { title: "記録を追加", description: "右下のボタンから素早く新規ワークアウトを追加できます。", targetId: "tour-add-workout" },
+        { title: "AIコーチ", description: "毎週月曜日にAIがあなたのトレーニングを分析してフィードバックを提供します。", targetId: "tour-ai-review" },
     ]), []);
 
     useEffect(() => {
@@ -238,7 +239,7 @@ export const DashboardPage = (props: Props) => {
                 )}
             </section>
             {aiSettings?.aiEnabled && (
-                <section>
+                <section id="tour-ai-review">
                     <Subheader content="AIコーチからのレビュー" variant="section"/>
                     <div className="flex items-center gap-1 mb-2">
                         <SparklesIcon className="w-4 h-4 text-purple-400" />
@@ -246,16 +247,28 @@ export const DashboardPage = (props: Props) => {
                     </div>
                     {loadingAiReviews && <Loading />}
                     {!loadingAiReviews && (
-                        <ListContainer>
-                            {aiReviews && aiReviews.length > 0
-                                ? aiReviews.map(r => (
-                                    <li key={r.id} className="py-2 px-4">
-                                        <Subheader content={r.executeDate} variant="subsection"/>
-                                        <span className="dark:text-white">{r.content}</span>
-                                    </li>
-                                ))
-                                : <NoDataCard />}
-                        </ListContainer>
+                        <>
+                            {aiReviews && aiReviews.length > 0 ? (
+                                <ListContainer>
+                                    {aiReviews.map(r => (
+                                        <li key={r.id} className="py-2 px-4">
+                                            <Subheader content={r.executeDate} variant="subsection"/>
+                                            <span className="dark:text-white">{r.content}</span>
+                                        </li>
+                                    ))}
+                                </ListContainer>
+                            ) : (
+                                <div className="flex flex-col items-center gap-2 py-6 px-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border border-dashed border-purple-200 dark:border-purple-700">
+                                    <SparklesIcon className="w-8 h-8 text-purple-300 dark:text-purple-600" />
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+                                        まだレビューがありません
+                                    </p>
+                                    <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
+                                        トレーニングを記録すると、毎週月曜日にAIコーチからフィードバックが届きます
+                                    </p>
+                                </div>
+                            )}
+                        </>
                     )}
                 </section>
             )}

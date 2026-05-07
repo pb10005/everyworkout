@@ -118,6 +118,13 @@ ${exerciseList}
         const message = await client.messages.create({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 512,
+          system: [
+            {
+              type: "text",
+              text: "あなたは経験豊富なパーソナルトレーナーです。ユーザーのトレーニング履歴と目標を分析し、科学的根拠に基づいた最適なワークアウトメニューを提案します。必ず指定されたJSON形式のみで応答してください。",
+              cache_control: { type: "ephemeral" },
+            },
+          ],
           messages: [{ role: "user", content: prompt }],
         });
         const block = message.content[0];

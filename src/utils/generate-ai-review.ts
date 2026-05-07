@@ -75,6 +75,13 @@ export const generateAiReview = async () => {
       const message = await client.messages.create({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 256,
+        system: [
+          {
+            type: "text",
+            text: "あなたは経験豊富なパーソナルトレーナーです。ユーザーの週次トレーニングデータを分析し、日本語で励ましと具体的なアドバイスを含む簡潔なレビューを提供します。",
+            cache_control: { type: "ephemeral" },
+          },
+        ],
         messages: [{ role: "user", content: prompt }],
       });
       const block = message.content[0];

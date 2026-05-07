@@ -240,9 +240,10 @@ export const DashboardPage = (props: Props) => {
             {aiSettings?.aiEnabled && (
                 <section>
                     <Subheader content="AIコーチからのレビュー" variant="section"/>
-                    <div className="flex items-center gap-1 mb-2">
+                    <div className="flex items-center gap-2 mb-2">
                         <SparklesIcon className="w-4 h-4 text-purple-400" />
                         <span className="text-xs text-purple-400">AI生成（毎週月曜更新）</span>
+                        <Link href="/ai-tools" className="text-xs underline text-purple-500">AIツールを開く</Link>
                     </div>
                     {loadingAiReviews && <Loading />}
                     {!loadingAiReviews && (

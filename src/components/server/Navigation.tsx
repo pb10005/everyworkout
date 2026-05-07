@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { HomeIcon, ListBulletIcon, MagnifyingGlassIcon, PencilSquareIcon, UserIcon } from "@heroicons/react/20/solid";
+import { HomeIcon, ListBulletIcon, MagnifyingGlassIcon, PencilSquareIcon, SparklesIcon, UserIcon } from "@heroicons/react/20/solid";
 
 type Props = {
   currentPage?: string;
@@ -54,6 +54,13 @@ export const Navigation: React.FC<Props> = (props: Props) => {
       icon: <PencilSquareIcon className="w-6 h-6" />, 
       label: 'Record',
       ariaLabel: 'Record workout' 
+    },
+    { 
+      key: 'ai-tools', 
+      path: '/ai-tools', 
+      icon: <SparklesIcon className="w-6 h-6" />, 
+      label: 'AI',
+      ariaLabel: 'Open AI tools' 
     },
     { 
       key: 'profile', 

@@ -180,7 +180,7 @@ ${exerciseList}
     }),
 
   getTodayWorkoutRecommendation: protectedProcedure
-    .input(z.object({ excludeRecentDays: z.number().min(0).max(14).default(2) }).optional())
+    .input(z.object({ excludeRecentDays: z.number().int().min(0).max(14).default(2) }).optional())
     .query(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       await assertAiEnabled(userId, ctx.prisma);
@@ -258,7 +258,7 @@ ${exerciseList}
     }),
 
   detectPlateau: protectedProcedure
-    .input(z.object({ lookbackWeeks: z.number().min(2).max(12).default(6) }).optional())
+    .input(z.object({ lookbackWeeks: z.number().int().min(2).max(12).default(6) }).optional())
     .query(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       await assertAiEnabled(userId, ctx.prisma);

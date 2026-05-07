@@ -310,18 +310,18 @@ ${exerciseList}
     }),
 
   generateGoalProgram: protectedProcedure
-    .input(z.object({ goal: z.string().min(3).max(120), weeks: z.number().min(2).max(24), daysPerWeek: z.number().min(2).max(7), equipment: z.string().max(200).optional() }))
+    .input(z.object({ goal: z.string().min(3).max(120), weeks: z.number().int().min(2).max(24), daysPerWeek: z.number().int().min(2).max(7), equipment: z.string().max(200).optional() }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       await assertAiEnabled(userId, ctx.prisma);
 
-      const prompt = `あなたはストレングスコーチです。以下条件で中長期プランをJSONで返してください。
+      const prompt = `以下条件で中長期プランをJSONで返してください。
 目標:${input.goal}
 期間:${input.weeks}週間
 週あたり:${input.daysPerWeek}日
 器具:${input.equipment ?? "指定なし"}
 
-返却形式:
+返却形式（JSON形式のみ、説明不要）:
 {"phases":[{"name":"","weeks":"1-4","focus":""}],"weeklyTemplate":[{"day":1,"focus":"","examples":["..."]}],"adjustmentRules":["..."]}`;
 
       let raw: string;
@@ -329,7 +329,7 @@ ${exerciseList}
         const client = getAnthropicClient();
         const message = await client.messages.create({
           model: "claude-haiku-4-5-20251001",
-          max_tokens: 700,
+          max_tokens: 1500,
           system: [
             {
               type: "text",
@@ -340,13 +340,32 @@ ${exerciseList}
           messages: [{ role: "user", content: prompt }],
         });
         const block = message.content[0];
+        if (message.stop_reason === "max_tokens") {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "AIの応答が長すぎて途中で切れました。期間や日数を減らして再試行してください。",
+          });
+        }
         raw = block?.type === "text" ? block.text : "{}";
       } catch (err) {
         console.error("[AI] generateGoalProgram failed:", err);
         if (err instanceof TRPCError) throw err;
+        if (err instanceof Anthropic.AuthenticationError) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "AI機能の設定が完了していません。管理者にお問い合わせください。",
+          });
+        }
+        if (err instanceof Anthropic.RateLimitError) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "AI APIの利用上限に達しました。しばらくしてから再試行してください。",
+          });
+        }
+        const detail = err instanceof Error ? err.message : String(err);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "AI生成に失敗しました。しばらくしてから再試行してください。",
+          message: `AI生成に失敗しました: ${detail}`,
         });
       }
 

@@ -14,6 +14,86 @@ const clamp = (value: number, min: number, max: number, fallback: number): numbe
   return Math.max(min, Math.min(max, n));
 };
 
+type GoalPlan = {
+  phases?: Array<{ name: string; weeks: string; focus: string }>;
+  weeklyTemplate?: Array<{ day: number; focus: string; examples?: string[] }>;
+  adjustmentRules?: string[];
+};
+
+const GoalPlanResult = ({ goal, weeks, daysPerWeek, plan }: {
+  goal: string;
+  weeks: number;
+  daysPerWeek: number;
+  plan: Record<string, unknown>;
+}) => {
+  const p = plan as GoalPlan;
+  return (
+    <div className="flex flex-col gap-4 text-sm">
+      <div className="rounded-lg bg-purple-50 dark:bg-purple-900/20 p-3">
+        <p className="font-medium text-purple-700 dark:text-purple-300">{goal}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{weeks}週間 · 週{daysPerWeek}日</p>
+      </div>
+
+      {p.phases && p.phases.length > 0 && (
+        <div>
+          <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">フェーズ</h4>
+          <div className="flex flex-col gap-2">
+            {p.phases.map((phase, i) => (
+              <div key={i} className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+                <div className="flex items-start justify-between gap-2">
+                  <span className="font-medium dark:text-white">{phase.name}</span>
+                  <span className="text-xs whitespace-nowrap bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded">{phase.weeks}</span>
+                </div>
+                <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{phase.focus}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {p.weeklyTemplate && p.weeklyTemplate.length > 0 && (
+        <div>
+          <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">週間テンプレート</h4>
+          <div className="flex flex-col gap-2">
+            {p.weeklyTemplate.map((day, i) => (
+              <div key={i} className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-bold bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded">Day {day.day}</span>
+                  <span className="font-medium dark:text-white">{day.focus}</span>
+                </div>
+                {day.examples && day.examples.length > 0 && (
+                  <ul className="mt-1.5 flex flex-col gap-0.5 pl-1">
+                    {day.examples.map((ex, j) => (
+                      <li key={j} className="text-xs text-gray-600 dark:text-gray-300 flex gap-1.5">
+                        <span className="text-purple-400 flex-shrink-0">•</span>
+                        <span>{ex}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {p.adjustmentRules && p.adjustmentRules.length > 0 && (
+        <div>
+          <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">調整ルール</h4>
+          <ul className="flex flex-col gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+            {p.adjustmentRules.map((rule, i) => (
+              <li key={i} className="text-xs text-gray-600 dark:text-gray-300 flex gap-2">
+                <span className="text-purple-400 flex-shrink-0">✓</span>
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const AiToolsPage = () => {
   const { data: aiSettings, isLoading: loadingSettings } = api.userSettings.get.useQuery();
   const [recommendExcludeDays, setRecommendExcludeDays] = useState(2);
@@ -204,9 +284,12 @@ export const AiToolsPage = () => {
           <p className="text-sm text-red-500" role="alert">{goalProgramMutation.error.message}</p>
         )}
         {goalProgramMutation.data && (
-          <pre className="overflow-auto rounded bg-white dark:bg-gray-800 p-3 text-xs dark:text-white whitespace-pre-wrap">
-            {JSON.stringify(goalProgramMutation.data.plan, null, 2)}
-          </pre>
+          <GoalPlanResult
+            goal={goalProgramMutation.data.goal}
+            weeks={goalProgramMutation.data.weeks}
+            daysPerWeek={goalProgramMutation.data.daysPerWeek}
+            plan={goalProgramMutation.data.plan}
+          />
         )}
       </section>
     </div>

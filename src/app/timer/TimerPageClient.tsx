@@ -1,17 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Timer, Button, BackButton } from "../../components";
 import { Container, Heading, Navigation } from "../../components/server";
+
+const TIMER_KEY = 'everyworkout_timer_state';
+
+type SavedTimer =
+  | { state: 'running'; expiryAt: number; duration: number }
+  | { state: 'paused'; remainingSeconds: number; duration: number };
 
 export const TimerPageClient: React.FC = () => {
   const [expiryTD, setExpiryTD] = useState<number>(120);
   const [isStarted, setStarted] = useState<boolean>(false);
+  const [autoStart, setAutoStart] = useState<boolean>(false);
+
+  useEffect(() => {
+    const raw = sessionStorage.getItem(TIMER_KEY);
+    if (!raw) return;
+    try {
+      const saved = JSON.parse(raw) as SavedTimer;
+      if (saved.state === 'running') {
+        const remaining = Math.floor((saved.expiryAt - Date.now()) / 1000);
+        if (remaining > 0) {
+          setExpiryTD(remaining);
+          setAutoStart(true);
+          setStarted(true);
+        } else {
+          sessionStorage.removeItem(TIMER_KEY);
+        }
+      } else {
+        setExpiryTD(saved.remainingSeconds);
+        setAutoStart(false);
+        setStarted(true);
+      }
+    } catch {
+      sessionStorage.removeItem(TIMER_KEY);
+    }
+  }, []);
 
   const modifyExpiryTD = (delta: number) => {
     const newVal = Math.max(0, expiryTD + delta);
     setExpiryTD(newVal);
-  }
+  };
+
+  const handleStart = () => {
+    const expiryAt = Date.now() + expiryTD * 1000;
+    sessionStorage.setItem(TIMER_KEY, JSON.stringify({
+      state: 'running', expiryAt, duration: expiryTD,
+    } satisfies SavedTimer));
+    setAutoStart(false);
+    setStarted(true);
+  };
+
+  const handleExpire = () => {
+    sessionStorage.removeItem(TIMER_KEY);
+  };
+
+  const handlePause = (remainingSeconds: number) => {
+    sessionStorage.setItem(TIMER_KEY, JSON.stringify({
+      state: 'paused', remainingSeconds, duration: expiryTD,
+    } satisfies SavedTimer));
+  };
+
+  const handleReset = () => {
+    sessionStorage.removeItem(TIMER_KEY);
+  };
 
   return (
     <>
@@ -34,14 +88,19 @@ export const TimerPageClient: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex justify-center items-center text-xl mt-1">
-                  <Button onClick={() => void setStarted(true)}>開始</Button>
+                  <Button onClick={handleStart}>開始</Button>
                 </div>
               </>
             }
             {
-              isStarted && <>
-                <Timer expiryTimeDelta={expiryTD}></Timer>
-              </>
+              isStarted &&
+              <Timer
+                expiryTimeDelta={expiryTD}
+                autoStart={autoStart}
+                onExpire={handleExpire}
+                onPause={handlePause}
+                onReset={handleReset}
+              />
             }
           </div>
         </Container>

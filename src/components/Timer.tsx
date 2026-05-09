@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { ArrowPathIcon, PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
 import { useNotification } from "../hooks/useNotification";
@@ -9,15 +9,22 @@ export interface TimerProps {
   onExpire?: () => void;
   variant?: "standard" | "compact" | "countdown";
   className?: string;
+  autoStart?: boolean;
+  onPause?: (remainingSeconds: number) => void;
+  onReset?: () => void;
 }
 
 export const Timer: React.FC<TimerProps> = ({
   expiryTimeDelta,
   onExpire: onTimerExpire,
   variant = "standard",
-  className
+  className,
+  autoStart = false,
+  onPause,
+  onReset,
 }) => {
   const [isExpired, setExpired] = useState<boolean>(false);
+  const isInitialMount = useRef(true);
   const tmp = new Date().getSeconds() + expiryTimeDelta;
   const expiryTimestamp = new Date();
   expiryTimestamp.setSeconds(tmp);
@@ -64,8 +71,15 @@ export const Timer: React.FC<TimerProps> = ({
   // }, [restart]);
 
   useEffect(() => {
-    const now = new Date();
-    resetInterval(now, expiryTimeDelta);
+    const ts = new Date();
+    ts.setSeconds(ts.getSeconds() + expiryTimeDelta);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      restart(ts, autoStart);
+    } else {
+      restart(ts, false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiryTimeDelta]);
 
   // Base styles for all timer variants
@@ -115,16 +129,16 @@ export const Timer: React.FC<TimerProps> = ({
         >
           <PlayIcon className={`${iconStyle} hover:scale-110 active:scale-95`} />
         </button>
-        <button 
-          className={controlButtonStyle} 
-          onClick={pause}
+        <button
+          className={controlButtonStyle}
+          onClick={() => { pause(); onPause?.(minutes * 60 + seconds); }}
           aria-label="一時停止"
         >
           <PauseIcon className={`${iconStyle} hover:scale-110 active:scale-95`} />
         </button>
-        <button 
-          className={controlButtonStyle} 
-          onClick={() => resetInterval(new Date(), expiryTimeDelta)}
+        <button
+          className={controlButtonStyle}
+          onClick={() => { resetInterval(new Date(), expiryTimeDelta); onReset?.(); }}
           aria-label="リセット"
         >
           <ArrowPathIcon className={`${iconStyle} hover:rotate-180`} />

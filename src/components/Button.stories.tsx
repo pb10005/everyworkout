@@ -1,3 +1,4 @@
+import { fn, userEvent, within, expect } from "@storybook/test";
 import { Button } from "./Button";
 
 export default {
@@ -8,20 +9,36 @@ export default {
 
 export const Default = {
     args: {
-        children: "PRESS"
+        children: "PRESS",
+        onClick: fn(),
+    },
+    play: async ({ canvasElement, args }: { canvasElement: HTMLElement; args: Record<string, unknown> }) => {
+        const canvas = within(canvasElement);
+        await userEvent.click(canvas.getByRole('button'));
+        expect(args.onClick).toHaveBeenCalled();
     },
 };
 
 export const Danger = {
     args: {
         children: "PRESS",
-        layout: 'danger'
+        variant: 'danger',
+        onClick: fn(),
     },
 };
 
-export const Dark = {
+export const Secondary = {
     args: {
         children: "PRESS",
-        className: 'dark'
+        variant: 'secondary',
+        onClick: fn(),
+    },
+};
+
+export const Disabled = {
+    args: {
+        children: "PRESS",
+        disabled: true,
+        onClick: fn(),
     },
 };

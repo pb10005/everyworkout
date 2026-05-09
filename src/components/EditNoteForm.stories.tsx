@@ -1,4 +1,5 @@
 import { type ChangeEvent, useState } from "react";
+import { userEvent, within, expect } from "@storybook/test";
 import { EditNoteForm } from "./EditNoteForm";
 
 import meta from "./EditNoteForm.stories";
@@ -15,9 +16,9 @@ export const Default = {
         submit: () => { alert('submit'); },
         cancel: () => { alert('cancel'); },
     },
-    render: function Comp(){ 
-      const [value, setValue] = useState('');  
-  
+    render: function Comp(){
+      const [value, setValue] = useState('');
+
       return (
         <meta.component
           submit={() => {setValue('')}}
@@ -26,5 +27,31 @@ export const Default = {
           setNote={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
         ></meta.component>
       );
+    },
+    play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+        const canvas = within(canvasElement);
+        const input = canvas.getByPlaceholderText('メモ');
+        await userEvent.type(input, 'テストメモ');
+        expect(input).toHaveValue('テストメモ');
+        await userEvent.click(canvas.getByText('送信'));
+    },
+};
+
+export const WithCancel = {
+    render: function Comp(){
+        const [value, setValue] = useState('初期メモ');
+
+        return (
+            <meta.component
+                submit={() => {setValue('')}}
+                cancel={() => {setValue('')}}
+                note={value}
+                setNote={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+            ></meta.component>
+        );
+    },
+    play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+        const canvas = within(canvasElement);
+        await userEvent.click(canvas.getByText('キャンセル'));
     },
 };

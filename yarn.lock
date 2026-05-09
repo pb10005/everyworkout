@@ -4754,6 +4754,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/csf@npm:^0.1.11":
+  version: 0.1.13
+  resolution: "@storybook/csf@npm:0.1.13"
+  dependencies:
+    type-fest: "npm:^2.19.0"
+  checksum: 10c0/7c57b531ac95ca45239f498d419483d675e58cd8d549e0bac623519cc1ef4f3c9c6b75ec3873aa51cc2872728012db5dd5e1f2c2d8085014241eb4b896480996
+  languageName: node
+  linkType: hard
+
 "@storybook/csf@npm:^0.1.2":
   version: 0.1.5
   resolution: "@storybook/csf@npm:0.1.5"
@@ -5009,9 +5018,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test-runner@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "@storybook/test-runner@npm:0.19.0"
+"@storybook/test-runner@npm:^0.19.1":
+  version: 0.19.1
+  resolution: "@storybook/test-runner@npm:0.19.1"
   dependencies:
     "@babel/core": "npm:^7.22.5"
     "@babel/generator": "npm:^7.22.5"
@@ -5019,7 +5028,7 @@ __metadata:
     "@babel/types": "npm:^7.22.5"
     "@jest/types": "npm:^29.6.3"
     "@storybook/core-common": "npm:^8.0.0"
-    "@storybook/csf": "npm:^0.1.2"
+    "@storybook/csf": "npm:^0.1.11"
     "@storybook/csf-tools": "npm:^8.0.0"
     "@storybook/preview-api": "npm:^8.0.0"
     "@swc/core": "npm:^1.5.22"
@@ -5037,7 +5046,7 @@ __metadata:
     playwright: "npm:^1.14.0"
   bin:
     test-storybook: dist/test-storybook.js
-  checksum: 10c0/f51dd3baf7b6153fcfe8d6db7cb54409138d1496561c7833ebfe25a1b38db6bbc6e134f7a5ff540eae9bee987d9011054677ffee00c6097f720a2075d29555ca
+  checksum: 10c0/728a23cb7952e52433b21addc4b916fc0a6e0fb7c74ff560489e35f5fc831d73a25dcbc2812f62dfe3d3adb067d1cb16dd0a4141428b71bd080b6da46e63abfd
   languageName: node
   linkType: hard
 
@@ -13082,7 +13091,7 @@ __metadata:
     "@storybook/nextjs": "npm:^8.2.2"
     "@storybook/react": "npm:^8.2.2"
     "@storybook/test": "npm:^8.2.2"
-    "@storybook/test-runner": "npm:^0.19.0"
+    "@storybook/test-runner": "npm:^0.19.1"
     "@tanstack/react-query": "npm:^4.20.0"
     "@trpc/client": "npm:^10.8.1"
     "@trpc/next": "npm:^10.8.1"

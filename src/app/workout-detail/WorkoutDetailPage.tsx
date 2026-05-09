@@ -146,6 +146,8 @@ export const WorkoutDetailPage: React.FC = () => {
                             sets={data.sets}
                             note={data.note}
                             muscles={data.exercise.muscles.map(m => m.muscle)}
+                            duration={data.duration}
+                            calories={data.calories}
                         />
                     </div>
                     
@@ -155,15 +157,17 @@ export const WorkoutDetailPage: React.FC = () => {
                             text="#everyworkout"
                             title="EVERYWORKOUT"
                         />
-                        <Link 
-                            className="bg-white dark:bg-gray-800 text-gray-700 dark:text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700" 
-                            href={`/exercise-detail?id=${data.exerciseId}`}
-                        >
-                            <ChartBarIcon className="w-5 h-5 text-blue-500" />
-                            <span>グラフを表示</span>
-                        </Link>
-                        <Link 
-                            className="bg-white dark:bg-gray-800 text-gray-700 dark:text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700" 
+                        {data.duration == null && (
+                            <Link
+                                className="bg-white dark:bg-gray-800 text-gray-700 dark:text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                href={`/exercise-detail?id=${data.exerciseId}`}
+                            >
+                                <ChartBarIcon className="w-5 h-5 text-blue-500" />
+                                <span>グラフを表示</span>
+                            </Link>
+                        )}
+                        <Link
+                            className="bg-white dark:bg-gray-800 text-gray-700 dark:text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                             href={`/search-result?exerciseId=${data.exerciseId}`}
                         >
                             <ListBulletIcon className="w-5 h-5 text-blue-500" />
@@ -171,7 +175,7 @@ export const WorkoutDetailPage: React.FC = () => {
                         </Link>
                     </div>
                     
-                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:border dark:border-gray-700 p-5">
+                    {data.duration == null && <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:border dark:border-gray-700 p-5">
                         <Subheader content="最大記録の登録" variant="section" />
                         
                         <div className="mt-4 space-y-4">
@@ -218,7 +222,22 @@ export const WorkoutDetailPage: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </div>}
+                    {data.duration != null && (
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:border dark:border-gray-700 p-5">
+                            {deleteMutation.isLoading ? (
+                                <Loading />
+                            ) : (
+                                <Button
+                                    onClick={() => void deleteWorkout()}
+                                    variant="danger"
+                                    className="w-full"
+                                >
+                                    この記録を削除
+                                </Button>
+                            )}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

@@ -18,11 +18,13 @@ type Props = {
     reps: number;
     sets: number;
     note: string | null;
-    muscles: Muscle[]
+    muscles: Muscle[];
+    duration?: number | null;
+    calories?: number | null;
 };
 
 export const WorkoutCard: React.FC<Props> = (props: Props) => {
-    const { id, date, exerciseName, weight, reps, sets, note, muscles } = props;
+    const { id, date, exerciseName, weight, reps, sets, note, muscles, duration, calories } = props;
     const dateDisplay = date
         ? new Date(date).toISOString().split("T")[0] || ""
         : "";
@@ -72,18 +74,35 @@ export const WorkoutCard: React.FC<Props> = (props: Props) => {
                     })}
                     <div className="flex justify-center items-center w-full">
                         <div className="flex justify-between items-center divide-x dark:divide-gray-500">
-                            <span className="w-20 flex flex-col items-center">
-                                <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
-                                <span className="text-gray-700 text-xs dark:text-gray-300">kg</span>
-                            </span>
-                            <span className="w-20 flex flex-col items-center">
-                                <span className="text-2xl font-extrabold text-[#42bfec]">{reps}</span>
-                                <span className="text-gray-700 text-xs dark:text-gray-300">reps</span>
-                            </span>
-                            <span className="w-20 flex flex-col items-center">
-                                <span className="text-2xl font-extrabold text-[#42bfec]">{sets}</span>
-                                <span className="text-gray-700 text-xs dark:text-gray-300">sets</span>
-                            </span>
+                            {duration != null ? (
+                                <>
+                                    <span className="w-20 flex flex-col items-center">
+                                        <span className="text-2xl font-extrabold text-[#42bfec]">{duration}</span>
+                                        <span className="text-gray-700 text-xs dark:text-gray-300">分</span>
+                                    </span>
+                                    {calories != null && (
+                                        <span className="w-20 flex flex-col items-center">
+                                            <span className="text-2xl font-extrabold text-[#42bfec]">{calories}</span>
+                                            <span className="text-gray-700 text-xs dark:text-gray-300">kcal</span>
+                                        </span>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <span className="w-20 flex flex-col items-center">
+                                        <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
+                                        <span className="text-gray-700 text-xs dark:text-gray-300">kg</span>
+                                    </span>
+                                    <span className="w-20 flex flex-col items-center">
+                                        <span className="text-2xl font-extrabold text-[#42bfec]">{reps}</span>
+                                        <span className="text-gray-700 text-xs dark:text-gray-300">reps</span>
+                                    </span>
+                                    <span className="w-20 flex flex-col items-center">
+                                        <span className="text-2xl font-extrabold text-[#42bfec]">{sets}</span>
+                                        <span className="text-gray-700 text-xs dark:text-gray-300">sets</span>
+                                    </span>
+                                </>
+                            )}
                         </div>
                     </div>
 

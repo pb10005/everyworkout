@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 import { api } from "../../utils/api";
 import { Loading } from "../../components";
@@ -94,6 +95,14 @@ export const WorkoutRecorderPage: React.FC = () => {
                 </p>
             )}
             {!isEnd && (sets === "-1" ? <>
+                <div className="m-2 flex justify-end">
+                    <Link
+                        href="/cardio-add"
+                        className="text-sm text-blue-500 border border-blue-200 dark:border-blue-800 px-3 py-2 rounded-lg flex items-center gap-1 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                    >
+                        有酸素運動を記録する
+                    </Link>
+                </div>
                 <SetConfigForm
                     bodyParts={bodyParts || []}
                     muscles={muscles || []}

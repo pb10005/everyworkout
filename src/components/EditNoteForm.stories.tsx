@@ -2,8 +2,6 @@ import { type ChangeEvent, useState } from "react";
 import { userEvent, within, expect } from "@storybook/test";
 import { EditNoteForm } from "./EditNoteForm";
 
-import meta from "./EditNoteForm.stories";
-
 export default {
     component: EditNoteForm,
     title: 'Edit note form',
@@ -20,12 +18,12 @@ export const Default = {
       const [value, setValue] = useState('');
 
       return (
-        <meta.component
+        <EditNoteForm
           submit={() => {setValue('')}}
           cancel={() => {setValue('')}}
           note={value}
           setNote={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
-        ></meta.component>
+        ></EditNoteForm>
       );
     },
     play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
@@ -42,12 +40,12 @@ export const WithCancel = {
         const [value, setValue] = useState('初期メモ');
 
         return (
-            <meta.component
+            <EditNoteForm
                 submit={() => {setValue('')}}
                 cancel={() => {setValue('')}}
                 note={value}
                 setNote={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
-            ></meta.component>
+            ></EditNoteForm>
         );
     },
     play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {

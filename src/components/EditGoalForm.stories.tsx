@@ -2,8 +2,6 @@ import { type ChangeEvent, useState } from "react";
 import { userEvent, within, expect } from "@storybook/test";
 import { EditGoalForm } from "./EditGoalForm";
 
-import meta from "./EditGoalForm.stories";
-
 export default {
     component: EditGoalForm,
     title: 'Edit goal form',
@@ -20,12 +18,12 @@ export const Default = {
       const [value, setValue] = useState('');
 
       return (
-        <meta.component
+        <EditGoalForm
           submit={() => { alert(`submit: ${value}`); } }
           cancel={() => {setValue('')}}
           goal={value}
           setGoal={(e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
-        ></meta.component>
+        ></EditGoalForm>
       );
     },
     play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
@@ -42,12 +40,12 @@ export const WithCancel = {
         const [value, setValue] = useState('現在の目標テキスト');
 
         return (
-            <meta.component
+            <EditGoalForm
                 submit={() => {setValue('')}}
                 cancel={() => {setValue('')}}
                 goal={value}
                 setGoal={(e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
-            ></meta.component>
+            ></EditGoalForm>
         );
     },
     play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {

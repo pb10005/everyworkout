@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ExerciseSelector } from "./ExerciseSelector";
-import meta from "./ExerciseSelector.stories";
 
 export default {
     component: ExerciseSelector,
@@ -22,14 +21,14 @@ export const Default = {
         ];
 
         return (
-          <meta.component
+          <ExerciseSelector
             selectedBodyPartId={selectedBodyPartId}
             selectedExerciseId={selectedExerciseId}
             muscles={muscles}
             bodyParts={bodyParts}
             handleBodyPartClick={selectBodyPartId}
             handleExerciseClick={selectExerciseId}
-          ></meta.component>
+          ></ExerciseSelector>
         );
     }
 };

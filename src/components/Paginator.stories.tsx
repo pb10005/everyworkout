@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Paginator } from "./Paginator";
 
-import meta from './Paginator.stories';
-
 export default {
     component: Paginator,
     title: 'Paginator',
@@ -14,11 +12,11 @@ export const Default = {
         const [page, setPage] = useState<number>(0);  
     
         return (
-          <meta.component
+          <Paginator
             page={page}
             maxPage={10}
             setPage={(p: number) => setPage(p)}
-          ></meta.component>
+          ></Paginator>
         );
       },
 };

@@ -106,6 +106,8 @@ export const WorkoutHistoryPage: React.FC = () => {
                   sets={d.sets}
                   note={d.note}
                   muscles={d.exercise.muscles.map(m => m.muscle)}
+                  duration={d.duration}
+                  calories={d.calories}
                 /></Link>;
               })
               : <NoDataCard />}

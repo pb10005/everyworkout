@@ -14,7 +14,9 @@ type Props = {
   reps: number;
   sets: number;
   note: string | null;
-  muscles: Muscle[]
+  muscles: Muscle[];
+  duration?: number | null;
+  calories?: number | null;
 };
 
 export const RecordCard: React.FC<Props> = (props: Props) => {
@@ -24,7 +26,9 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
     weight,
     reps,
     sets,
-    muscles
+    muscles,
+    duration,
+    calories,
   } = props;
   const dateDisplay = date.toISOString().split("T")[0];
   return (
@@ -45,18 +49,35 @@ export const RecordCard: React.FC<Props> = (props: Props) => {
         </div>
         <div className="col-span-12 my-3">
           <div className="flex justify-center items-center gap-2 divide-x">
-            <span className="w-20 flex flex-col items-center">
-              <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
-              <span className="text-gray-500 text-xs">kg</span>
-            </span>
-            <span className="w-20 flex flex-col items-center">
-              <span className="text-2xl font-extrabold text-[#42bfec]">{reps}</span>
-              <span className="text-gray-500 text-xs">reps</span>
-            </span>
-            <span className="w-20 flex flex-col items-center">
-              <span className="text-2xl font-extrabold text-[#42bfec]">{sets}</span>
-              <span className="text-gray-500 text-xs">sets</span>
-            </span>
+            {duration != null ? (
+              <>
+                <span className="w-20 flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-[#42bfec]">{duration}</span>
+                  <span className="text-gray-500 text-xs">分</span>
+                </span>
+                {calories != null && (
+                  <span className="w-20 flex flex-col items-center">
+                    <span className="text-2xl font-extrabold text-[#42bfec]">{calories}</span>
+                    <span className="text-gray-500 text-xs">kcal</span>
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                <span className="w-20 flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-[#42bfec]">{weight}</span>
+                  <span className="text-gray-500 text-xs">kg</span>
+                </span>
+                <span className="w-20 flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-[#42bfec]">{reps}</span>
+                  <span className="text-gray-500 text-xs">reps</span>
+                </span>
+                <span className="w-20 flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-[#42bfec]">{sets}</span>
+                  <span className="text-gray-500 text-xs">sets</span>
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

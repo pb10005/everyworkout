@@ -22,11 +22,13 @@ export const workoutRouter = createTRPCRouter({
     .input(
       z.object({
         date: z.string().datetime(),
-        weight: z.number(),
+        weight: z.number().optional(),
         reps: z.number(),
         sets: z.number(),
         note: z.string().max(500),
         exerciseId: z.number(),
+        duration: z.number().int().min(1).optional(),
+        calories: z.number().min(0).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -34,11 +36,13 @@ export const workoutRouter = createTRPCRouter({
         data: {
           userId: ctx.session.user.id,
           date: input.date,
-          weight: input.weight,
+          weight: input.weight ?? null,
           reps: input.reps,
           sets: input.sets,
           note: input.note,
           exerciseId: input.exerciseId,
+          duration: input.duration ?? null,
+          calories: input.calories ?? null,
           weeklyReportPublished: false
         },
       });

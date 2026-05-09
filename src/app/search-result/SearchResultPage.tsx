@@ -54,7 +54,9 @@ export const SearchResultPage: React.FC = () => {
                                         reps={d.reps}
                                         sets={d.sets}
                                         note={d.note}
-                                        muscles={d.exercise.muscles.map(m => m.muscle)} /></Link>;
+                                        muscles={d.exercise.muscles.map(m => m.muscle)}
+                                        duration={d.duration}
+                                        calories={d.calories} /></Link>;
                                 })
                                 : <NoDataCard />}
                         </ListContainer>

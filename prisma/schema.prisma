@@ -32,6 +32,8 @@ model Workout {
   sets                  Int
   note                  String?
   exerciseId            Int
+  duration              Int?
+  calories              Float?
   weeklyReportPublished Boolean  @default(false)
   createdAt             DateTime @default(now())
   exercise              Exercise @relation(fields: [exerciseId], references: [id])

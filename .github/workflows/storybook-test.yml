@@ -23,17 +23,19 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+      - name: Install Playwright OS dependencies
+        run: npx playwright install-deps chromium
+
+      - name: Install Playwright browser
+        run: npx playwright install chromium
 
       - name: Build Storybook
         run: yarn build-storybook
 
-      - name: Serve Storybook
-        run: npx serve storybook-static --listen 6006 &
-
-      - name: Wait for Storybook to be ready
-        run: npx wait-on http://127.0.0.1:6006 --timeout 60000
-
-      - name: Run Storybook tests
-        run: yarn test-storybook --url http://127.0.0.1:6006
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static -p 6006 --silent" \
+            "npx wait-on tcp:6006 && yarn test-storybook --url http://localhost:6006"
+        env:
+          STORYBOOK_DISABLE_TELEMETRY: 1

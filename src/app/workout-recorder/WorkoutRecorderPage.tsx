@@ -25,6 +25,10 @@ export const WorkoutRecorderPage: React.FC = () => {
     const { data: bodyParts, isLoading: loadingB } = api.bodyPart.getAll.useQuery();
     const { data: muscles, isLoading: loadingM } = api.muscle.getAllExercises.useQuery();
 
+    const cardioBodyPartId = bodyParts?.find(bp => bp.name === '有酸素運動')?.id;
+    const strengthBodyParts = bodyParts?.filter(bp => bp.name !== '有酸素運動') ?? [];
+    const strengthMuscles = muscles?.filter(m => m.bodyPartId !== cardioBodyPartId) ?? [];
+
     const isLoading = [
         loadingE,
         loadingB,
@@ -104,8 +108,8 @@ export const WorkoutRecorderPage: React.FC = () => {
                     </Link>
                 </div>
                 <SetConfigForm
-                    bodyParts={bodyParts || []}
-                    muscles={muscles || []}
+                    bodyParts={strengthBodyParts}
+                    muscles={strengthMuscles}
                     exercises={exercises || []}
                     startSets={startSets}
                     initialExerciseId={parseInt(exerciseId) || -1}

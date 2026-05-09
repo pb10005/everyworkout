@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import {
   Button,
@@ -24,6 +25,10 @@ export const WorkoutAddPage: React.FC = () => {
   const { data: bodyParts } = api.bodyPart.getAll.useQuery();
   const { data: muscles } = api.muscle.getAllExercises.useQuery();
   const { data: exercises } = api.exercise.getAll.useQuery();
+
+  const cardioBodyPartId = bodyParts?.find(bp => bp.name === '有酸素運動')?.id;
+  const strengthBodyParts = bodyParts?.filter(bp => bp.name !== '有酸素運動') ?? [];
+  const strengthMuscles = muscles?.filter(m => m.bodyPartId !== cardioBodyPartId) ?? [];
 
   const {
     selectedExerciseId,
@@ -64,6 +69,14 @@ export const WorkoutAddPage: React.FC = () => {
   return (
     <>
       <div className="m-2 flex flex-col gap-2">
+        <div className="flex justify-end">
+          <Link
+            href="/cardio-add"
+            className="text-sm text-blue-500 border border-blue-200 dark:border-blue-800 px-3 py-2 rounded-lg flex items-center gap-1 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+          >
+            有酸素運動を記録する
+          </Link>
+        </div>
         {mutation.isError && (
           <p className="rounded-lg bg-red-100 p-4 text-red-900">
             エラーが発生しました。もう一度お試しください。
@@ -94,8 +107,8 @@ export const WorkoutAddPage: React.FC = () => {
           {bodyParts && muscles && <ExerciseSelector
             selectedExerciseId={selectedExerciseId}
             selectedBodyPartId={selectedBodyPartId}
-            bodyParts={bodyParts}
-            muscles={muscles}
+            bodyParts={strengthBodyParts}
+            muscles={strengthMuscles}
             handleExerciseClick={handleExerciseClick}
             handleBodyPartClick={handleBodyPartClick}
           />}

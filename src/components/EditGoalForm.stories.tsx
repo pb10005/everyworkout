@@ -32,7 +32,7 @@ export const Default = {
         const canvas = within(canvasElement);
         const textarea = canvas.getByPlaceholderText('目標');
         await userEvent.type(textarea, '毎日30分走る');
-        expect(textarea).toHaveValue('毎日30分走る');
+        await expect(textarea).toHaveValue('毎日30分走る');
         await userEvent.click(canvas.getByText('送信'));
     },
 };

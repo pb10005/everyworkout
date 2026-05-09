@@ -15,7 +15,7 @@ export const Default = {
     play: async ({ canvasElement, args }: { canvasElement: HTMLElement; args: Record<string, unknown> }) => {
         const canvas = within(canvasElement);
         await userEvent.click(canvas.getByRole('button'));
-        expect(args.onClick).toHaveBeenCalled();
+        await expect(args.onClick).toHaveBeenCalled();
     },
 };
 

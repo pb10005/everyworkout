@@ -32,7 +32,7 @@ export const Default = {
         const canvas = within(canvasElement);
         const input = canvas.getByPlaceholderText('メモ');
         await userEvent.type(input, 'テストメモ');
-        expect(input).toHaveValue('テストメモ');
+        await expect(input).toHaveValue('テストメモ');
         await userEvent.click(canvas.getByText('送信'));
     },
 };

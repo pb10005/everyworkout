@@ -6,6 +6,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import type { WorkoutProp } from "../../components/types";
 import { Button, Subheader, Timer } from "../../components";
 
+const INTERVAL_KEY = 'everyworkout_interval_timer';
+
+type SavedIntervalTimer =
+  | { state: 'running'; expiryAt: number }
+  | { state: 'paused'; remainingSeconds: number };
+
 type Props = {
     endSets: (sets: string) => void;
 };
@@ -22,6 +28,14 @@ export function SetRecorder(props: Props) {
     const [selectedExerciseId, selectExerciseId] = useState(-1);
     const [selectedExerciseName, selectExerciseName] = useState("");
     const [selectedBodyPartId, selectBodyPartId] = useState(-1);
+    const [restoredSeconds, setRestoredSeconds] = useState<number | null>(null);
+    const [autoStartTimer, setAutoStartTimer] = useState<boolean>(false);
+
+    const clearIntervalTimer = () => {
+        sessionStorage.removeItem(INTERVAL_KEY);
+        setRestoredSeconds(null);
+        setAutoStartTimer(false);
+    };
 
     const saveSession = (currentSet: string) => {
         const data: WorkoutProp = {
@@ -38,6 +52,7 @@ export function SetRecorder(props: Props) {
     };
 
     const onPrevSet = () => {
+        clearIntervalTimer();
         const tmp = Math.max(parseInt(sets) - 1, 0);
         setSets(tmp.toString());
         saveSession(tmp.toString());
@@ -45,6 +60,7 @@ export function SetRecorder(props: Props) {
     };
 
     const onNextSet = () => {
+        clearIntervalTimer();
         const tmp = parseInt(sets) + 1;
         setSets(tmp.toString());
         saveSession(tmp.toString());
@@ -56,6 +72,7 @@ export function SetRecorder(props: Props) {
     };
 
     const clear = () => {
+        clearIntervalTimer();
         window.sessionStorage.removeItem("workout");
         router.push('/workout-menu');
     };
@@ -73,7 +90,26 @@ export function SetRecorder(props: Props) {
             setExpiryTimeDelta(workout.expiryTimeDelta);
             setSets(workout.sets);
         }
-    }, [setDate, selectExerciseId, selectExerciseName, selectBodyPartId, setWeight, setReps, setExpiryTimeDelta, setSets]);
+
+        const raw = sessionStorage.getItem(INTERVAL_KEY);
+        if (!raw) return;
+        try {
+            const saved = JSON.parse(raw) as SavedIntervalTimer;
+            if (saved.state === 'running') {
+                const remaining = Math.floor((saved.expiryAt - Date.now()) / 1000);
+                if (remaining > 0) {
+                    setRestoredSeconds(remaining);
+                    setAutoStartTimer(true);
+                } else {
+                    sessionStorage.removeItem(INTERVAL_KEY);
+                }
+            } else {
+                setRestoredSeconds(saved.remainingSeconds);
+            }
+        } catch {
+            sessionStorage.removeItem(INTERVAL_KEY);
+        }
+    }, []);
 
     return (<>
         <div className="dark:text-white p-2 md:p-0">
@@ -91,7 +127,15 @@ export function SetRecorder(props: Props) {
             </div>
             <Subheader content="インターバル" variant="section"/>
             <div>
-                <Timer expiryTimeDelta={expiryTimeDelta} onExpire={onNextSet}></Timer>
+                <Timer
+                    expiryTimeDelta={restoredSeconds ?? expiryTimeDelta}
+                    autoStart={autoStartTimer}
+                    onExpire={() => { clearIntervalTimer(); onNextSet(); }}
+                    onPause={(remaining) => {
+                        sessionStorage.setItem(INTERVAL_KEY, JSON.stringify({ state: 'paused', remainingSeconds: remaining } satisfies SavedIntervalTimer));
+                    }}
+                    onReset={clearIntervalTimer}
+                />
             </div>
             <div className="flex flex-col justify-center gap-2 mt-2">
                 <Button onClick={handleEndButtonClick}>セットを終了して記録</Button>

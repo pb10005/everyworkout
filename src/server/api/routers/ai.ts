@@ -388,7 +388,6 @@ ${exerciseList}
     return ctx.prisma.aiReview.findMany({
       where: { userId: ctx.session.user.id },
       orderBy: { executeDate: "desc" },
-      take: 3,
     });
   }),
 });

@@ -42,13 +42,20 @@ export const DashboardPage = (props: Props) => {
     const [tourOpen, setTourOpen] = useState(false);
     const [tourStepIndex, setTourStepIndex] = useState(0);
 
-    const tourSteps = useMemo<TourStep[]>(() => ([
-        { title: "統計", description: "ここで連続日数や今月の記録数を確認できます。", targetId: "tour-stats" },
-        { title: "履歴グラフ", description: "週次のトレーニング推移を可視化できます。", targetId: "tour-chart" },
-        { title: "目標", description: "達成したい目標を登録して継続につなげましょう。", targetId: "tour-goal" },
-        { title: "記録を追加", description: "右下のボタンから素早く新規ワークアウトを追加できます。", targetId: "tour-add-workout" },
-        { title: "AIコーチ", description: "毎週月曜日にAIがあなたのトレーニングを分析してフィードバックを提供します。", targetId: "tour-ai-review" },
-    ]), []);
+    const { data: aiSettings } = api.userSettings.get.useQuery();
+
+    const tourSteps = useMemo<TourStep[]>(() => {
+        const steps: TourStep[] = [
+            { title: "目標", description: "達成したい目標を登録して継続につなげましょう。", targetId: "tour-goal" },
+            { title: "統計", description: "ここで連続日数や今月の記録数を確認できます。", targetId: "tour-stats" },
+            { title: "履歴グラフ", description: "週次のトレーニング推移を可視化できます。", targetId: "tour-chart" },
+            { title: "記録を追加", description: "右下のボタンから素早く新規ワークアウトを追加できます。", targetId: "tour-add-workout" },
+        ];
+        if (aiSettings?.aiEnabled) {
+            steps.splice(1, 0, { title: "AIコーチ", description: "毎週月曜日にAIがあなたのトレーニングを分析してフィードバックを提供します。", targetId: "tour-ai-review" });
+        }
+        return steps;
+    }, [aiSettings?.aiEnabled]);
 
     useEffect(() => {
         const done = localStorage.getItem("everyworkout-onboarding-v1");
@@ -95,17 +102,84 @@ export const DashboardPage = (props: Props) => {
 
     const { data: stats, isLoading: loadingStats } = api.workout.getTrainingStats.useQuery();
 
-    const { data: aiSettings } = api.userSettings.get.useQuery();
     const { data: aiReviews, isLoading: loadingAiReviews } = api.ai.getUserAiReviews.useQuery(
       undefined,
       { enabled: aiSettings?.aiEnabled === true }
     );
+
+    const latestAiReview = aiReviews?.[0];
+    const latestReport = reports?.[0];
 
 
     return (
         <>
             {(errorM && errorR) && <NotLoggedInCard />}
             <div>
+            <section id="tour-goal" className="flex flex-col gap-2">
+                <Subheader content="目標" variant="section"/>
+                {goal ? <>
+                    <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
+                        <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>
+                        <Dropdown>
+                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                                <DropdownItem onClick={() => router.push(`/goal-edit?id=${goal.id}`)}>
+                                    編集
+                                </DropdownItem>
+                                <DropdownItem onClick={() => router.push("/goal-history")}>
+                                    過去の目標
+                                </DropdownItem>
+                            </ul>
+                        </Dropdown>
+                    </section>
+                </> : <NoDataCard />}
+                <div className="flex">
+                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/goal-add">
+                        <PlusIcon className="w-4 h-4"></PlusIcon>
+                        <span>新規作成</span>
+                    </Link>
+                </div>
+            </section>
+            {aiSettings?.aiEnabled && (
+                <section id="tour-ai-review">
+                    <Subheader content="AIコーチからのレビュー" variant="section"/>
+                    <div className="flex items-center gap-2 mb-2">
+                        <SparklesIcon className="w-4 h-4 text-purple-400" />
+                        <span className="text-xs text-purple-400">AI生成（毎週月曜更新）</span>
+                        <Link href="/ai-tools" className="text-xs underline text-purple-500">AIツールを開く</Link>
+                    </div>
+                    {loadingAiReviews && <Loading />}
+                    {!loadingAiReviews && (
+                        <>
+                            {latestAiReview ? (
+                                <>
+                                    <ListContainer>
+                                        <li className="py-2 px-4">
+                                            <Subheader content={latestAiReview.executeDate} variant="subsection"/>
+                                            <span className="dark:text-white">{latestAiReview.content}</span>
+                                        </li>
+                                    </ListContainer>
+                                    <div className="flex mt-1">
+                                        <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/ai-review-history">
+                                            <ListBulletIcon className="w-4 h-4" />
+                                            <span>過去のレビューを見る</span>
+                                        </Link>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="flex flex-col items-center gap-2 py-6 px-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border border-dashed border-purple-200 dark:border-purple-700">
+                                    <SparklesIcon className="w-8 h-8 text-purple-300 dark:text-purple-600" />
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+                                        まだレビューがありません
+                                    </p>
+                                    <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
+                                        トレーニングを記録すると、毎週月曜日にAIコーチからフィードバックが届きます
+                                    </p>
+                                </div>
+                            )}
+                        </>
+                    )}
+                </section>
+            )}
             <section id="tour-stats" className="flex flex-col gap-2">
                 <Subheader content="トレーニング統計" variant="section"/>
                 {loadingStats && <Loading />}
@@ -150,8 +224,8 @@ export const DashboardPage = (props: Props) => {
                     {!isEmptyData ? (
                         <ExerciseChart chartData={chartData} />
                     ) : (
-                        <EmptyState 
-                            message="今週のトレーニングデータがありません" 
+                        <EmptyState
+                            message="今週のトレーニングデータがありません"
                             description="トレーニングを記録して、グラフを表示しましょう"
                             icon={
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,30 +242,6 @@ export const DashboardPage = (props: Props) => {
                     </Link>
                 </div>
             </section>
-            <section id="tour-goal" className="flex flex-col gap-2">
-                <Subheader content="目標" variant="section"/>
-                {goal ? <>
-                    <section key={goal.id} className="flex justify-between mx-1 px-2 py-4 bg-gray-100 rounded-lg dark:bg-gray-900 dark:outline outline-1 outline-gray-500 dark:text-white">
-                        <div className="text-xl whitespace-pre-wrap flex items-center">{goal.content}</div>
-                        <Dropdown>
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                                <DropdownItem onClick={() => router.push(`/goal-edit?id=${goal.id}`)}>
-                                    編集
-                                </DropdownItem>
-                                <DropdownItem onClick={() => router.push("/goal-history")}>
-                                    過去の目標
-                                </DropdownItem>
-                            </ul>
-                        </Dropdown>
-                    </section>
-                </> : <NoDataCard />}
-                <div className="flex">
-                    <Link className="text-sm dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full flex items-center gap-1" href="/goal-add">
-                        <PlusIcon className="w-4 h-4"></PlusIcon>
-                        <span>新規作成</span>
-                    </Link>
-                </div>
-            </section>
             <section>
                 <Subheader content="自己ベスト" variant="section"/>
                 {loadingM && <Loading />}
@@ -199,7 +249,7 @@ export const DashboardPage = (props: Props) => {
                     <>
                         <ListContainer>
                             {maximum?.length && maximum?.length > 0
-                                ? maximum?.map((m) => {
+                                ? maximum.slice(0, 5).map((m) => {
                                     return (
                                         <div
                                             key={`${m.exerciseId}${m.metrics_code}`}
@@ -226,53 +276,18 @@ export const DashboardPage = (props: Props) => {
                 {successR && (
                     <>
                         <ListContainer>
-                            {reports?.length && reports.length > 0
-                                ? reports?.map(r => (
-                                    <li key={r.id} className="py-2 px-4">
-                                        <Subheader content={r.executeDate || ''} variant="subsection"/>
-                                        <span className="dark:text-white">{r.content}</span>
-                                    </li>)
+                            {latestReport
+                                ? (
+                                    <li key={latestReport.id} className="py-2 px-4">
+                                        <Subheader content={latestReport.executeDate || ''} variant="subsection"/>
+                                        <span className="dark:text-white">{latestReport.content}</span>
+                                    </li>
                                 )
                                 : <NoDataCard />}
                         </ListContainer>
                     </>
                 )}
             </section>
-            {aiSettings?.aiEnabled && (
-                <section id="tour-ai-review">
-                    <Subheader content="AIコーチからのレビュー" variant="section"/>
-                    <div className="flex items-center gap-2 mb-2">
-                        <SparklesIcon className="w-4 h-4 text-purple-400" />
-                        <span className="text-xs text-purple-400">AI生成（毎週月曜更新）</span>
-                        <Link href="/ai-tools" className="text-xs underline text-purple-500">AIツールを開く</Link>
-                    </div>
-                    {loadingAiReviews && <Loading />}
-                    {!loadingAiReviews && (
-                        <>
-                            {aiReviews && aiReviews.length > 0 ? (
-                                <ListContainer>
-                                    {aiReviews.map(r => (
-                                        <li key={r.id} className="py-2 px-4">
-                                            <Subheader content={r.executeDate} variant="subsection"/>
-                                            <span className="dark:text-white">{r.content}</span>
-                                        </li>
-                                    ))}
-                                </ListContainer>
-                            ) : (
-                                <div className="flex flex-col items-center gap-2 py-6 px-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border border-dashed border-purple-200 dark:border-purple-700">
-                                    <SparklesIcon className="w-8 h-8 text-purple-300 dark:text-purple-600" />
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                                        まだレビューがありません
-                                    </p>
-                                    <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
-                                        トレーニングを記録すると、毎週月曜日にAIコーチからフィードバックが届きます
-                                    </p>
-                                </div>
-                            )}
-                        </>
-                    )}
-                </section>
-            )}
             <FloatingButton href="/workout-add">
                 <PlusIcon className="w-10 h-10 text-white dark:text-gray-900"></PlusIcon>
             </FloatingButton>

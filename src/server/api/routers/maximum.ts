@@ -43,12 +43,12 @@ export const maximumRouter = createTRPCRouter({
       const exercises = await ctx.prisma.exercise.findMany({});
       const maximums = await ctx.prisma.maximum.groupBy({
         by: ["exerciseId", "metrics_code"],
-        _max: { value: true },
+        _max: { value: true, date: true },
         where: {
           userId: ctx.session.user.id
         },
         orderBy: {
-          exerciseId: "asc",
+          _max: { date: "desc" },
         },
       });
       return maximums.map((d) => {
@@ -58,6 +58,7 @@ export const maximumRouter = createTRPCRouter({
           exercise: e,
           metrics_code: d.metrics_code,
           value: d._max.value,
+          latestDate: d._max.date,
         };
       });
     }),

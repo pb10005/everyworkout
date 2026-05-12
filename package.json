@@ -8,8 +8,8 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o ./storybook-static",
+    "storybook": "NEXT_PRIVATE_LOCAL_WEBPACK=true storybook dev -p 6006",
+    "build-storybook": "NEXT_PRIVATE_LOCAL_WEBPACK=true storybook build -o ./storybook-static",
     "test-storybook": "test-storybook"
   },
   "dependencies": {
@@ -41,7 +41,6 @@
     "@storybook/addon-interactions": "^8.2.2",
     "@storybook/addon-links": "^8.2.2",
     "@storybook/addon-onboarding": "^8.2.2",
-    "@storybook/addons": "7.6.17",
     "@storybook/blocks": "^8.2.2",
     "@storybook/nextjs": "^8.2.2",
     "@storybook/react": "^8.2.2",

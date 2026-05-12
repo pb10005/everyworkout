@@ -13,6 +13,7 @@ import { ExerciseChart } from "./ExerciseChart";
 import { ExerciseSelector } from "./ExerciseSelector";
 import { FloatingButton } from "./FloatingButton";
 import { ListContainer } from "./ListContainer";
+import { MarkdownContent } from "./MarkdownContent";
 import { Loading } from "./Loading";
 import { MaximumCard } from "./MaximumCard";
 import { NoDataCard } from "./NoDataCard";
@@ -42,6 +43,7 @@ export {
   ExerciseSelector,
   FloatingButton,
   ListContainer,
+  MarkdownContent,
   Loading,
   MaximumCard,
   NoDataCard,

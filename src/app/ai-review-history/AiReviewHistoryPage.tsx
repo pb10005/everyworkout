@@ -1,7 +1,7 @@
 "use client";
 
 import { SparklesIcon } from "@heroicons/react/20/solid";
-import { ListContainer, Loading, Subheader } from "../../components";
+import { ListContainer, Loading, MarkdownContent, Subheader } from "../../components";
 import { api } from "../../utils/api";
 
 export const AiReviewHistoryPage: React.FC = () => {
@@ -24,7 +24,7 @@ export const AiReviewHistoryPage: React.FC = () => {
                     {reviews.map(r => (
                         <li key={r.id} className="py-2 px-4">
                             <Subheader content={r.executeDate} variant="subsection" />
-                            <span className="dark:text-white">{r.content}</span>
+                            <MarkdownContent content={r.content} />
                         </li>
                     ))}
                 </ListContainer>

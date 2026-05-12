@@ -9,6 +9,7 @@ import {
     NotLoggedInCard,
     ListContainer,
     Loading,
+    MarkdownContent,
     MaximumCard,
     NoDataCard,
     Subheader,
@@ -155,7 +156,7 @@ export const DashboardPage = (props: Props) => {
                                     <ListContainer>
                                         <li className="py-2 px-4">
                                             <Subheader content={latestAiReview.executeDate} variant="subsection"/>
-                                            <span className="dark:text-white">{latestAiReview.content}</span>
+                                            <MarkdownContent content={latestAiReview.content} />
                                         </li>
                                     </ListContainer>
                                     <div className="flex mt-1">
